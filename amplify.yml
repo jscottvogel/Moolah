@@ -4,22 +4,23 @@ backend:
     build:
       commands:
         - npm ci
-        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
-applications:
-  - frontend:
-      phases:
-        preBuild:
-          commands:
-            - npm ci
-        build:
-          commands:
-            - npm run build
-      artifacts:
-        baseDirectory: .next
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - node_modules/**/*
-          - .next/cache/**/*
-    appRoot: ui
+        # Force the backend outputs into the ui folder where Next.js can find them
+        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID --outputs-out-dir ui
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - cd ui && npm ci
+    build:
+      commands:
+        - cd ui && npm run build
+  artifacts:
+    # Explicit path from the root to the build output
+    baseDirectory: ui/.next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - ui/node_modules/**/*
+      - ui/.next/cache/**/*
