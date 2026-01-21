@@ -1,0 +1,17 @@
+{
+    "auth": {
+        "user_pool_id": "us-east-1_dummy",
+        "aws_region": "us-east-1",
+        "user_pool_client_id": "dummy"
+    },
+    "data": {
+        "url": "https://dummy.appsync-api.us-east-1.amazonaws.com/graphql",
+        "aws_region": "us-east-1",
+        "api_key": "da2-dummy",
+        "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
+        "authorization_types": [
+            "API_KEY"
+        ]
+    },
+    "version": "1"
+}
