@@ -6,15 +6,15 @@ export default function LandingPage() {
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* Background Gradients */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-cyan-900/20 rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-900/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-amber-900/10 rounded-full blur-[120px]" />
       </div>
 
       <header className="fixed w-full z-50 glass border-b border-white/5">
         <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-tr from-purple-500 to-cyan-500 rounded-lg flex items-center justify-center font-bold text-white">M</div>
-            <div className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400">
+          <div className="flex items-center gap-3">
+            <img src="/logo.png" alt="Moolah Logo" className="w-10 h-10 object-contain" />
+            <div className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-amber-400">
               Moolah
             </div>
           </div>
@@ -35,12 +35,12 @@ export default function LandingPage() {
       <main className="flex-grow pt-32 pb-20">
         {/* Hero */}
         <section className="container mx-auto px-6 py-16 md:py-24 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-cyan-400 mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-emerald-400 mb-6">
             <Zap className="w-3 h-3 fill-current" /> New: Tax-Loss Harvesting Estimates
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]">
             Smart dividends.<br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-cyan-400 to-emerald-400 animate-gradient-x">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-amber-200 to-emerald-500 animate-gradient-x">
               Agentic Reasoning.
             </span>
           </h1>
@@ -48,7 +48,7 @@ export default function LandingPage() {
             Stop guessing. Moolah uses advanced AI agents to build, optimize, and explain a tax-efficient dividend portfolio tailored to your goals.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 items-center">
-            <Link href="/login?screen=signup" className="px-8 py-4 bg-gradient-to-r from-purple-600 to-cyan-600 text-white font-bold rounded-xl hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] transition-all flex items-center gap-2 w-full sm:w-auto justify-center">
+            <Link href="/login?screen=signup" className="px-8 py-4 bg-gradient-to-r from-emerald-600 to-amber-600 text-white font-bold rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all flex items-center gap-2 w-full sm:w-auto justify-center">
               Run Optimization <ArrowRight className="w-5 h-5" />
             </Link>
             <Link href="#demo" className="px-8 py-4 bg-white/5 border border-white/10 text-white font-semibold rounded-xl hover:bg-white/10 transition-all w-full sm:w-auto justify-center flex">
@@ -86,7 +86,7 @@ export default function LandingPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <FeatureCard
-              icon={<PieChart className="w-6 h-6 text-purple-400" />}
+              icon={<PieChart className="w-6 h-6 text-emerald-400" />}
               title="Smart Diversification"
               description="Automatically balances sector caps and strict holding limits (max 40) to prevent over-concentration."
             />
@@ -96,7 +96,7 @@ export default function LandingPage() {
               description="Prioritizes companies with sustainable payout ratios and history of growth, not just yield traps."
             />
             <FeatureCard
-              icon={<ShieldCheck className="w-6 h-6 text-cyan-400" />}
+              icon={<ShieldCheck className="w-6 h-6 text-amber-400" />}
               title="Safety Gates"
               description="Instantly flags dividend cuts, deteriorating fundamentals, or dangerous leverage ratios."
             />

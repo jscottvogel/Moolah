@@ -8,6 +8,10 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   title: "Moolah | Agentic Dividend Optimizer",
   description: "Generate production-grade dividend portfolios with AI. Optimized for income growth & tax efficiency.",
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  }
 };
 
 export default function RootLayout({
