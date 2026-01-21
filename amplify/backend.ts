@@ -27,12 +27,9 @@ const backend = defineBackend({
 const customStack = backend.createStack('CustomInfraStack');
 
 // 1. SQS Queue for Market Data Fetching
-const dlq = new sqs.Queue(customStack, 'MarketDLQ', {
-    queueName: 'market-data-fetch-dlq',
-});
+const dlq = new sqs.Queue(customStack, 'MarketDLQ', {});
 
 const marketQueue = new sqs.Queue(customStack, 'MarketDataQueue', {
-    queueName: 'market-data-fetch-queue',
     visibilityTimeout: Duration.seconds(90), // Must be > worker lambda timeout
     deadLetterQueue: {
         queue: dlq,
