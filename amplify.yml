@@ -4,13 +4,16 @@ backend:
     build:
       commands:
         - npm ci
-        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID --outputs-out-dir ui
+        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
 applications:
-  - frontend:
+  - appRoot: ui
+    frontend:
       phases:
         preBuild:
           commands:
             - npm ci
+            # This generates the client config directly in the ui directory
+            - npx ampx generate outputs --branch $AWS_BRANCH --app-id $AWS_APP_ID --out-dir .
         build:
           commands:
             - npm run build
@@ -22,4 +25,3 @@ applications:
         paths:
           - node_modules/**/*
           - .next/cache/**/*
-    appRoot: ui
