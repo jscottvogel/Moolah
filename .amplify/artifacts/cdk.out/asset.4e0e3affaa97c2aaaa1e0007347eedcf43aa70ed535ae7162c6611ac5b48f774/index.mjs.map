@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../node_modules/@aws-amplify/backend-function/src/lambda-shims/cjs_shim.ts", "../../../../amplify/functions/market-worker/handler.ts"],
+  "sourcesContent": ["import { createRequire } from 'node:module';\nimport path from 'node:path';\nimport url from 'node:url';\nglobal.require = createRequire(import.meta.url);\nglobal.__filename = url.fileURLToPath(import.meta.url);\nglobal.__dirname = path.dirname(__filename);\n", "import type { SQSHandler } from 'aws-lambda';\n\nexport const handler: SQSHandler = async (event) => {\n    console.log('Market Worker triggered', JSON.stringify(event));\n    for (const record of event.Records) {\n        console.log('Processing message', record.body);\n    }\n};\n"],
+  "mappings": ";AAAA,OAAS,iBAAAA,MAAqB,cAC9B,OAAOC,MAAU,YACjB,OAAOC,MAAS,WAChB,OAAO,QAAUF,EAAc,YAAY,GAAG,EAC9C,OAAO,WAAaE,EAAI,cAAc,YAAY,GAAG,EACrD,OAAO,UAAYD,EAAK,QAAQ,UAAU,ECHnC,IAAME,EAAsB,MAAOC,GAAU,CAChD,QAAQ,IAAI,0BAA2B,KAAK,UAAUA,CAAK,CAAC,EAC5D,QAAWC,KAAUD,EAAM,QACvB,QAAQ,IAAI,qBAAsBC,EAAO,IAAI,CAErD",
+  "names": ["createRequire", "path", "url", "handler", "event", "record"]
+}

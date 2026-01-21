@@ -1,0 +1,2179 @@
+{
+ "Parameters": {
+  "DynamoDBModelTableReadIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of read IOPS the table should support."
+  },
+  "DynamoDBModelTableWriteIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of write IOPS the table should support."
+  },
+  "DynamoDBBillingMode": {
+   "Type": "String",
+   "Default": "PAY_PER_REQUEST",
+   "AllowedValues": [
+    "PAY_PER_REQUEST",
+    "PROVISIONED"
+   ],
+   "Description": "Configure @model types to create DynamoDB tables with PAY_PER_REQUEST or PROVISIONED billing modes."
+  },
+  "DynamoDBEnablePointInTimeRecovery": {
+   "Type": "String",
+   "Default": "false",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Whether to enable Point in Time Recovery on the table."
+  },
+  "DynamoDBEnableServerSideEncryption": {
+   "Type": "String",
+   "Default": "true",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Enable server side encryption powered by KMS."
+  },
+  "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource9827E652Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerTableManagerC5F673FC5": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef": {
+   "Type": "String"
+  }
+ },
+ "Conditions": {
+  "HasEnvironmentParameter": {
+   "Fn::Not": [
+    {
+     "Fn::Equals": [
+      "NONE",
+      "NONE"
+     ]
+    }
+   ]
+  },
+  "ShouldUsePayPerRequestBilling": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBBillingMode"
+    },
+    "PAY_PER_REQUEST"
+   ]
+  },
+  "ShouldUsePointInTimeRecovery": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBEnablePointInTimeRecovery"
+    },
+    "true"
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "HoldingTable": {
+   "Type": "Custom::AmplifyDynamoDBTable",
+   "Properties": {
+    "ServiceToken": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource9827E652Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerTableManagerC5F673FC5"
+    },
+    "tableName": {
+     "Fn::Join": [
+      "",
+      [
+       "Holding-",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "attributeDefinitions": [
+     {
+      "attributeName": "id",
+      "attributeType": "S"
+     }
+    ],
+    "keySchema": [
+     {
+      "attributeName": "id",
+      "keyType": "HASH"
+     }
+    ],
+    "provisionedThroughput": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      {
+       "Ref": "AWS::NoValue"
+      },
+      {
+       "ReadCapacityUnits": {
+        "Ref": "DynamoDBModelTableReadIOPS"
+       },
+       "WriteCapacityUnits": {
+        "Ref": "DynamoDBModelTableWriteIOPS"
+       }
+      }
+     ]
+    },
+    "sseSpecification": {
+     "sseEnabled": false
+    },
+    "streamSpecification": {
+     "streamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "deletionProtectionEnabled": false,
+    "allowDestructiveGraphqlSchemaUpdates": true,
+    "replaceTableUponGsiUpdate": true,
+    "pointInTimeRecoverySpecification": {
+     "Fn::If": [
+      "ShouldUsePointInTimeRecovery",
+      {
+       "PointInTimeRecoveryEnabled": true
+      },
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    },
+    "billingMode": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      "PAY_PER_REQUEST",
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/HoldingTable/Default/Default"
+   }
+  },
+  "HoldingIAMRoleB632BDD4": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:GetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:UpdateItem",
+          "dynamodb:ConditionCheckItem",
+          "dynamodb:DescribeTable",
+          "dynamodb:GetRecords",
+          "dynamodb:GetShardIterator"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "Holding-",
+                {
+                 "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          },
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "Holding-",
+                {
+                 "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "DynamoDBAccess"
+     }
+    ],
+    "RoleName": {
+     "Fn::Join": [
+      "",
+      [
+       "HoldingIAMRolea01441-",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/HoldingIAMRole/Resource"
+   }
+  },
+  "HoldingDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DynamoDBConfig": {
+     "AwsRegion": {
+      "Ref": "AWS::Region"
+     },
+     "TableName": {
+      "Fn::Select": [
+       1,
+       {
+        "Fn::Split": [
+         "/",
+         {
+          "Fn::Select": [
+           5,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "HoldingTable",
+               "TableArn"
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "Name": "HoldingTable",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "HoldingIAMRoleB632BDD4",
+      "Arn"
+     ]
+    },
+    "Type": "AMAZON_DYNAMODB"
+   },
+   "DependsOn": [
+    "HoldingIAMRoleB632BDD4"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/HoldingDataSource/Resource"
+   }
+  },
+  "QuerygetHoldingauth0FunctionQuerygetHoldingauth0FunctionAppSyncFunctionF96FC049": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetHoldingauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b5e19309383f9e8964a3deca60bb43787960d705db799c21d87e0f0c32127523.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/QuerygetHoldingauth0Function/QuerygetHoldingauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetHoldingpostAuth0FunctionQuerygetHoldingpostAuth0FunctionAppSyncFunction1DCC0793": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetHoldingpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/QuerygetHoldingpostAuth0Function/QuerygetHoldingpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryGetHoldingDataResolverFnQueryGetHoldingDataResolverFnAppSyncFunctionF2CDAC24": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "HoldingDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryGetHoldingDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/08f4d557693d96c1a4efba0f9dc91330e4b19772fd5477c156468843e3d9cb5e.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4c6a2d29f01c6091bd1d9afe16e5849d456c96f17c3b215938c8067399532719.vtl"
+    }
+   },
+   "DependsOn": [
+    "HoldingDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/QueryGetHoldingDataResolverFn/QueryGetHoldingDataResolverFn.AppSyncFunction"
+   }
+  },
+  "GetHoldingResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "FieldName": "getHolding",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerygetHoldingauth0FunctionQuerygetHoldingauth0FunctionAppSyncFunctionF96FC049",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetHoldingpostAuth0FunctionQuerygetHoldingpostAuth0FunctionAppSyncFunction1DCC0793",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryGetHoldingDataResolverFnQueryGetHoldingDataResolverFnAppSyncFunctionF2CDAC24",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getHolding\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "HoldingTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/queryGetHoldingResolver"
+   }
+  },
+  "QuerylistHoldingsauth0FunctionQuerylistHoldingsauth0FunctionAppSyncFunctionC8AC74DD": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistHoldingsauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b5e19309383f9e8964a3deca60bb43787960d705db799c21d87e0f0c32127523.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/QuerylistHoldingsauth0Function/QuerylistHoldingsauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistHoldingspostAuth0FunctionQuerylistHoldingspostAuth0FunctionAppSyncFunctionA67B48C4": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistHoldingspostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/QuerylistHoldingspostAuth0Function/QuerylistHoldingspostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListHoldingsDataResolverFnQueryListHoldingsDataResolverFnAppSyncFunctionD1FB8AE8": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "HoldingDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListHoldingsDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9fcbe070ecd3023c5bf5b966fa9584757db9762eef123bad0820bd87591b2174.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cc01911d0269d4080ea57505dc445dfc315ef7ad85d3d9d4ea1357858bff451d.vtl"
+    }
+   },
+   "DependsOn": [
+    "HoldingDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/QueryListHoldingsDataResolverFn/QueryListHoldingsDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ListHoldingResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "FieldName": "listHoldings",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistHoldingsauth0FunctionQuerylistHoldingsauth0FunctionAppSyncFunctionC8AC74DD",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistHoldingspostAuth0FunctionQuerylistHoldingspostAuth0FunctionAppSyncFunctionA67B48C4",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListHoldingsDataResolverFnQueryListHoldingsDataResolverFnAppSyncFunctionD1FB8AE8",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listHoldings\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "HoldingTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/queryListHoldingsResolver"
+   }
+  },
+  "MutationcreateHoldinginit0FunctionMutationcreateHoldinginit0FunctionAppSyncFunctionDB660ABF": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateHoldinginit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a183ddccbd956316c38ef97177b8f088ef0826f62023323f5ae6053d348ccffc.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/MutationcreateHoldinginit0Function/MutationcreateHoldinginit0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateHoldingauth0FunctionMutationcreateHoldingauth0FunctionAppSyncFunctionA01C4FF6": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateHoldingauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/475e77d2fd6c1d0a58ced14feb5e2f373be1b969ba76d9944744724b7e8aabac.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/MutationcreateHoldingauth0Function/MutationcreateHoldingauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateHoldingpostAuth0FunctionMutationcreateHoldingpostAuth0FunctionAppSyncFunctionD9F8A30A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateHoldingpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/MutationcreateHoldingpostAuth0Function/MutationcreateHoldingpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationCreateHoldingDataResolverFnMutationCreateHoldingDataResolverFnAppSyncFunctionDFAB419C": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "HoldingDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationCreateHoldingDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d34463fc01bad618d23165df4f4fe2f415b76b37e58fc596110cf743b5cdc5dc.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "HoldingDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/MutationCreateHoldingDataResolverFn/MutationCreateHoldingDataResolverFn.AppSyncFunction"
+   }
+  },
+  "CreateHoldingResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "FieldName": "createHolding",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationcreateHoldinginit0FunctionMutationcreateHoldinginit0FunctionAppSyncFunctionDB660ABF",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateHoldingauth0FunctionMutationcreateHoldingauth0FunctionAppSyncFunctionA01C4FF6",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateHoldingpostAuth0FunctionMutationcreateHoldingpostAuth0FunctionAppSyncFunctionD9F8A30A",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationCreateHoldingDataResolverFnMutationCreateHoldingDataResolverFnAppSyncFunctionDFAB419C",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createHolding\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "HoldingTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/mutationCreateHoldingResolver"
+   }
+  },
+  "MutationupdateHoldinginit0FunctionMutationupdateHoldinginit0FunctionAppSyncFunction3FAF5A0B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateHoldinginit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/06db846fd14e6fc371f22b12b5545ba8e2dbfeda85d8c8d586c71c282166657b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/MutationupdateHoldinginit0Function/MutationupdateHoldinginit0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateHoldingauth0FunctionMutationupdateHoldingauth0FunctionAppSyncFunction987FBB53": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "HoldingDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateHoldingauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/40cb54e40f37d62c373e22a202bbb03fd02f3e09b887ecf45fd6e4a986730c3d.vtl"
+    }
+   },
+   "DependsOn": [
+    "HoldingDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/MutationupdateHoldingauth0Function/MutationupdateHoldingauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateHoldingpostAuth0FunctionMutationupdateHoldingpostAuth0FunctionAppSyncFunction92FC46FB": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateHoldingpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/MutationupdateHoldingpostAuth0Function/MutationupdateHoldingpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationUpdateHoldingDataResolverFnMutationUpdateHoldingDataResolverFnAppSyncFunction86598DEE": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "HoldingDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationUpdateHoldingDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/474bf0776ec2164a13191d1a0a9e057154931e4918fea5086f49850d02a5371b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "HoldingDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/MutationUpdateHoldingDataResolverFn/MutationUpdateHoldingDataResolverFn.AppSyncFunction"
+   }
+  },
+  "UpdateHoldingResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "FieldName": "updateHolding",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationupdateHoldinginit0FunctionMutationupdateHoldinginit0FunctionAppSyncFunction3FAF5A0B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateHoldingauth0FunctionMutationupdateHoldingauth0FunctionAppSyncFunction987FBB53",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateHoldingpostAuth0FunctionMutationupdateHoldingpostAuth0FunctionAppSyncFunction92FC46FB",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationUpdateHoldingDataResolverFnMutationUpdateHoldingDataResolverFnAppSyncFunction86598DEE",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updateHolding\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "HoldingTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/mutationUpdateHoldingResolver"
+   }
+  },
+  "MutationdeleteHoldingauth0FunctionMutationdeleteHoldingauth0FunctionAppSyncFunctionE3C39896": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "HoldingDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteHoldingauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6257bfd1ef2992bd01df135516c0df15c5ff692f426e0c71c93960be8f8c81df.vtl"
+    }
+   },
+   "DependsOn": [
+    "HoldingDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/MutationdeleteHoldingauth0Function/MutationdeleteHoldingauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeleteHoldingpostAuth0FunctionMutationdeleteHoldingpostAuth0FunctionAppSyncFunction9E57289B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteHoldingpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/MutationdeleteHoldingpostAuth0Function/MutationdeleteHoldingpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationDeleteHoldingDataResolverFnMutationDeleteHoldingDataResolverFnAppSyncFunction8976B399": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "HoldingDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationDeleteHoldingDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4f7907d1209a2c9953a0c053df402c634e359546d70c7cc5c2e8e21ea734880f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "HoldingDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/MutationDeleteHoldingDataResolverFn/MutationDeleteHoldingDataResolverFn.AppSyncFunction"
+   }
+  },
+  "DeleteHoldingResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "FieldName": "deleteHolding",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteHoldingauth0FunctionMutationdeleteHoldingauth0FunctionAppSyncFunctionE3C39896",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteHoldingpostAuth0FunctionMutationdeleteHoldingpostAuth0FunctionAppSyncFunction9E57289B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationDeleteHoldingDataResolverFnMutationDeleteHoldingDataResolverFnAppSyncFunction8976B399",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deleteHolding\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "HoldingTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/mutationDeleteHoldingResolver"
+   }
+  },
+  "SubscriptiononCreateHoldingauth0FunctionSubscriptiononCreateHoldingauth0FunctionAppSyncFunction77C85633": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateHoldingauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/ba02e7c1690152b12072e4f476fba2abbb138ea0b0aba433b0676ffcff949e08.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/SubscriptiononCreateHoldingauth0Function/SubscriptiononCreateHoldingauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateHoldingpostAuth0FunctionSubscriptiononCreateHoldingpostAuth0FunctionAppSyncFunctionE0543DF9": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateHoldingpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/SubscriptiononCreateHoldingpostAuth0Function/SubscriptiononCreateHoldingpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnCreateHoldingDataResolverFnSubscriptionOnCreateHoldingDataResolverFnAppSyncFunctionF6E641D6": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnCreateHoldingDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/SubscriptionOnCreateHoldingDataResolverFn/SubscriptionOnCreateHoldingDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateHoldingResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "FieldName": "onCreateHolding",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateHoldingauth0FunctionSubscriptiononCreateHoldingauth0FunctionAppSyncFunction77C85633",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateHoldingpostAuth0FunctionSubscriptiononCreateHoldingpostAuth0FunctionAppSyncFunctionE0543DF9",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnCreateHoldingDataResolverFnSubscriptionOnCreateHoldingDataResolverFnAppSyncFunctionF6E641D6",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreateHolding\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/subscriptionOnCreateHoldingResolver"
+   }
+  },
+  "SubscriptiononUpdateHoldingauth0FunctionSubscriptiononUpdateHoldingauth0FunctionAppSyncFunctionB7FBC288": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateHoldingauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/ba02e7c1690152b12072e4f476fba2abbb138ea0b0aba433b0676ffcff949e08.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/SubscriptiononUpdateHoldingauth0Function/SubscriptiononUpdateHoldingauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateHoldingpostAuth0FunctionSubscriptiononUpdateHoldingpostAuth0FunctionAppSyncFunction32570764": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateHoldingpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/SubscriptiononUpdateHoldingpostAuth0Function/SubscriptiononUpdateHoldingpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnUpdateHoldingDataResolverFnSubscriptionOnUpdateHoldingDataResolverFnAppSyncFunction04998829": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnUpdateHoldingDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/SubscriptionOnUpdateHoldingDataResolverFn/SubscriptionOnUpdateHoldingDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateHoldingResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "FieldName": "onUpdateHolding",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateHoldingauth0FunctionSubscriptiononUpdateHoldingauth0FunctionAppSyncFunctionB7FBC288",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateHoldingpostAuth0FunctionSubscriptiononUpdateHoldingpostAuth0FunctionAppSyncFunction32570764",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnUpdateHoldingDataResolverFnSubscriptionOnUpdateHoldingDataResolverFnAppSyncFunction04998829",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdateHolding\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/subscriptionOnUpdateHoldingResolver"
+   }
+  },
+  "SubscriptiononDeleteHoldingauth0FunctionSubscriptiononDeleteHoldingauth0FunctionAppSyncFunctionD019283B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteHoldingauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/ba02e7c1690152b12072e4f476fba2abbb138ea0b0aba433b0676ffcff949e08.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/SubscriptiononDeleteHoldingauth0Function/SubscriptiononDeleteHoldingauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteHoldingpostAuth0FunctionSubscriptiononDeleteHoldingpostAuth0FunctionAppSyncFunctionE6DE1E87": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteHoldingpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/SubscriptiononDeleteHoldingpostAuth0Function/SubscriptiononDeleteHoldingpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnDeleteHoldingDataResolverFnSubscriptionOnDeleteHoldingDataResolverFnAppSyncFunction1EB9E9CC": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnDeleteHoldingDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/SubscriptionOnDeleteHoldingDataResolverFn/SubscriptionOnDeleteHoldingDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteHoldingResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "FieldName": "onDeleteHolding",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteHoldingauth0FunctionSubscriptiononDeleteHoldingauth0FunctionAppSyncFunctionD019283B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteHoldingpostAuth0FunctionSubscriptiononDeleteHoldingpostAuth0FunctionAppSyncFunctionE6DE1E87",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnDeleteHoldingDataResolverFnSubscriptionOnDeleteHoldingDataResolverFnAppSyncFunction1EB9E9CC",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteHolding\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/subscriptionOnDeleteHoldingResolver"
+   }
+  },
+  "HoldingOwnerDataResolverFnHoldingOwnerDataResolverFnAppSyncFunction94E42C6A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "HoldingOwnerDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/041534e5fd916595f752318f161512d7c7f83b9f2cf32d0f0be381c12253ff68.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/064303962e481067b44300212516363b99aaee539b6bafaf756fdd83ff0b60f0.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/HoldingOwnerDataResolverFn/HoldingOwnerDataResolverFn.AppSyncFunction"
+   }
+  },
+  "HoldingownerResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+    },
+    "FieldName": "owner",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "HoldingOwnerDataResolverFnHoldingOwnerDataResolverFnAppSyncFunction94E42C6A",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Holding\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"owner\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Holding"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/holdingOwnerResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WO0W6DMAxFv6XvwROwfcAK2mM3wd4rkxiUEhIUO60qxL9P0KnTnq6PfGTfAoryDfID3jjTZsyc7WA5EQuZVlCPqur9F0acSChuUAVvrNjgVUMcUtSkqsQSpj/s/XPGG58Xc/c4BdPBN3aOjsikLE6wNME97OBoVTjPfPcalnrX665GwfZ58j99JK+3ElXwvR1SxL3R72d3pbgqLs/ITMLwvoXiEo5JjyRbgXVzP5PMSdS+bgUH64dV+WAILvxyLV4hzyE/XNjaLCYvdiJoHvkDg1rF6DYBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "GetAttHoldingTableStreamArn": {
+   "Description": "Your DynamoDB table StreamArn.",
+   "Value": {
+    "Fn::GetAtt": [
+     "HoldingTable",
+     "TableStreamArn"
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "GetAtt:HoldingTable:StreamArn"
+      ]
+     ]
+    }
+   }
+  },
+  "GetAttHoldingTableName": {
+   "Description": "Your DynamoDB table name.",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "Holding-",
+      {
+       "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+      },
+      "-NONE"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+       },
+       "GetAtt:HoldingTable:Name"
+      ]
+     ]
+    }
+   }
+  },
+  "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingHoldingTableD88A6051TableArn": {
+   "Value": {
+    "Fn::GetAtt": [
+     "HoldingTable",
+     "TableArn"
+    ]
+   }
+  }
+ }
+}

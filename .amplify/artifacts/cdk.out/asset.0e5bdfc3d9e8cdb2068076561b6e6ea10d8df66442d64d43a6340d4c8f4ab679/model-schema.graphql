@@ -1,0 +1,50 @@
+type UserSettings @model @auth(rules: [{allow: owner, ownerField: "owner"}])
+{
+  settingsJson: AWSJSON
+}
+
+type Holding @model @auth(rules: [{allow: owner, ownerField: "owner"}])
+{
+  ticker: String!
+  shares: Float!
+  costBasis: Float
+  purchaseDate: AWSDate
+}
+
+type Recommendation @model @auth(rules: [{allow: owner, ownerField: "owner"}])
+{
+  status: String
+  packetJson: AWSJSON
+  createdAt: AWSDateTime
+}
+
+type MarketPrice @model @auth(rules: [{allow: private, operations: [read]}])
+{
+  ticker: String! @index(sortKeyFields: ["date"], queryField: "listMarketPriceByTickerAndDate")
+  date: String!
+  close: Float
+  adjustedClose: Float
+  volume: Float
+}
+
+type MarketFundamental @model @auth(rules: [{allow: private, operations: [read]}])
+{
+  ticker: String! @index(sortKeyFields: ["asOf"], queryField: "listMarketFundamentalByTickerAndAsOf")
+  asOf: String
+  dataJson: AWSJSON
+}
+
+type MarketDividend @model @auth(rules: [{allow: private, operations: [read]}])
+{
+  ticker: String! @index(sortKeyFields: ["exDate"], queryField: "listMarketDividendByTickerAndExDate")
+  exDate: String!
+  amount: Float
+  paymentDate: String
+}
+
+type ProviderCache @model @auth(rules: [{allow: private, operations: [read]}])
+{
+  cacheKey: String! @primaryKey
+  responseJson: AWSJSON
+  ttl: Int
+}

@@ -72,7 +72,7 @@ const schema = a.schema({
         responseJson: a.json(),
         ttl: a.integer(), // Epoch timestamp for expiration
     })
-        .primaryKey(["cacheKey"])
+        .identifier(["cacheKey"])
         .authorization((allow) => [
             allow.authenticated().to(['read']), // Maybe only backend needs this? But keeping it accessible for debug is fine.
         ]),

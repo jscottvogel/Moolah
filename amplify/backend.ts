@@ -1,15 +1,15 @@
 import 'dotenv/config';
 import { defineBackend } from '@aws-amplify/backend';
-import { auth } from './auth/resource';
-import { data } from './data/resource';
-import { orchestrator } from './functions/orchestrator/resource';
-import { marketWorker } from './functions/market-worker/resource';
-import { marketScheduler } from './functions/market-scheduler/resource';
+import { auth } from './auth/resource.ts';
+import { data } from './data/resource.ts';
+import { orchestrator } from './functions/orchestrator/resource.ts';
+import { marketWorker } from './functions/market-worker/resource.ts';
+import { marketScheduler } from './functions/market-scheduler/resource.ts';
 import * as sqs from 'aws-cdk-lib/aws-sqs';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as targets from 'aws-cdk-lib/aws-events-targets';
 import { PolicyStatement } from 'aws-cdk-lib/aws-iam';
-import { Duration } from 'aws-cdk-lib';
+import { Duration, Stack } from 'aws-cdk-lib';
 
 /**
  * @see https://docs.amplify.aws/react/build-a-backend/
@@ -46,10 +46,11 @@ marketQueue.grantConsumeMessages(backend.marketWorker.resources.lambda);
 
 // Scheduler sends to queue
 marketQueue.grantSendMessages(backend.marketScheduler.resources.lambda);
-backend.marketScheduler.resources.lambda.addEnvironment('MARKET_QUEUE_URL', marketQueue.queueUrl);
+(backend.marketScheduler.resources.lambda as any).addEnvironment('MARKET_QUEUE_URL', marketQueue.queueUrl);
 
 // 3. EventBridge Schedule (Daily)
-const dailyRule = new events.Rule(customStack, 'DailyMarketRefreshRule', {
+const marketSchedulerStack = Stack.of(backend.marketScheduler.resources.lambda);
+const dailyRule = new events.Rule(marketSchedulerStack, 'DailyMarketRefreshRule', {
     schedule: events.Schedule.cron({ hour: '10', minute: '0' }), // Daily at 10:00 UTC
     targets: [new targets.LambdaFunction(backend.marketScheduler.resources.lambda)],
 });
