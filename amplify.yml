@@ -4,7 +4,8 @@ backend:
     build:
       commands:
         - npm ci
-        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+        # The backend phase runs at the root, so it puts the config in ui/amplify_outputs.json
+        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID --outputs-out-dir ui
 applications:
   - appRoot: ui
     frontend:
@@ -12,8 +13,6 @@ applications:
         preBuild:
           commands:
             - npm ci
-            # This generates the client config directly in the ui directory
-            - npx ampx generate outputs --branch $AWS_BRANCH --app-id $AWS_APP_ID --out-dir .
         build:
           commands:
             - npm run build
