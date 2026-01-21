@@ -10,16 +10,16 @@ applications:
       phases:
         preBuild:
           commands:
-            - cd ui && npm ci
+            - npm ci
         build:
           commands:
-            - cd ui && npm run build
+            - npm run build
       artifacts:
-        baseDirectory: ui/.next
+        baseDirectory: .next
         files:
           - '**/*'
       cache:
         paths:
-          - ui/node_modules/**/*
-          - ui/.next/cache/**/*
+          - node_modules/**/*
+          - .next/cache/**/*
     appRoot: ui
