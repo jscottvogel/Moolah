@@ -21,16 +21,42 @@ const mockChartData = [
 
 function DashboardHome() {
     const [totalValue, setTotalValue] = useState(0);
+    const [annualIncome, setAnnualIncome] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [isOptimizing, setIsOptimizing] = useState(false);
 
     useEffect(() => {
         const sub = client.models.Holding.observeQuery().subscribe({
-            next: ({ items }) => {
-                const total = items.reduce((acc, current) => {
-                    return acc + (current.shares * (current.costBasis || 0));
-                }, 0);
+            next: async ({ items }) => {
+                let total = 0;
+                let income = 0;
+
+                // For each holding, we try to find the latest fundamental data for yield
+                // and the latest price. Since these are in global tables, we fetch them.
+                for (const holding of items) {
+                    const currentVal = holding.shares * (holding.costBasis || 0);
+                    total += currentVal;
+
+                    try {
+                        // Fetch latest fundamental for this ticker
+                        const { data: fundamentals } = await client.models.MarketFundamental.listMarketFundamentalByTickerAndAsOf(
+                            { ticker: holding.ticker },
+                            { limit: 1, sortDirection: 'desc' }
+                        );
+
+                        if (fundamentals && fundamentals.length > 0) {
+                            const yieldPct = fundamentals[0].dividendYield || 0;
+                            // Estimated Income = Value * Yield
+                            // Note: Yield is usually a percentage (0.025 = 2.5%)
+                            income += currentVal * yieldPct;
+                        }
+                    } catch (e) {
+                        console.warn(`Could not fetch yield for ${holding.ticker}`, e);
+                    }
+                }
+
                 setTotalValue(total);
+                setAnnualIncome(income);
                 setIsLoading(false);
             },
         });
@@ -43,11 +69,14 @@ function DashboardHome() {
             const { data, errors } = await client.mutations.runOptimization({
                 constraintsJson: JSON.stringify({ targetYield: 0.04 })
             });
-            if (errors) throw errors;
-            alert("Optimization started! Check 'Recommendations' in a few moments.");
-        } catch (err) {
+            if (errors) {
+                console.error("Mutation errors:", errors);
+                throw new Error(errors[0].message);
+            }
+            alert("Optimization started! The AI agent is analyzing your portfolio.");
+        } catch (err: any) {
             console.error("Optimization failed:", err);
-            alert("Failed to start optimization.");
+            alert(`Failed to start optimization: ${err.message || 'Unknown error'}`);
         } finally {
             setIsOptimizing(false);
         }
@@ -62,12 +91,18 @@ function DashboardHome() {
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <StatsCard
-                    title="Total Value"
+                    title="Total Invested"
                     value={isLoading ? "..." : `$${totalValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                     icon={<Wallet className="h-4 w-4" />}
-                    trend="+0.0%"
+                    trend="Cost Basis"
                 />
-                <StatsCard title="Est. Annual Income" value="$0.00" icon={<DollarSign className="h-4 w-4" />} trend="0.00% YOC" color="text-emerald-400" />
+                <StatsCard
+                    title="Est. Annual Income"
+                    value={isLoading ? "..." : `$${annualIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                    icon={<DollarSign className="h-4 w-4" />}
+                    trend={`${totalValue > 0 ? ((annualIncome / totalValue) * 100).toFixed(2) : '0.00'}% Yield`}
+                    color="text-emerald-400"
+                />
                 <StatsCard title="VIG Benchmark" value="+12.4%" icon={<TrendingUp className="h-4 w-4" />} trend="1 Year Return" color="text-cyan-400" />
                 <StatsCard title="Next Rebalance" value="Feb 1" icon={<Calendar className="h-4 w-4" />} trend="Scheduled" />
             </div>

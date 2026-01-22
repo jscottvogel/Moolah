@@ -1,5 +1,13 @@
-import type { Handler } from 'aws-lambda';
+import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedrock-runtime";
+import { generateClient } from 'aws-amplify/data';
+import type { Schema } from '../../data/resource';
 import { z } from 'zod';
+
+const client = generateClient<Schema>({
+    authMode: 'iam',
+});
+
+const bedrock = new BedrockRuntimeClient({ region: process.env.AWS_REGION || 'us-east-1' });
 
 // Interfaces
 interface PortfolioItem {
@@ -24,96 +32,107 @@ interface RecommendationPacket {
     };
 }
 
-// Zod Schema for Explanation
-const ExplanationSchema = z.object({
-    summary: z.string().min(50),
-    bullets: z.array(z.string()).min(3),
-    whatWouldChangeThis: z.array(z.string()),
-    risksToWatch: z.array(z.string()),
-    disclaimers: z.array(z.string()),
+// Zod Schema for AI Output
+const AIRecommendationSchema = z.object({
+    targetPortfolio: z.array(z.object({
+        ticker: z.string(),
+        weight: z.number(),
+        reason: z.string()
+    })),
+    explanation: z.object({
+        summary: z.string(),
+        bullets: z.array(z.string()),
+        risksToWatch: z.array(z.string())
+    })
 });
 
-export const handler: Handler = async (event, context) => {
-    console.log('Orchestrator triggered', JSON.stringify(event));
+export const handler = async (event: any) => {
+    console.log('Orchestrator Brain Triggered', JSON.stringify(event));
 
-    // 1. Context Loading (Simulated)
-    const userSettings = { maxHoldings: 40 };
-
-    // 2. Optimization Strategy (Simulated for MVP)
-    const packet: RecommendationPacket = {
-        asOf: new Date().toISOString().split('T')[0],
-        benchmark: "VIG",
-        targetPortfolio: [
-            { ticker: "MSFT", weight: 0.05, score: 92 },
-            { ticker: "JNJ", weight: 0.04, score: 88 },
-        ],
-        compliance: [],
-        metrics: { yield: 0.028, beta: 0.85 }
-    };
-
-    // 3. Generate Explanation check
-    let explanation = null;
     try {
-        explanation = await generateSafeExplanation(packet);
-    } catch (e) {
-        console.error("LLM Generation Failed, using fallback", e);
-        explanation = getFallbackExplanation(packet);
+        // 1. Fetch User Data
+        // Since we are called via GraphQL, context contains identity
+        const owner = event.identity?.username || 'system';
+
+        // Fetch holdings for this user
+        // Note: In custom mutation, we might need to handle owner filtering manually or via AppSync identity
+        const { data: holdings } = await client.models.Holding.list();
+
+        // 2. Fetch Market Context (Global)
+        const { data: fundamentals } = await client.models.MarketFundamental.list({ limit: 50 });
+
+        // 3. Construct AI Prompt
+        const prompt = `
+            You are the Moolah Agentic Portfolio Optimizer. 
+            User Portfolio: ${JSON.stringify(holdings)}
+            Market Intelligence: ${JSON.stringify(fundamentals)}
+            
+            Goal: Suggest a rebalanced portfolio (max 40 holdings) optimized for:
+            1. Dividend Safety (Payout < 80%)
+            2. Low Leverage (Debt/Equity < 2.0)
+            3. Yield vs Benchmark (VIG)
+            
+            Return ONLY a JSON object matching this schema:
+            {
+              "targetPortfolio": [{"ticker": "STRING", "weight": NUMBER, "reason": "STRING"}],
+              "explanation": {
+                "summary": "STRING",
+                "bullets": ["STRING"],
+                "risksToWatch": ["STRING"]
+              }
+            }
+        `;
+
+        // 4. Invoke Bedrock (Claude 3 Haiku for speed/cost)
+        const bedrockResponse = await bedrock.send(new InvokeModelCommand({
+            modelId: "anthropic.claude-3-haiku-20240307-v1:0",
+            contentType: "application/json",
+            accept: "application/json",
+            body: JSON.stringify({
+                anthropic_version: "bedrock-2023-05-31",
+                max_tokens: 1024,
+                messages: [{ role: "user", content: prompt }]
+            })
+        }));
+
+        const resultBody = JSON.parse(new TextDecoder().decode(bedrockResponse.body));
+        const aiOutputText = resultBody.content[0].text;
+
+        // Simple extraction in case AI adds preamble
+        const jsonMatch = aiOutputText.match(/\{[\s\S]*\}/);
+        const validatedOutput = AIRecommendationSchema.parse(JSON.parse(jsonMatch ? jsonMatch[0] : aiOutputText));
+
+        // 5. Store Recommendation (Phase 4 Logic)
+        const packet: RecommendationPacket = {
+            asOf: new Date().toISOString().split('T')[0],
+            benchmark: "VIG",
+            targetPortfolio: validatedOutput.targetPortfolio.map(p => ({
+                ticker: p.ticker,
+                weight: p.weight,
+                score: 85 // Mock score for now
+            })),
+            compliance: [],
+            metrics: { yield: 0.032, beta: 0.9 }
+        };
+
+        const rec = await client.models.Recommendation.create({
+            status: 'COMPLETED',
+            packetJson: JSON.stringify(packet),
+            explanationJson: JSON.stringify(validatedOutput.explanation)
+        });
+
+        return JSON.stringify({
+            status: 'SUCCESS',
+            id: rec.data?.id,
+            packet,
+            explanation: validatedOutput.explanation
+        });
+
+    } catch (err) {
+        console.error("Agentic Optimization Failed:", err);
+        return JSON.stringify({
+            status: 'FAILED',
+            error: err instanceof Error ? err.message : 'Unknown error'
+        });
     }
-
-    // 4. Final Return (must be string for AppSync)
-    const result = {
-        packet,
-        explanation
-    };
-
-    return JSON.stringify(result);
 };
-
-async function generateSafeExplanation(packet: RecommendationPacket) {
-    // In real impl: Invoke Bedrock here with prompt
-    // const bedrockResponse = await bedrock.invokeModel(...)
-
-    // Clean & Parse JSON
-    const rawJson = `
-    {
-      "summary": "The portfolio is positioned for quality growth with a defensive tilt.",
-      "bullets": ["Overweight Healthcare", "Added MSFT for dividend growth"],
-      "whatWouldChangeThis": ["Interest rate hikes"],
-      "risksToWatch": ["Tech valuation compression"],
-      "disclaimers": ["Not financial advice", "No guarantee of outperformance", "Human approval required"]
-    }
-  `;
-
-    const parsed = JSON.parse(rawJson);
-
-    // Zod Validation
-    const validated = ExplanationSchema.parse(parsed);
-
-    // Hallucination Guard: Validating Tickers
-    const packetTickers = new Set(packet.targetPortfolio.map(p => p.ticker));
-    const textContent = JSON.stringify(validated);
-
-    // Heuristic: Extract all ALL_CAPS words that look like tickers (2-5 chars)
-    const potentialTickers = textContent.match(/\b[A-Z]{2,5}\b/g) || [];
-    const knownKeywords = ["VIG", "ETF", "USA", "USD", "GDP", "CPI", "CAGR", "EPS", "FCF", "ROIC", "LLC", "INC"];
-
-    for (const t of potentialTickers) {
-        if (knownKeywords.includes(t)) continue;
-        // If it looks like a ticker but isn't in packet, flag it
-        if (!packetTickers.has(t)) {
-            console.warn(`Potential hallucinated ticker detected: ${t}`);
-            // In strict mode, throw error.
-            // throw new Error("Hallucination detected");
-        }
-    }
-
-    return validated;
-}
-
-function getFallbackExplanation(packet: RecommendationPacket) {
-    return {
-        summary: "Standard recommendation packet generated based on configured constraints.",
-        bullets: ["Review target weights in table."],
-        disclaimers: ["Not financial advice", "No guarantee of outperformance", "Human approval required"]
-    };
-}
