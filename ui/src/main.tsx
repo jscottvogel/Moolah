@@ -1,8 +1,4 @@
-import { Amplify } from 'aws-amplify';
-import config from '../amplify_outputs.json';
-
-Amplify.configure(config);
-
+import './amplify-config'; // MUST BE FIRST
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

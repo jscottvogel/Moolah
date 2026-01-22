@@ -1,0 +1,5 @@
+import { Amplify } from 'aws-amplify';
+import config from '../amplify_outputs.json';
+
+console.log("[AMPLIFY] Configuring with data provider:", config.data ? "YES" : "NO");
+Amplify.configure(config);

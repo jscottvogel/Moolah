@@ -1,13 +1,11 @@
-import { useState, useMemo } from 'react';
-import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '../../../amplify/data/resource';
+import { useState } from 'react';
+import { client } from '../client';
 
 /**
  * Hook for managing cloud-side orchestration actions (Sync, Optimize).
  * Uses direct GraphQL calls to ensure reliability across schema updates.
  */
 export function useCloudActions() {
-    const client = useMemo(() => generateClient<Schema>(), []);
     const [isSyncing, setIsSyncing] = useState(false);
     const [isOptimizing, setIsOptimizing] = useState(false);
 

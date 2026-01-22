@@ -1,12 +1,10 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Button } from '@/components/ui';
 import { TrendingUp, Info, PlusCircle, Loader2, Sparkles } from 'lucide-react';
-import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '../../../amplify/data/resource';
+import { client } from '../client';
 import { useNavigate } from 'react-router-dom';
 
 export default function RecommendationsPage() {
-    const client = useMemo(() => generateClient<Schema>(), []);
     const [suggestions, setSuggestions] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isActionLoading, setIsActionLoading] = useState<string | null>(null);
@@ -37,7 +35,7 @@ export default function RecommendationsPage() {
         };
 
         fetchSuggestions();
-    }, [client]);
+    }, []);
 
     const handleAddToHoldings = async (stock: any) => {
         const sharesStr = window.prompt(`How many shares of ${stock.symbol} would you like to add?`, "10");
