@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Card, CardHeader, CardTitle, CardContent, Button } from '@/components/ui';
-import { Search, TrendingUp, Info, ShoppingCart, Loader2, Sparkles, AlertCircle } from 'lucide-react';
+import { Card, Button } from '@/components/ui';
+import { TrendingUp, Info, PlusCircle, Loader2, Sparkles } from 'lucide-react';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../../amplify/data/resource';
+import { useNavigate } from 'react-router-dom';
 
 const client = generateClient<Schema>();
 
 export default function RecommendationsPage() {
     const [suggestions, setSuggestions] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isActionLoading, setIsActionLoading] = useState<string | null>(null);
+    const navigate = useNavigate();
 
-    // In a production app, these would come from the AI Orchestrator's Recommendation output
-    // For now, we fetch from the MarketFundamental and MarketPrice tables
     useEffect(() => {
         const fetchSuggestions = async () => {
             setIsLoading(true);
@@ -38,6 +39,35 @@ export default function RecommendationsPage() {
 
         fetchSuggestions();
     }, []);
+
+    const handleAddToHoldings = async (stock: any) => {
+        const sharesStr = window.prompt(`How many shares of ${stock.symbol} would you like to add?`, "10");
+        const shares = parseFloat(sharesStr || "0");
+        if (isNaN(shares) || shares <= 0) return;
+
+        const costStr = window.prompt(`What is your cost basis per share for ${stock.symbol}?`, stock.price.toString());
+        const costBasis = parseFloat(costStr || "0");
+        if (isNaN(costBasis)) return;
+
+        setIsActionLoading(stock.symbol);
+        try {
+            await client.models.Holding.create({
+                ticker: stock.symbol,
+                shares,
+                costBasis,
+                purchaseDate: new Date().toISOString().split('T')[0]
+            });
+
+            if (window.confirm(`${stock.symbol} added to holdings! View your portfolio now?`)) {
+                navigate('/dashboard/holdings');
+            }
+        } catch (err) {
+            console.error("Failed to add holding:", err);
+            alert("Error adding holding to database.");
+        } finally {
+            setIsActionLoading(null);
+        }
+    };
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -93,8 +123,19 @@ export default function RecommendationsPage() {
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 text-right">
-                                                <Button size="sm" variant="ghost" className="text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 gap-2">
-                                                    <ShoppingCart className="w-3 h-3" /> Buy
+                                                <Button
+                                                    onClick={() => handleAddToHoldings(stock)}
+                                                    disabled={isActionLoading === stock.symbol}
+                                                    size="sm"
+                                                    variant="ghost"
+                                                    className="text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 gap-2"
+                                                >
+                                                    {isActionLoading === stock.symbol ? (
+                                                        <Loader2 className="w-3 h-3 animate-spin" />
+                                                    ) : (
+                                                        <PlusCircle className="w-3 h-3" />
+                                                    )}
+                                                    Add to Holdings
                                                 </Button>
                                             </td>
                                         </tr>
