@@ -11,12 +11,10 @@ applications:
       phases:
         preBuild:
           commands:
-            # In a monorepo, dependencies must be installed at the root to ensure a singleton React instance.
-            - cd .. && npm install
+            - npm install
         build:
           commands:
-            # npx will search up to the root node_modules to find the Next.js binary.
-            - npx next build
+            - npm run build
       artifacts:
         baseDirectory: .next
         files:
@@ -24,4 +22,4 @@ applications:
       cache:
         paths:
           - .next/cache/**/*
-          - ../node_modules/**/*
+          - node_modules/**/*
