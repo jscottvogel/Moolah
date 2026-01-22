@@ -3,7 +3,6 @@ backend:
   phases:
     build:
       commands:
-        # Install everything for the whole workspace at the root
         - npm install
         - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID --outputs-out-dir ui
 applications:
@@ -12,11 +11,12 @@ applications:
       phases:
         preBuild:
           commands:
-            # DO NOT run npm install here, it breaks React Hooks by double-loading React in workspaces
-            - echo "Skipping local install, relying on root install"
+            # We already installed everything at the root
+            - echo "Using workspace dependencies..."
         build:
           commands:
-            - npm run build
+            # Run the build from the project root to ensure Next.js binary is found in workspaces
+            - cd .. && npm run build -w ui
       artifacts:
         baseDirectory: .next
         files:
