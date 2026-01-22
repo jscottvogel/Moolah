@@ -83,13 +83,14 @@ function DashboardHome() {
         if (holdingsTickers.length === 0) return;
         setIsSyncing(true);
         try {
-            const mutations = client.mutations as any;
-            if (mutations && typeof mutations.syncMarketData === 'function') {
+            const mutations: any = client.mutations;
+            if (mutations?.syncMarketData) {
                 await mutations.syncMarketData({ tickers: holdingsTickers });
                 setTimeout(() => calculateMetrics(currentHoldings), 5000);
                 alert("Market sync started. Prices and yields will update shortly.");
             } else {
-                alert("The Sync feature is still being provisioned. Refresh your browser in a moment.");
+                console.warn("syncMarketData mutation not found. Available:", Object.keys(mutations || {}));
+                alert("The Sync feature is still being wired up in the cloud. Please refresh your browser (Cmd/Ctrl + R).");
             }
         } catch (err: any) {
             console.error("Sync failed:", err);
@@ -102,10 +103,12 @@ function DashboardHome() {
     const handleRunOptimization = async () => {
         setIsOptimizing(true);
         try {
-            const mutations = client.mutations as any;
-            if (!mutations || typeof mutations.runOptimization !== 'function') {
-                throw new Error("AI Optimizer is initializing in the cloud. Refresh in a moment.");
+            const mutations: any = client.mutations;
+            if (!mutations?.runOptimization) {
+                console.error("AI mutation missing. Available mutations:", Object.keys(mutations || {}));
+                throw new Error("The AI Optimizer is being deployed. Please refresh your browser (Cmd/Ctrl + R) to link the new engine.");
             }
+
             const { data: rawResult, errors } = await mutations.runOptimization({
                 constraintsJson: JSON.stringify({ targetYield: 0.04 })
             });
@@ -115,7 +118,7 @@ function DashboardHome() {
             alert("Optimization started! The AI agent is analyzing your portfolio.");
         } catch (err: any) {
             console.error("Optimization failed:", err);
-            alert(`Failed: ${err.message}`);
+            alert(`Optimization Detail: ${err.message}`);
         } finally {
             setIsOptimizing(false);
         }
