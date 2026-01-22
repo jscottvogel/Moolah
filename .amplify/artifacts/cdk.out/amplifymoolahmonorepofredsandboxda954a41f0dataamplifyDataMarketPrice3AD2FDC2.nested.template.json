@@ -655,7 +655,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "QuerygetMarketPriceauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6677b1986afebbf1f4026c57099890e32ab4e450e422c5e3c930b085a73b6b60.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/62baca1d1fe8e93eb394d958513556ffc536c35fde7d8fba84f4af8dd76705da.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -835,7 +835,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "QuerylistMarketPricesauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6677b1986afebbf1f4026c57099890e32ab4e450e422c5e3c930b085a73b6b60.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/62baca1d1fe8e93eb394d958513556ffc536c35fde7d8fba84f4af8dd76705da.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1627,7 +1627,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "SubscriptiononCreateMarketPriceauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4843bc77043eb1b2460e9b1e3df9218ebee2b5c86adc9e9f789a60b4f3a02049.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/616d9084d37a5192e6c798ff5243c52f88c11adb3c7a2424c4a4948cbfa78618.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1774,7 +1774,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "SubscriptiononUpdateMarketPriceauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4843bc77043eb1b2460e9b1e3df9218ebee2b5c86adc9e9f789a60b4f3a02049.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/616d9084d37a5192e6c798ff5243c52f88c11adb3c7a2424c4a4948cbfa78618.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -1921,7 +1921,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "SubscriptiononDeleteMarketPriceauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4843bc77043eb1b2460e9b1e3df9218ebee2b5c86adc9e9f789a60b4f3a02049.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/616d9084d37a5192e6c798ff5243c52f88c11adb3c7a2424c4a4948cbfa78618.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -2068,7 +2068,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "QuerylistMarketPriceByTickerAndDateauth0Function",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6677b1986afebbf1f4026c57099890e32ab4e450e422c5e3c930b085a73b6b60.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/62baca1d1fe8e93eb394d958513556ffc536c35fde7d8fba84f4af8dd76705da.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },

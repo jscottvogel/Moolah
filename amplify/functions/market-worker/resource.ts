@@ -5,4 +5,5 @@ export const marketWorker = defineFunction({
     entry: './handler.ts',
     timeoutSeconds: 60, // SQS usually 30-60s batches, but single item processing is fast.
     memoryMB: 512,
+    resourceGroupName: 'data',
 });

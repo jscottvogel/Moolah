@@ -4,7 +4,6 @@
   "MarketDLQA4756C59": {
    "Type": "AWS::SQS::Queue",
    "Properties": {
-    "QueueName": "market-data-fetch-dlq",
     "Tags": [
      {
       "Key": "amplify:deployment-type",
@@ -25,7 +24,6 @@
   "MarketDataQueueC73F65FA": {
    "Type": "AWS::SQS::Queue",
    "Properties": {
-    "QueueName": "market-data-fetch-queue",
     "RedrivePolicy": {
      "deadLetterTargetArn": {
       "Fn::GetAtt": [

@@ -5,4 +5,5 @@ export const orchestrator = defineFunction({
     entry: './handler.ts',
     timeoutSeconds: 300,
     memoryMB: 1024,
+    resourceGroupName: 'data',
 });

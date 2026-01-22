@@ -22,7 +22,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/8ec79fe71c6bc1ade1a1d5b40c54455b483e2b7a496d9edd893f3190d4fd9cae.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/74790c5c3a9c56b5612ffb8a3ceab880d8018d497005b8b2f1fec88e03737872.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -273,6 +273,42 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "groups"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/orchestrator-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "orchestratorlambdaServiceRoleAB33D811"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/orchestrator-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "orchestratorlambdaServiceRoleDefaultPolicy6701290A"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/orchestrator-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "orchestratorlambda11E59449"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/market-worker-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "marketworkerlambdaServiceRole5D4A0277"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/market-worker-lambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "marketworkerlambdaServiceRoleDefaultPolicy1E3D6081"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/market-worker-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "marketworkerlambdaBD44AF6C"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/GraphQLAPI/Resource": [
@@ -873,6 +909,12 @@
             "data": "CDKMetadataAvailable"
           }
         ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/UserSettings/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsUserSettingsTable3B5CC852TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsUserSettingsTable3B5CC852TableArn"
+          }
+        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/UserSettings/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource9827E652Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventFE5A638CArn": [
           {
             "type": "aws:cdk:logicalId",
@@ -907,12 +949,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/UserSettings/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsUserSettingsTable3B5CC852TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsUserSettingsTable3B5CC852TableArn"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/UserSettings.NestedStack/UserSettings.NestedStackResource": [
@@ -1407,6 +1443,12 @@
             "data": "CDKMetadataAvailable"
           }
         ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingHoldingTableD88A6051TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingHoldingTableD88A6051TableArn"
+          }
+        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource9827E652Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventFE5A638CArn": [
           {
             "type": "aws:cdk:logicalId",
@@ -1441,12 +1483,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingHoldingTableD88A6051TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingHoldingTableD88A6051TableArn"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Holding.NestedStack/Holding.NestedStackResource": [
@@ -1941,6 +1977,12 @@
             "data": "CDKMetadataAvailable"
           }
         ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Recommendation/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationRecommendationTableA449BAE7TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationRecommendationTableA449BAE7TableArn"
+          }
+        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Recommendation/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource9827E652Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventFE5A638CArn": [
           {
             "type": "aws:cdk:logicalId",
@@ -1977,16 +2019,544 @@
             "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
           }
         ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Recommendation/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationRecommendationTableA449BAE7TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationRecommendationTableA449BAE7TableArn"
-          }
-        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/Recommendation.NestedStack/Recommendation.NestedStackResource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "amplifyDataRecommendationNestedStackRecommendationNestedStackResource4975574A"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/AuditLogTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AuditLog"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/AuditLogTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuditLogTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AuditLog"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/CustomTableAuditLogTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AuditLog"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/GetAttAuditLogTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttAuditLogTableStreamArn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/GetAttAuditLogTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttAuditLogTableName"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/AuditLogIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AuditLogIAMRole"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/AuditLogIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuditLogIAMRole12A5D424"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AuditLogIAMRole"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/AuditLogDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AuditLogTable"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/AuditLogDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuditLogDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AuditLogTable"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/QuerygetAuditLogauth0Function/QuerygetAuditLogauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetAuditLogauth0FunctionQuerygetAuditLogauth0FunctionAppSyncFunctionBD9215E5"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetAuditLogauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/QuerygetAuditLogpostAuth0Function/QuerygetAuditLogpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetAuditLogpostAuth0FunctionQuerygetAuditLogpostAuth0FunctionAppSyncFunctionACCEC229"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetAuditLogpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/QueryGetAuditLogDataResolverFn/QueryGetAuditLogDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetAuditLogDataResolverFnQueryGetAuditLogDataResolverFnAppSyncFunction79ED1103"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetAuditLogDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/queryGetAuditLogResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAuditLogResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getAuditLog"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/QuerylistAuditLogsauth0Function/QuerylistAuditLogsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistAuditLogsauth0FunctionQuerylistAuditLogsauth0FunctionAppSyncFunction10A90E9B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistAuditLogsauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/QuerylistAuditLogspostAuth0Function/QuerylistAuditLogspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistAuditLogspostAuth0FunctionQuerylistAuditLogspostAuth0FunctionAppSyncFunction3510CFA8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistAuditLogspostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/QueryListAuditLogsDataResolverFn/QueryListAuditLogsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListAuditLogsDataResolverFnQueryListAuditLogsDataResolverFnAppSyncFunctionDD652B7A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListAuditLogsDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/queryListAuditLogsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListAuditLogResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listAuditLogs"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/MutationcreateAuditLoginit0Function/MutationcreateAuditLoginit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateAuditLoginit0FunctionMutationcreateAuditLoginit0FunctionAppSyncFunction48A8B36E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateAuditLoginit0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/MutationcreateAuditLogauth0Function/MutationcreateAuditLogauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateAuditLogauth0FunctionMutationcreateAuditLogauth0FunctionAppSyncFunction4D8A2577"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateAuditLogauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/MutationcreateAuditLogpostAuth0Function/MutationcreateAuditLogpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateAuditLogpostAuth0FunctionMutationcreateAuditLogpostAuth0FunctionAppSyncFunctionDDBC350C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateAuditLogpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/MutationCreateAuditLogDataResolverFn/MutationCreateAuditLogDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateAuditLogDataResolverFnMutationCreateAuditLogDataResolverFnAppSyncFunction9475B46B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateAuditLogDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/mutationCreateAuditLogResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateAuditLogResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createAuditLog"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/MutationupdateAuditLoginit0Function/MutationupdateAuditLoginit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateAuditLoginit0FunctionMutationupdateAuditLoginit0FunctionAppSyncFunctionC1085313"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateAuditLoginit0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/MutationupdateAuditLogauth0Function/MutationupdateAuditLogauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateAuditLogauth0FunctionMutationupdateAuditLogauth0FunctionAppSyncFunction9C4FD0B8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateAuditLogauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/MutationupdateAuditLogpostAuth0Function/MutationupdateAuditLogpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateAuditLogpostAuth0FunctionMutationupdateAuditLogpostAuth0FunctionAppSyncFunction4172F4C3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateAuditLogpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/MutationUpdateAuditLogDataResolverFn/MutationUpdateAuditLogDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateAuditLogDataResolverFnMutationUpdateAuditLogDataResolverFnAppSyncFunction290E3DD8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateAuditLogDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/mutationUpdateAuditLogResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateAuditLogResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateAuditLog"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/MutationdeleteAuditLogauth0Function/MutationdeleteAuditLogauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteAuditLogauth0FunctionMutationdeleteAuditLogauth0FunctionAppSyncFunction5F203FA3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteAuditLogauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/MutationdeleteAuditLogpostAuth0Function/MutationdeleteAuditLogpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteAuditLogpostAuth0FunctionMutationdeleteAuditLogpostAuth0FunctionAppSyncFunction86792942"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteAuditLogpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/MutationDeleteAuditLogDataResolverFn/MutationDeleteAuditLogDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteAuditLogDataResolverFnMutationDeleteAuditLogDataResolverFnAppSyncFunction9927C986"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteAuditLogDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/mutationDeleteAuditLogResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteAuditLogResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteAuditLog"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/SubscriptiononCreateAuditLogauth0Function/SubscriptiononCreateAuditLogauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateAuditLogauth0FunctionSubscriptiononCreateAuditLogauth0FunctionAppSyncFunction0C0AD56E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateAuditLogauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/SubscriptiononCreateAuditLogpostAuth0Function/SubscriptiononCreateAuditLogpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateAuditLogpostAuth0FunctionSubscriptiononCreateAuditLogpostAuth0FunctionAppSyncFunctionCB0DEDE2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateAuditLogpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/SubscriptionOnCreateAuditLogDataResolverFn/SubscriptionOnCreateAuditLogDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateAuditLogDataResolverFnSubscriptionOnCreateAuditLogDataResolverFnAppSyncFunction333E5FE9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateAuditLogDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/subscriptionOnCreateAuditLogResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateAuditLogResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateAuditLog"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/SubscriptiononUpdateAuditLogauth0Function/SubscriptiononUpdateAuditLogauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateAuditLogauth0FunctionSubscriptiononUpdateAuditLogauth0FunctionAppSyncFunction8E79FFE5"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateAuditLogauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/SubscriptiononUpdateAuditLogpostAuth0Function/SubscriptiononUpdateAuditLogpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateAuditLogpostAuth0FunctionSubscriptiononUpdateAuditLogpostAuth0FunctionAppSyncFunction80099035"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateAuditLogpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/SubscriptionOnUpdateAuditLogDataResolverFn/SubscriptionOnUpdateAuditLogDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateAuditLogDataResolverFnSubscriptionOnUpdateAuditLogDataResolverFnAppSyncFunction29F4F623"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateAuditLogDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/subscriptionOnUpdateAuditLogResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateAuditLogResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateAuditLog"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/SubscriptiononDeleteAuditLogauth0Function/SubscriptiononDeleteAuditLogauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteAuditLogauth0FunctionSubscriptiononDeleteAuditLogauth0FunctionAppSyncFunction604A8318"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteAuditLogauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/SubscriptiononDeleteAuditLogpostAuth0Function/SubscriptiononDeleteAuditLogpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteAuditLogpostAuth0FunctionSubscriptiononDeleteAuditLogpostAuth0FunctionAppSyncFunction003B9574"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteAuditLogpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/SubscriptionOnDeleteAuditLogDataResolverFn/SubscriptionOnDeleteAuditLogDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteAuditLogDataResolverFnSubscriptionOnDeleteAuditLogDataResolverFnAppSyncFunctionFFFB09E4"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteAuditLogDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/subscriptionOnDeleteAuditLogResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteAuditLogResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteAuditLog"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/AuditLogOwnerDataResolverFn/AuditLogOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuditLogOwnerDataResolverFnAuditLogOwnerDataResolverFnAppSyncFunction68CF6A83"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AuditLogOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/auditLogOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AuditLogownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "AuditLog.owner"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogAuditLogTableDB115562TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogAuditLogTableDB115562TableArn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource9827E652Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventFE5A638CArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource9827E652Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerTableManagerC5F673FC5"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/reference-to-amplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputs.amplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/reference-to-amplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputs.amplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog/reference-to-amplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputs.amplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuditLog.NestedStack/AuditLog.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAuditLogNestedStackAuditLogNestedStackResourceF5A0647C"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketPrice/DynamoDBModelTableReadIOPS": [
@@ -2495,6 +3065,12 @@
             "data": "CDKMetadataAvailable"
           }
         ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketPrice/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceMarketPriceTable3C45D6E8TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceMarketPriceTable3C45D6E8TableArn"
+          }
+        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketPrice/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource9827E652Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventFE5A638CArn": [
           {
             "type": "aws:cdk:logicalId",
@@ -2529,12 +3105,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketPrice/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceMarketPriceTable3C45D6E8TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceMarketPriceTable3C45D6E8TableArn"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketPrice.NestedStack/MarketPrice.NestedStackResource": [
@@ -3049,6 +3619,12 @@
             "data": "CDKMetadataAvailable"
           }
         ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketFundamental/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalMarketFundamentalTableE0E6A8C5TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalMarketFundamentalTableE0E6A8C5TableArn"
+          }
+        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketFundamental/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource9827E652Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventFE5A638CArn": [
           {
             "type": "aws:cdk:logicalId",
@@ -3083,12 +3659,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketFundamental/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalMarketFundamentalTableE0E6A8C5TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalMarketFundamentalTableE0E6A8C5TableArn"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketFundamental.NestedStack/MarketFundamental.NestedStackResource": [
@@ -3603,6 +4173,12 @@
             "data": "CDKMetadataAvailable"
           }
         ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketDividend/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendMarketDividendTable3FF9A5A0TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendMarketDividendTable3FF9A5A0TableArn"
+          }
+        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketDividend/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource9827E652Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventFE5A638CArn": [
           {
             "type": "aws:cdk:logicalId",
@@ -3637,12 +4213,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketDividend/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendMarketDividendTable3FF9A5A0TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendMarketDividendTable3FF9A5A0TableArn"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/MarketDividend.NestedStack/MarketDividend.NestedStackResource": [
@@ -4167,6 +4737,12 @@
             "data": "CDKMetadataAvailable"
           }
         ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/ProviderCache/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheProviderCacheTableAFED7434TableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheProviderCacheTableAFED7434TableArn"
+          }
+        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/ProviderCache/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource9827E652Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventFE5A638CArn": [
           {
             "type": "aws:cdk:logicalId",
@@ -4203,16 +4779,204 @@
             "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
           }
         ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/ProviderCache/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheProviderCacheTableAFED7434TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheProviderCacheTableAFED7434TableArn"
-          }
-        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/ProviderCache.NestedStack/ProviderCache.NestedStackResource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "amplifyDataProviderCacheNestedStackProviderCacheNestedStackResourceB0243D8E"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/FnRunOptimizationLambdaDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "FnRunOptimizationLambdaDataSource"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/FnRunOptimizationLambdaDataSource/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnRunOptimizationLambdaDataSourceServiceRoleEC1A73A2"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/FnRunOptimizationLambdaDataSource/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnRunOptimizationLambdaDataSourceServiceRoleDefaultPolicy587EC054"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/FnRunOptimizationLambdaDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnRunOptimizationLambdaDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "FnRunOptimizationLambdaDataSource"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/InvokeFnRunOptimizationLambdaDataSource/InvokeFnRunOptimizationLambdaDataSource.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InvokeFnRunOptimizationLambdaDataSourceInvokeFnRunOptimizationLambdaDataSourceAppSyncFunctionFC49C8AD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "InvokeFnRunOptimizationLambdaDataSource"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/mutationRunOptimizationResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationrunOptimizationResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.runOptimization"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/FnSyncMarketDataLambdaDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "FnSyncMarketDataLambdaDataSource"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/FnSyncMarketDataLambdaDataSource/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnSyncMarketDataLambdaDataSourceServiceRole0BAD7959"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/FnSyncMarketDataLambdaDataSource/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnSyncMarketDataLambdaDataSourceServiceRoleDefaultPolicy321C42B6"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/FnSyncMarketDataLambdaDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FnSyncMarketDataLambdaDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "FnSyncMarketDataLambdaDataSource"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/InvokeFnSyncMarketDataLambdaDataSource/InvokeFnSyncMarketDataLambdaDataSource.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InvokeFnSyncMarketDataLambdaDataSourceInvokeFnSyncMarketDataLambdaDataSourceAppSyncFunction763F6D20"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "InvokeFnSyncMarketDataLambdaDataSource"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/mutationSyncMarketDataResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationsyncMarketDataResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.syncMarketData"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/MutationRunOptimizationAuthFN/MutationRunOptimizationAuthFN.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationRunOptimizationAuthFNMutationRunOptimizationAuthFNAppSyncFunction76BC45E3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationRunOptimizationAuthFN"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/MutationSyncMarketDataAuthFN/MutationSyncMarketDataAuthFN.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationSyncMarketDataAuthFNMutationSyncMarketDataAuthFNAppSyncFunction26B7BA9C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationSyncMarketDataAuthFN"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataorchestratorlambda413871B5Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataorchestratorlambda413871B5Arn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/reference-to-amplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputs.amplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthauthenticatedUserRole2B3B59E3Ref"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/reference-to-amplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputs.amplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthunauthenticatedUserRoleE4B000D3Ref"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/reference-to-amplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputs.amplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/reference-to-amplifymoolahmonorepofredsandboxda954a41f0datamarketworkerlambda2111AEB9Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0datamarketworkerlambda2111AEB9Arn"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPINONEDS4B518413Name"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/FunctionDirectiveStack.NestedStack/FunctionDirectiveStack.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataFunctionDirectiveStackNestedStackFunctionDirectiveStackNestedStackResource1246A302"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AuthRolePolicy01/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAuthRolePolicy01567A5654"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/UnauthRolePolicy01/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataUnauthRolePolicy01355B9DCF"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Resource": [
@@ -4395,6 +5159,12 @@
             "data": "CDKMetadataAvailable"
           }
         ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/reference-to-amplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputs.amplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDArn"
+          }
+        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/reference-to-amplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputs.amplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthUserPoolC1C2BFC0Ref": [
           {
             "type": "aws:cdk:logicalId",
@@ -4417,6 +5187,18 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthIdentityPool997C4B3BRef"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifymoolahmonorepofredsandboxda954a41f0dataorchestratorlambda413871B5Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataorchestratorlambda413871B5Ref"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifymoolahmonorepofredsandboxda954a41f0datamarketworkerlambda2111AEB9Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0datamarketworkerlambda2111AEB9Ref"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258ApiId": [
@@ -4443,52 +5225,16 @@
             "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPIDefaultApiKey0331AC6BApiKey"
           }
         ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsNestedStackUserSettingsNestedStackResourceCF51A263Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsUserSettingsTable3B5CC852TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsNestedStackUserSettingsNestedStackResourceCF51A263Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsUserSettingsTable3B5CC852TableArn"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingNestedStackHoldingNestedStackResourceB4525407Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingHoldingTableD88A6051TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingNestedStackHoldingNestedStackResourceB4525407Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingHoldingTableD88A6051TableArn"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationNestedStackRecommendationNestedStackResource9FDD59E0Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationRecommendationTableA449BAE7TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationNestedStackRecommendationNestedStackResource9FDD59E0Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationRecommendationTableA449BAE7TableArn"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceNestedStackMarketPriceNestedStackResourceAAAF0B1AOutputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceMarketPriceTable3C45D6E8TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceNestedStackMarketPriceNestedStackResourceAAAF0B1AOutputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceMarketPriceTable3C45D6E8TableArn"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalNestedStackMarketFundamentalNestedStackResource78AC253AOutputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalMarketFundamentalTableE0E6A8C5TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalNestedStackMarketFundamentalNestedStackResource78AC253AOutputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalMarketFundamentalTableE0E6A8C5TableArn"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendNestedStackMarketDividendNestedStackResource227BCF01Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendMarketDividendTable3FF9A5A0TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendNestedStackMarketDividendNestedStackResource227BCF01Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendMarketDividendTable3FF9A5A0TableArn"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheNestedStackProviderCacheNestedStackResourceE2C82A9FOutputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheProviderCacheTableAFED7434TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheNestedStackProviderCacheNestedStackResourceE2C82A9FOutputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheProviderCacheTableAFED7434TableArn"
-          }
-        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data.NestedStack/data.NestedStackResource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "data7552DF31"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/definedFunctions": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "definedFunctions"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/awsAppsyncApiId": [
@@ -4533,42 +5279,6 @@
             "data": "awsAppsyncAdditionalAuthenticationTypes"
           }
         ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/orchestrator-lambda/ServiceRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "orchestratorlambdaServiceRoleAB33D811"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/orchestrator-lambda/ServiceRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "orchestratorlambdaServiceRoleDefaultPolicy6701290A"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/orchestrator-lambda/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "orchestratorlambda11E59449"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/market-worker-lambda/ServiceRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "marketworkerlambdaServiceRole5D4A0277"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/market-worker-lambda/ServiceRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "marketworkerlambdaServiceRoleDefaultPolicy1E3D6081"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/market-worker-lambda/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "marketworkerlambdaBD44AF6C"
-          }
-        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/market-scheduler-lambda/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -4611,46 +5321,10 @@
             "data": "CDKMetadataAvailable"
           }
         ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsNestedStackUserSettingsNestedStackResourceCF51A263Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsUserSettingsTable3B5CC852TableArn": [
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/amplifymoolahmonorepofredsandboxda954a41f0functionmarketschedulerlambda113C6A1ARef": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsNestedStackUserSettingsNestedStackResourceCF51A263Outputsamplifym04A95440"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingNestedStackHoldingNestedStackResourceB4525407Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingHoldingTableD88A6051TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingNestedStackHoldingNestedStackResourceB4525407OutputsamplifymoolahmonorB8EBBACA"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationNestedStackRecommendationNestedStackResource9FDD59E0Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationRecommendationTableA449BAE7TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationNestedStackRecommendationNestedStackResource9FDD59E0OutputsamplEA32AC77"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceNestedStackMarketPriceNestedStackResourceAAAF0B1AOutputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceMarketPriceTable3C45D6E8TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceNestedStackMarketPriceNestedStackResourceAAAF0B1AOutputsamplifymoo3E37A5D9"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalNestedStackMarketFundamentalNestedStackResource78AC253AOutputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalMarketFundamentalTableE0E6A8C5TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalNestedStackMarketFundamentalNestedStackResource78AC253AOutpu94BE75A5"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendNestedStackMarketDividendNestedStackResource227BCF01Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendMarketDividendTable3FF9A5A0TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendNestedStackMarketDividendNestedStackResource227BCF01Outputsampl9B4A5132"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheNestedStackProviderCacheNestedStackResourceE2C82A9FOutputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheProviderCacheTableAFED7434TableArn": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheNestedStackProviderCacheNestedStackResourceE2C82A9FOutputsamplifDDAD755E"
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0functionmarketschedulerlambda113C6A1ARef"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/reference-to-amplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputs.amplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDArn": [
@@ -4665,34 +5339,10 @@
             "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef"
           }
         ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/amplifymoolahmonorepofredsandboxda954a41f0functionorchestratorlambdaD9CD5CE9Ref": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0functionorchestratorlambdaD9CD5CE9Ref"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/amplifymoolahmonorepofredsandboxda954a41f0functionmarketworkerlambdaCE7A0C5ERef": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0functionmarketworkerlambdaCE7A0C5ERef"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/amplifymoolahmonorepofredsandboxda954a41f0functionmarketschedulerlambda113C6A1ARef": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifymoolahmonorepofredsandboxda954a41f0functionmarketschedulerlambda113C6A1ARef"
-          }
-        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function.NestedStack/function.NestedStackResource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "function1351588B"
-          }
-        ],
-        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/definedFunctions": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "definedFunctions"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/CustomInfraStack/MarketDLQ/Resource": [

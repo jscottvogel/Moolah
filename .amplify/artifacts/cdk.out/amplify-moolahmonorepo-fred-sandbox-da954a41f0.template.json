@@ -34,6 +34,12 @@
     "groups"
    ]
   },
+  "AWS::Amplify::Function": {
+   "version": "1",
+   "stackOutputs": [
+    "definedFunctions"
+   ]
+  },
   "AWS::Amplify::GraphQL": {
    "version": "1",
    "stackOutputs": [
@@ -44,12 +50,6 @@
     "amplifyApiModelSchemaS3Uri",
     "awsAppsyncApiKey",
     "awsAppsyncAdditionalAuthenticationTypes"
-   ]
-  },
-  "AWS::Amplify::Function": {
-   "version": "1",
-   "stackOutputs": [
-    "definedFunctions"
    ]
   }
  },
@@ -147,6 +147,37 @@
   "groups": {
    "Value": "[]"
   },
+  "definedFunctions": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "[\"",
+      {
+       "Fn::GetAtt": [
+        "data7552DF31",
+        "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataorchestratorlambda413871B5Ref"
+       ]
+      },
+      "\",\"",
+      {
+       "Fn::GetAtt": [
+        "data7552DF31",
+        "Outputs.amplifymoolahmonorepofredsandboxda954a41f0datamarketworkerlambda2111AEB9Ref"
+       ]
+      },
+      "\",\"",
+      {
+       "Fn::GetAtt": [
+        "function1351588B",
+        "Outputs.amplifymoolahmonorepofredsandboxda954a41f0functionmarketschedulerlambda113C6A1ARef"
+       ]
+      },
+      "\"]"
+     ]
+    ]
+   }
+  },
   "awsAppsyncApiId": {
    "Value": {
     "Fn::GetAtt": [
@@ -218,37 +249,6 @@
   },
   "awsAppsyncAdditionalAuthenticationTypes": {
    "Value": "API_KEY,AWS_IAM"
-  },
-  "definedFunctions": {
-   "Value": {
-    "Fn::Join": [
-     "",
-     [
-      "[\"",
-      {
-       "Fn::GetAtt": [
-        "function1351588B",
-        "Outputs.amplifymoolahmonorepofredsandboxda954a41f0functionorchestratorlambdaD9CD5CE9Ref"
-       ]
-      },
-      "\",\"",
-      {
-       "Fn::GetAtt": [
-        "function1351588B",
-        "Outputs.amplifymoolahmonorepofredsandboxda954a41f0functionmarketworkerlambdaCE7A0C5ERef"
-       ]
-      },
-      "\",\"",
-      {
-       "Fn::GetAtt": [
-        "function1351588B",
-        "Outputs.amplifymoolahmonorepofredsandboxda954a41f0functionmarketschedulerlambda113C6A1ARef"
-       ]
-      },
-      "\"]"
-     ]
-    ]
-   }
   }
  },
  "Resources": {
@@ -298,6 +298,12 @@
    "Type": "AWS::CloudFormation::Stack",
    "Properties": {
     "Parameters": {
+     "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDArn": {
+      "Fn::GetAtt": [
+       "CustomInfraStack696189F0",
+       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDArn"
+      ]
+     },
      "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthUserPoolC1C2BFC0Ref": {
       "Fn::GetAtt": [
        "auth179371D7",
@@ -349,7 +355,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/316f0e584326ad3d7e0f57892a202a7def22db22a4cbb2e054bc65df62f0ba99.json"
+       "/31150845063d1bbb7d41994ad599da28cb4e98e47a65f76e18032802b49b96b9.json"
       ]
      ]
     }
@@ -366,48 +372,6 @@
    "Type": "AWS::CloudFormation::Stack",
    "Properties": {
     "Parameters": {
-     "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsNestedStackUserSettingsNestedStackResourceCF51A263Outputsamplifym04A95440": {
-      "Fn::GetAtt": [
-       "data7552DF31",
-       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsNestedStackUserSettingsNestedStackResourceCF51A263Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataUserSettingsUserSettingsTable3B5CC852TableArn"
-      ]
-     },
-     "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingNestedStackHoldingNestedStackResourceB4525407OutputsamplifymoolahmonorB8EBBACA": {
-      "Fn::GetAtt": [
-       "data7552DF31",
-       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingNestedStackHoldingNestedStackResourceB4525407Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataHoldingHoldingTableD88A6051TableArn"
-      ]
-     },
-     "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationNestedStackRecommendationNestedStackResource9FDD59E0OutputsamplEA32AC77": {
-      "Fn::GetAtt": [
-       "data7552DF31",
-       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationNestedStackRecommendationNestedStackResource9FDD59E0Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataRecommendationRecommendationTableA449BAE7TableArn"
-      ]
-     },
-     "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceNestedStackMarketPriceNestedStackResourceAAAF0B1AOutputsamplifymoo3E37A5D9": {
-      "Fn::GetAtt": [
-       "data7552DF31",
-       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceNestedStackMarketPriceNestedStackResourceAAAF0B1AOutputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketPriceMarketPriceTable3C45D6E8TableArn"
-      ]
-     },
-     "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalNestedStackMarketFundamentalNestedStackResource78AC253AOutpu94BE75A5": {
-      "Fn::GetAtt": [
-       "data7552DF31",
-       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalNestedStackMarketFundamentalNestedStackResource78AC253AOutputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketFundamentalMarketFundamentalTableE0E6A8C5TableArn"
-      ]
-     },
-     "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendNestedStackMarketDividendNestedStackResource227BCF01Outputsampl9B4A5132": {
-      "Fn::GetAtt": [
-       "data7552DF31",
-       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendNestedStackMarketDividendNestedStackResource227BCF01Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataMarketDividendMarketDividendTable3FF9A5A0TableArn"
-      ]
-     },
-     "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheNestedStackProviderCacheNestedStackResourceE2C82A9FOutputsamplifDDAD755E": {
-      "Fn::GetAtt": [
-       "data7552DF31",
-       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheNestedStackProviderCacheNestedStackResourceE2C82A9FOutputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheProviderCacheTableAFED7434TableArn"
-      ]
-     },
      "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDArn": {
       "Fn::GetAtt": [
        "CustomInfraStack696189F0",
@@ -447,7 +411,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/23f0e48f29549880b921b0a698f46af58112ed1a8a5b237ba41469ff1148fecb.json"
+       "/21af065d958bc1c5932f6f6df4d4ae98f194e34539e0d49e4433f604d23aa9b0.json"
       ]
      ]
     }
@@ -489,7 +453,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/6eed25874cae88445c95f3b75f381ee061881cf21314e6cc772f03ad5d8c68f0.json"
+       "/9e2a3c841534eca83171491efa0d92027522c54cf8fd8c27d3b48d559d1bd1a4.json"
       ]
      ]
     }
