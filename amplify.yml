@@ -11,11 +11,12 @@ applications:
       phases:
         preBuild:
           commands:
-            - echo "Starting frontend build..."
+            # In a monorepo, dependencies must be installed at the root to ensure a singleton React instance.
+            - cd .. && npm install
         build:
           commands:
-            # Using the explicit path to the hoisted binary avoids PATH resolution issues in monorepos.
-            - ../node_modules/.bin/next build
+            # npx will search up to the root node_modules to find the Next.js binary.
+            - npx next build
       artifacts:
         baseDirectory: .next
         files:
