@@ -16,10 +16,14 @@ applications:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: .next
+        baseDirectory: dist
         files:
           - '**/*'
       cache:
         paths:
-          - .next/cache/**/*
           - node_modules/**/*
+    customHeaders:
+      - pattern: '**/*'
+        headers:
+          - key: 'Cache-Control'
+            value: 'public, max-age=0, must-revalidate'
