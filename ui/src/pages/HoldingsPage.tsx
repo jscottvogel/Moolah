@@ -48,8 +48,10 @@ export default function HoldingsPage() {
                 costBasis,
             });
             // Defensive check: mutations might not be available immediately during deployment
-            if (client.mutations && typeof client.mutations.syncMarketData === 'function') {
-                client.mutations.syncMarketData({ tickers: [ticker] });
+            const mutations = client.mutations as any;
+            if (mutations && typeof mutations.syncMarketData === 'function') {
+                console.log(`[SYNC] Triggering sync for added ticker: ${ticker}`);
+                mutations.syncMarketData({ tickers: [ticker] });
             }
         } catch (err) {
             console.error("Error adding holding:", err);

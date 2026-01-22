@@ -1,5 +1,5 @@
 import { Link, Routes, Route, useNavigate, Outlet, useLocation } from 'react-router-dom';
-import { Wallet, DollarSign, TrendingUp, Calendar, ArrowUpRight, LogOut, LayoutDashboard, Database, Settings as SettingsIcon, Loader2, Sparkles, RefreshCw } from 'lucide-react';
+import { Wallet, DollarSign, TrendingUp, Calendar, ArrowUpRight, LogOut, LayoutDashboard, Database, Settings as SettingsIcon, Loader2, Sparkles, RefreshCw, TrendingDown } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, Button, cn } from '@/components/ui';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useEffect, useState, useCallback } from 'react';
@@ -20,7 +20,8 @@ const mockChartData = [
 ];
 
 function DashboardHome() {
-    const [totalValue, setTotalValue] = useState(0);
+    const [totalInvested, setTotalInvested] = useState(0);
+    const [marketValue, setMarketValue] = useState(0);
     const [annualIncome, setAnnualIncome] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [isSyncing, setIsSyncing] = useState(false);
@@ -29,16 +30,30 @@ function DashboardHome() {
     const [currentHoldings, setCurrentHoldings] = useState<any[]>([]);
 
     const calculateMetrics = useCallback(async (holdings: any[]) => {
-        let total = 0;
-        let income = 0;
+        let costTotal = 0;
+        let marketTotal = 0;
+        let incomeTotal = 0;
         const tickers: string[] = [];
 
         for (const holding of holdings) {
             tickers.push(holding.ticker);
-            const currentVal = holding.shares * (holding.costBasis || 0);
-            total += currentVal;
+            const holdingCost = holding.shares * (holding.costBasis || 0);
+            costTotal += holdingCost;
 
             try {
+                // 1. Fetch latest price
+                const { data: prices } = await client.models.MarketPrice.listMarketPriceByTickerAndDate(
+                    { ticker: holding.ticker },
+                    { limit: 1, sortDirection: 'desc' }
+                );
+
+                let currentPrice = (holding.costBasis || 0); // Fallback to cost basis if no price found
+                if (prices && prices.length > 0) {
+                    currentPrice = prices[0].close || currentPrice;
+                }
+                marketTotal += holding.shares * currentPrice;
+
+                // 2. Fetch latest yield for income
                 const { data: fundamentals } = await client.models.MarketFundamental.listMarketFundamentalByTickerAndAsOf(
                     { ticker: holding.ticker },
                     { limit: 1, sortDirection: 'desc' }
@@ -46,16 +61,19 @@ function DashboardHome() {
 
                 if (fundamentals && fundamentals.length > 0) {
                     const yieldPct = fundamentals[0].dividendYield || 0;
-                    income += currentVal * yieldPct;
+                    // Income is calculated on current market value
+                    incomeTotal += (holding.shares * currentPrice) * yieldPct;
                 }
             } catch (e) {
-                console.warn(`Could not fetch yield for ${holding.ticker}`, e);
+                console.warn(`Could not fetch data for ${holding.ticker}`, e);
+                marketTotal += holdingCost; // Safe fallback
             }
         }
 
         setHoldingsTickers(tickers);
-        setTotalValue(total);
-        setAnnualIncome(income);
+        setTotalInvested(costTotal);
+        setMarketValue(marketTotal);
+        setAnnualIncome(incomeTotal);
         setIsLoading(false);
     }, []);
 
@@ -73,16 +91,17 @@ function DashboardHome() {
         if (holdingsTickers.length === 0) return;
         setIsSyncing(true);
         try {
-            if (client.mutations && typeof client.mutations.syncMarketData === 'function') {
-                await client.mutations.syncMarketData({ tickers: holdingsTickers });
+            const mutations = client.mutations as any;
+            if (mutations && typeof mutations.syncMarketData === 'function') {
+                await mutations.syncMarketData({ tickers: holdingsTickers });
                 setTimeout(() => calculateMetrics(currentHoldings), 5000);
-                alert("Market data sync requested. Metrics will update shortly.");
+                alert("Market sync started. Prices and yields will update shortly.");
             } else {
-                alert("Market sync is currently being updated. Please try again in 1-2 minutes.");
+                alert("The Sync feature is still being provisioned. Refresh your browser in a moment.");
             }
-        } catch (err) {
+        } catch (err: any) {
             console.error("Sync failed:", err);
-            alert("Failed to sync market data. Check your network.");
+            alert(`Failed: Check network or refresh the page.`);
         } finally {
             setIsSyncing(false);
         }
@@ -91,21 +110,16 @@ function DashboardHome() {
     const handleRunOptimization = async () => {
         setIsOptimizing(true);
         try {
-            if (!client.mutations || typeof client.mutations.runOptimization !== 'function') {
-                throw new Error("AI Optimizer is initializing. Please refresh in a moment.");
+            const mutations = client.mutations as any;
+            if (!mutations || typeof mutations.runOptimization !== 'function') {
+                throw new Error("AI Optimizer is initializing in the cloud. Refresh in a moment.");
             }
-
-            const { data: rawResult, errors } = await client.mutations.runOptimization({
+            const { data: rawResult, errors } = await mutations.runOptimization({
                 constraintsJson: JSON.stringify({ targetYield: 0.04 })
             });
-
             if (errors) throw new Error(errors[0].message);
-
             const result = JSON.parse(rawResult || "{}");
-            if (result.status === 'FAILED') {
-                throw new Error(result.error || "AI Agent failed to process request.");
-            }
-
+            if (result.status === 'FAILED') throw new Error(result.error);
             alert("Optimization started! The AI agent is analyzing your portfolio.");
         } catch (err: any) {
             console.error("Optimization failed:", err);
@@ -115,12 +129,16 @@ function DashboardHome() {
         }
     };
 
+    // ROI Calculation
+    const roiPercentage = totalInvested > 0 ? ((marketValue - totalInvested) / totalInvested) * 100 : 0;
+    const isPositive = roiPercentage >= 0;
+
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="flex justify-between items-center">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 w-fit">Dashboard</h1>
-                    <p className="text-slate-400">Portfolio overview and key metrics.</p>
+                    <p className="text-slate-400">Portfolio performance and AI intelligence.</p>
                 </div>
                 <Button
                     variant="outline"
@@ -136,20 +154,25 @@ function DashboardHome() {
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <StatsCard
-                    title="Total Invested"
-                    value={isLoading ? "..." : `$${totalValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                    title="Portfolio Value"
+                    value={isLoading ? "..." : `$${marketValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                     icon={<Wallet className="h-4 w-4" />}
-                    trend="Cost Basis"
+                    trend={isLoading ? "" : (
+                        <span className={cn("flex items-center gap-1", isPositive ? "text-emerald-400" : "text-rose-400")}>
+                            {isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                            {isPositive ? "+" : ""}{roiPercentage.toFixed(2)}% Return
+                        </span>
+                    )}
                 />
                 <StatsCard
                     title="Est. Annual Income"
                     value={isLoading ? "..." : `$${annualIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                     icon={<DollarSign className="h-4 w-4" />}
-                    trend={annualIncome > 0 ? `${((annualIncome / totalValue) * 100).toFixed(2)}% Yield` : (holdingsTickers.length > 0 ? "Sync Required" : "0.00% Yield")}
+                    trend={annualIncome > 0 ? `${((annualIncome / marketValue) * 100).toFixed(2)}% Yield` : (holdingsTickers.length > 0 ? "Sync for Yield" : "0.00% Yield")}
                     color={annualIncome > 0 ? "text-emerald-400" : "text-amber-400"}
                 />
                 <StatsCard title="VIG Benchmark" value="+12.4%" icon={<TrendingUp className="h-4 w-4" />} trend="1 Year Return" color="text-cyan-400" />
-                <StatsCard title="Next Rebalance" value="Feb 1" icon={<Calendar className="h-4 w-4" />} trend="Scheduled" />
+                <StatsCard title="Total Invested" value={`$${totalInvested.toLocaleString()}`} icon={<Calendar className="h-4 w-4" />} trend="Cost Basis" />
             </div>
 
             <div className="grid gap-4 md:grid-cols-7">
@@ -212,7 +235,7 @@ function StatsCard({ title, value, icon, trend, color = "text-slate-50" }: any) 
             </CardHeader>
             <CardContent>
                 <div className={`text-2xl font-bold ${color}`}>{value}</div>
-                <p className="text-[10px] text-slate-500 mt-1 font-medium">{trend}</p>
+                <div className="text-[10px] text-slate-500 mt-1 font-medium">{trend}</div>
             </CardContent>
         </Card>
     );
