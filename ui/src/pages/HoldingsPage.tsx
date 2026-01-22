@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Card, CardHeader, CardTitle, CardContent, Button } from '@/components/ui';
-import { Plus, Trash2, Upload, AlertCircle, Loader2 } from 'lucide-react';
+import { Card, Button } from '@/components/ui';
+import { Plus, Trash2, Upload, AlertCircle, Loader2, Edit3, X, Check } from 'lucide-react';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../../amplify/data/resource';
 
@@ -9,7 +9,12 @@ const client = generateClient<Schema>();
 export default function HoldingsPage() {
     const [holdings, setHoldings] = useState<Array<Schema['Holding']['type']>>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [isAdding, setIsAdding] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+
+    // Inline editing state
+    const [editingId, setEditingId] = useState<string | null>(null);
+    const [editShares, setEditShares] = useState<string>("");
+    const [editCost, setEditCost] = useState<string>("");
 
     // Fetch and Subscribe to Holdings
     useEffect(() => {
@@ -23,31 +28,68 @@ export default function HoldingsPage() {
         return () => sub.unsubscribe();
     }, []);
 
-    // Add a holding (Simple version for MVP)
     const addTicker = async () => {
-        const ticker = window.prompt("Enter Ticker (e.g. MSFT):");
+        const ticker = window.prompt("Enter Ticker (e.g. MSFT):")?.toUpperCase();
         if (!ticker) return;
 
-        const sharesStr = window.prompt("Enter Number of Shares:");
+        const sharesStr = window.prompt("Enter Number of Shares:", "1");
         const shares = parseFloat(sharesStr || "0");
         if (isNaN(shares) || shares <= 0) return;
 
-        setIsAdding(true);
+        const costStr = window.prompt("Enter Cost Basis per Share (USD):", "0");
+        const costBasis = parseFloat(costStr || "0");
+        if (isNaN(costBasis)) return;
+
+        setIsSaving(true);
         try {
             await client.models.Holding.create({
-                ticker: ticker.toUpperCase(),
-                shares: shares,
-                costBasis: 0, // In real app, we'd ask for this
+                ticker,
+                shares,
+                costBasis,
             });
         } catch (err) {
             console.error("Error adding holding:", err);
-            alert("Failed to add holding. Check console for details.");
+            alert("Failed to add holding.");
         } finally {
-            setIsAdding(false);
+            setIsSaving(false);
         }
     };
 
-    // Delete a holding
+    const startEditing = (holding: Schema['Holding']['type']) => {
+        setEditingId(holding.id);
+        setEditShares(holding.shares.toString());
+        setEditCost((holding.costBasis || 0).toString());
+    };
+
+    const cancelEditing = () => {
+        setEditingId(null);
+    };
+
+    const saveEdit = async (id: string) => {
+        const shares = parseFloat(editShares);
+        const costBasis = parseFloat(editCost);
+
+        if (isNaN(shares) || isNaN(costBasis)) {
+            alert("Please enter valid numbers.");
+            return;
+        }
+
+        setIsSaving(true);
+        try {
+            await client.models.Holding.update({
+                id,
+                shares,
+                costBasis,
+            });
+            setEditingId(null);
+        } catch (err) {
+            console.error("Update failed:", err);
+            alert("Failed to update holding.");
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
     const deleteHolding = async (id: string) => {
         if (!window.confirm("Are you sure you want to remove this holding?")) return;
         try {
@@ -62,18 +104,15 @@ export default function HoldingsPage() {
             <div className="flex justify-between items-center">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 w-fit">Manage Holdings</h1>
-                    <p className="text-slate-400">Track your current portfolio positions.</p>
+                    <p className="text-slate-400">Track and edit your portfolio positions.</p>
                 </div>
                 <div className="flex gap-3">
-                    <Button variant="outline" className="border-white/10 text-slate-300 gap-2">
-                        <Upload className="w-4 h-4" /> Import CSV
-                    </Button>
                     <Button
                         onClick={addTicker}
-                        disabled={isAdding}
+                        disabled={isSaving}
                         className="bg-emerald-600 hover:bg-emerald-500 text-white gap-2 transition-all active:scale-95"
                     >
-                        {isAdding ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+                        {isSaving && !editingId ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
                         Add Ticker
                     </Button>
                 </div>
@@ -91,10 +130,9 @@ export default function HoldingsPage() {
                             <thead>
                                 <tr className="border-b border-white/5 bg-slate-900/50">
                                     <th className="px-6 py-4 font-medium text-slate-400">Ticker</th>
-                                    <th className="px-6 py-4 font-medium text-slate-400 text-right">Shares</th>
-                                    <th className="px-6 py-4 font-medium text-slate-400 text-right">Cost Basis</th>
-                                    <th className="px-6 py-4 font-medium text-slate-400 text-right">Total Value</th>
-                                    <th className="px-6 py-4 font-medium text-slate-400">Status</th>
+                                    <th className="px-6 py-4 font-medium text-slate-400 text-right w-32">Shares</th>
+                                    <th className="px-6 py-4 font-medium text-slate-400 text-right w-40">Cost Basis (Avg)</th>
+                                    <th className="px-6 py-4 font-medium text-slate-400 text-right">Total Cost</th>
                                     <th className="px-6 py-4 font-medium text-slate-400 text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -102,21 +140,71 @@ export default function HoldingsPage() {
                                 {holdings.map((holding) => (
                                     <tr key={holding.id} className="hover:bg-white/5 transition-colors group">
                                         <td className="px-6 py-4 font-bold text-slate-100">{holding.ticker}</td>
-                                        <td className="px-6 py-4 text-right text-slate-300 font-mono">{holding.shares}</td>
-                                        <td className="px-6 py-4 text-right text-slate-300 font-mono">${(holding.costBasis || 0).toFixed(2)}</td>
-                                        <td className="px-6 py-4 text-right text-slate-100 font-bold font-mono">${(holding.shares * (holding.costBasis || 0)).toFixed(2)}</td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center gap-1.5 text-emerald-400 text-xs font-medium">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Live
-                                            </div>
-                                        </td>
+
                                         <td className="px-6 py-4 text-right">
-                                            <button
-                                                onClick={() => deleteHolding(holding.id)}
-                                                className="p-2 text-slate-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                            </button>
+                                            {editingId === holding.id ? (
+                                                <input
+                                                    type="number"
+                                                    value={editShares}
+                                                    onChange={(e) => setEditShares(e.target.value)}
+                                                    className="w-full bg-slate-950 border border-white/10 rounded px-2 py-1 text-right text-emerald-400 focus:outline-none focus:border-emerald-500"
+                                                />
+                                            ) : (
+                                                <span className="text-slate-300 font-mono">{holding.shares}</span>
+                                            )}
+                                        </td>
+
+                                        <td className="px-6 py-4 text-right">
+                                            {editingId === holding.id ? (
+                                                <input
+                                                    type="number"
+                                                    value={editCost}
+                                                    onChange={(e) => setEditCost(e.target.value)}
+                                                    className="w-full bg-slate-950 border border-white/10 rounded px-2 py-1 text-right text-emerald-400 focus:outline-none focus:border-emerald-500"
+                                                />
+                                            ) : (
+                                                <span className="text-slate-300 font-mono">${(holding.costBasis || 0).toFixed(2)}</span>
+                                            )}
+                                        </td>
+
+                                        <td className="px-6 py-4 text-right text-slate-100 font-bold font-mono">
+                                            ${(holding.shares * (holding.costBasis || 0)).toFixed(2)}
+                                        </td>
+
+                                        <td className="px-6 py-4 text-right">
+                                            <div className="flex justify-end gap-2">
+                                                {editingId === holding.id ? (
+                                                    <>
+                                                        <button
+                                                            onClick={() => saveEdit(holding.id)}
+                                                            className="p-1.5 text-emerald-400 hover:bg-emerald-500/10 rounded transition-all"
+                                                        >
+                                                            <Check className="w-4 h-4" />
+                                                        </button>
+                                                        <button
+                                                            onClick={cancelEditing}
+                                                            className="p-1.5 text-slate-500 hover:bg-white/5 rounded transition-all"
+                                                        >
+                                                            <X className="w-4 h-4" />
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <button
+                                                            onClick={() => startEditing(holding)}
+                                                            className="p-1.5 text-slate-500 hover:text-emerald-400 hover:bg-emerald-500/10 rounded transition-all opacity-0 group-hover:opacity-100"
+                                                        >
+                                                            <Edit3 className="w-4 h-4" />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => deleteHolding(holding.id)}
+                                                            className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded transition-all opacity-0 group-hover:opacity-100"
+                                                        >
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </button>
+                                                    </>
+                                                )}
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -124,51 +212,23 @@ export default function HoldingsPage() {
                         </table>
                     )}
                 </div>
-                {!isLoading && holdings.length === 0 && (
-                    <div className="py-20 text-center">
-                        <Database className="w-12 h-12 mx-auto text-slate-800 mb-4" />
-                        <p className="text-slate-500">No holdings found. Start by adding your first ticker.</p>
-                    </div>
-                )}
             </Card>
 
             <section className="grid md:grid-cols-2 gap-6">
                 <Card className="bg-slate-900/30 border-white/5 p-6">
                     <h3 className="font-bold text-slate-200 mb-4 flex items-center gap-2">
-                        <AlertCircle className="w-5 h-5 text-amber-400" /> Gating & Warnings
+                        <AlertCircle className="w-5 h-5 text-amber-400" /> Investment Summary
                     </h3>
                     <div className="space-y-3">
-                        {holdings.length > 0 ? (
-                            <div className="p-3 bg-slate-800/20 border border-white/5 rounded-lg text-xs text-slate-500">
-                                No critical safety gates tripped for currently tracked holdings.
-                            </div>
-                        ) : (
-                            <p className="text-xs text-slate-600 italic">Add holdings to run safety checks.</p>
-                        )}
+                        <div className="flex justify-between text-sm py-2 border-b border-white/5">
+                            <span className="text-slate-400">Total Invested</span>
+                            <span className="text-slate-100 font-bold font-mono">
+                                ${holdings.reduce((sum, h) => sum + (h.shares * (h.costBasis || 0)), 0).toFixed(2)}
+                            </span>
+                        </div>
                     </div>
                 </Card>
             </section>
         </div>
     );
-}
-
-function Database(props: any) {
-    return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <ellipse cx="12" cy="5" rx="9" ry="3" />
-            <path d="M3 5V19A9 3 0 0 0 21 19V5" />
-            <path d="M3 12A9 3 0 0 0 21 12" />
-        </svg>
-    )
 }
