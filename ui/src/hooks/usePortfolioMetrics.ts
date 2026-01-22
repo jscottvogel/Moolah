@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../../amplify/data/resource';
 
@@ -7,7 +7,7 @@ import type { Schema } from '../../../amplify/data/resource';
  * Encapsulates data fetching from Amplify and reactive updates.
  */
 export function usePortfolioMetrics() {
-    const client = generateClient<Schema>();
+    const client = useMemo(() => generateClient<Schema>(), []);
     const [totalInvested, setTotalInvested] = useState(0);
     const [marketValue, setMarketValue] = useState(0);
     const [annualIncome, setAnnualIncome] = useState(0);

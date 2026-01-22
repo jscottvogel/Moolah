@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../../amplify/data/resource';
 
@@ -7,7 +7,7 @@ import type { Schema } from '../../../amplify/data/resource';
  * Uses direct GraphQL calls to ensure reliability across schema updates.
  */
 export function useCloudActions() {
-    const client = generateClient<Schema>();
+    const client = useMemo(() => generateClient<Schema>(), []);
     const [isSyncing, setIsSyncing] = useState(false);
     const [isOptimizing, setIsOptimizing] = useState(false);
 

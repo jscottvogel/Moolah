@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Card, Button } from '@/components/ui';
 import { Plus, Trash2, AlertCircle, Loader2, Edit3, X, Check } from 'lucide-react';
 import { generateClient } from 'aws-amplify/data';
@@ -9,7 +9,7 @@ import type { Schema } from '../../../amplify/data/resource';
  * Supports inline editing, manual entry, and automated market sync triggers.
  */
 export default function HoldingsPage() {
-    const client = generateClient<Schema>();
+    const client = useMemo(() => generateClient<Schema>(), []);
     const [holdings, setHoldings] = useState<Array<Schema['Holding']['type']>>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);

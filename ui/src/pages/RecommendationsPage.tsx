@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Card, Button } from '@/components/ui';
 import { TrendingUp, Info, PlusCircle, Loader2, Sparkles } from 'lucide-react';
 import { generateClient } from 'aws-amplify/data';
@@ -6,7 +6,7 @@ import type { Schema } from '../../../amplify/data/resource';
 import { useNavigate } from 'react-router-dom';
 
 export default function RecommendationsPage() {
-    const client = generateClient<Schema>();
+    const client = useMemo(() => generateClient<Schema>(), []);
     const [suggestions, setSuggestions] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isActionLoading, setIsActionLoading] = useState<string | null>(null);
