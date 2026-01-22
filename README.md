@@ -1,64 +1,47 @@
-# Moolah - Agentic Dividend Portfolio Optimizer
+# Moolah 💸 - Agentic Portfolio Intelligence
 
-Moolah is a cloud-native, agentic AI application that generates optimized, tax-aware dividend portfolios. It uses AWS Amplify Gen 2, Bedrock for agentic reasoning, and highly structured backend logic to provide transparent recommendations.
+Moolah is a premium, AI-driven portfolio tracker and optimizer designed specifically for dividend-growth investors. Unlike traditional stock trackers, Moolah leverages an agentic reasoning engine to analyze safety metrics and provide actionable rebalancing suggestions.
 
-## features
+## 🏗 Architecture & Design Choices
 
-- **Agentic Optimization**: Intelligent portfolio construction balancing yield, growth, quality, and tax efficiency.
-- **AI Explanations**: Every recommendation comes with a generated, validated explanation (via Bedrock).
-- **Tax-Aware**: Estimates tax drag based on user-specific tax brackets.
-- **Safety First**: Automatic gates for dividend cuts, declining fundamentals, and excessive leverage.
-- **Modern UI**: Built with Next.js, Tailwind, and ShadCN for a premium experience.
+### 1. Agentic Reasoning Layer (The Orchestrator)
+- **Choice**: Instead of hard-coded rebalancing heuristics, we use **AWS Bedrock (Claude 3 Haiku)** as a logic gate.
+- **Reason**: Market conditions are fluid. An LLM can weigh diverse metrics (Debt-to-Equity vs. Payout Ratio vs. Sector Concentration) in a nuanced way that traditional algorithms struggle with. Validated via rigid **Zod schemas** to ensure reliability.
 
-## Tech Stack
+### 2. Unified Market Ingestion (The Worker)
+- **Choice**: On-demand Market Sync via SQS and direct GraphQL mutations.
+- **Reason**: Real-time market data is expensive and prone to rate limits (Alpha Vantage). We use a **Provider Cache** and asynchronous worker pattern to hydrate the global Market Domain while keeping the UI snappy.
 
-- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS, ShadCN UI
-- **Backend**: AWS Amplify Gen 2 (Cognito, AppSync/DynamoDB), AWS Lambda
-- **Infrastructure**: AWS CDK (SQS, EventBridge)
-- **AI**: AWS Bedrock (Claude / Titan)
-- **Data**: Alpha Vantage (Market Data) with SQS-based rate limiting
+### 3. Clean UI Architecture
+- **Choice**: Reactive React 19 Frontend with Custom Hooks.
+- **Reason**: By separating business logic (`usePortfolioMetrics`) from components, we achieve high testability and maintainability. Components are purely presentational units.
 
-## Project Structure
+### 4. Direct GraphQL Mutations
+- **Choice**: Preferring `client.graphql` over Amplify's generated helpers for custom functions.
+- **Reason**: Bypasses propagation lag in the Amplify Client generation, ensuring that new features (like Sync or Optimize) work immediately after backend deployment.
 
-- `amplify/`: Backend definition (Gen 2)
-  - `auth/`: Cognito resources
-  - `data/`: DynamoDB schema
-  - `functions/`: Lambda functions (Orchestrator, Worker, Scheduler)
-  - `backend.ts`: CDK custom resource wiring (SQS, EventBridge)
-- `ui/`: Frontend application (Next.js)
-  - `app/`: App Router pages
-  - `components/`: UI components
+## 🛠 Tech Stack
+- **Frontend**: React 19, TypeScript, Vite, Tailwind CSS, Recharts.
+- **Backend**: AWS Amplify Gen 2, AppSync (GraphQL), DynamoDB.
+- **AI**: AWS Bedrock (Claude 3 Haiku).
+- **Testing**: Vitest (Unit) + Playwright (E2E).
 
-## Getting Started
+## 🧪 Testing Coverage
+We target **>80% coverage** across critical business logic.
 
-### Prerequisites
+- **Unit Tests**: `npm run test` (Vitest)
+  - Portfolio ROI calculations.
+  - Estimated annual income logic.
+  - Hook-state transitions.
+- **E2E Tests**: `npx playwright test`
+  - Auth flow (Login/Signup).
+  - Holdings management.
+  - AI Optimization trigger.
 
-- Node.js v18+
-- AWS Account & Credentials configured
-- Alpha Vantage API Key
+## 🚀 Deployment & Maintenance
+1. **Backend**: Managed via AWS Amplify Gen 2 (`npx ampx sandbox` for local development).
+2. **API Keys**: Ensure `ALPHA_VANTAGE_API_KEY` is set in the Amplify environment variables.
+3. **IAM Policies**: The Orchestrator requires `bedrock:InvokeModel` permissions (managed in `amplify/backend.ts`).
 
-### Installation
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Start the local development sandbox (Backend + Frontend):
-   ```bash
-   npx ampx sandbox
-   # In a separate terminal
-   npm run dev
-   ```
-
-## Deployment
-
-Validates against standard Amplify Gen 2 CI/CD.
-Connect this repo to AWS Amplify Console.
-Set the following environment variables in Amplify:
-- `DATA_PROVIDER`: `alpha_vantage` (or `mock`)
-- `ALPHA_VANTAGE_API_KEY`: [Your Key]
-- `EXPLANATION_MODEL_PROVIDER`: `bedrock` (or `mock`)
-
-## Architecture
-
-See `docs/architecture.md` for detailed system design.
+---
+Designed for performance, safety, and alpha. Maintained by the Moolah Engineering Team.

@@ -1,165 +1,48 @@
-import { Link, Routes, Route, useNavigate, Outlet, useLocation } from 'react-router-dom';
+import { Link, useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { Wallet, DollarSign, TrendingUp, Calendar, ArrowUpRight, LogOut, LayoutDashboard, Database, Settings as SettingsIcon, Loader2, Sparkles, RefreshCw, TrendingDown } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, Button, cn } from '@/components/ui';
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { useEffect, useState, useCallback, useMemo } from 'react';
-import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '../../../amplify/data/resource';
+import { useEffect, useState, useMemo } from 'react';
+import { usePortfolioMetrics } from '@/hooks/usePortfolioMetrics';
+import { useCloudActions } from '@/hooks/useCloudActions';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-
-const client = generateClient<Schema>();
 
 type ChartRange = '6M' | '1Y' | '2Y' | '5Y' | '20Y';
 
-function DashboardHome() {
-    const [totalInvested, setTotalInvested] = useState(0);
-    const [marketValue, setMarketValue] = useState(0);
-    const [annualIncome, setAnnualIncome] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isSyncing, setIsSyncing] = useState(false);
-    const [isOptimizing, setIsOptimizing] = useState(false);
-    const [holdingsTickers, setHoldingsTickers] = useState<string[]>([]);
-    const [currentHoldings, setCurrentHoldings] = useState<any[]>([]);
+/**
+ * DashboardHome - The primary overview component for the Moolah platform.
+ * Displays real-time metrics, growth analysis, and AI controls.
+ */
+export function DashboardHome() {
+    const {
+        marketValue, totalInvested, annualIncome, isLoading, holdingsTickers,
+        roiPercentage, isPositive, currentHoldings, refresh
+    } = usePortfolioMetrics();
+
+    const { isSyncing, isOptimizing, syncMarketData, runOptimization } = useCloudActions();
     const [selectedRange, setSelectedRange] = useState<ChartRange>('1Y');
 
-    const calculateMetrics = useCallback(async (holdings: any[]) => {
-        let costTotal = 0;
-        let marketTotal = 0;
-        let incomeTotal = 0;
-        const tickers: string[] = [];
-
-        for (const holding of holdings) {
-            tickers.push(holding.ticker);
-            const holdingCost = holding.shares * (holding.costBasis || 0);
-            costTotal += holdingCost;
-
-            try {
-                // 1. Fetch latest price
-                const { data: prices } = await client.models.MarketPrice.listMarketPriceByTickerAndDate(
-                    { ticker: holding.ticker },
-                    { limit: 1, sortDirection: 'desc' }
-                );
-
-                let currentPrice = (holding.costBasis || 0); // Fallback to cost basis if no price found
-                if (prices && prices.length > 0) {
-                    currentPrice = prices[0].close || currentPrice;
-                }
-                marketTotal += holding.shares * currentPrice;
-
-                // 2. Fetch latest yield for income
-                const { data: fundamentals } = await client.models.MarketFundamental.listMarketFundamentalByTickerAndAsOf(
-                    { ticker: holding.ticker },
-                    { limit: 1, sortDirection: 'desc' }
-                );
-
-                if (fundamentals && fundamentals.length > 0) {
-                    const yieldPct = fundamentals[0].dividendYield || 0;
-                    incomeTotal += (holding.shares * currentPrice) * yieldPct;
-                }
-            } catch (e) {
-                console.warn(`Could not fetch data for ${holding.ticker}`, e);
-                marketTotal += holdingCost; // Safe fallback
-            }
-        }
-
-        setHoldingsTickers(tickers);
-        setTotalInvested(costTotal);
-        setMarketValue(marketTotal);
-        setAnnualIncome(incomeTotal);
-        setIsLoading(false);
-    }, []);
-
-    useEffect(() => {
-        const sub = client.models.Holding.observeQuery().subscribe({
-            next: ({ items }) => {
-                setCurrentHoldings(items);
-                calculateMetrics(items);
-            },
-        });
-        return () => sub.unsubscribe();
-    }, [calculateMetrics]);
-
-    const handleSyncData = async () => {
-        if (holdingsTickers.length === 0) return;
-        setIsSyncing(true);
+    const handleSync = async () => {
         try {
-            console.log("[SYNC] Triggering Market Data Sync via GraphQL...");
-
-            const syncMutation = `
-                mutation SyncMarketData($tickers: [String]) {
-                    syncMarketData(tickers: $tickers)
-                }
-            `;
-
-            const response: any = await client.graphql({
-                query: syncMutation,
-                variables: { tickers: holdingsTickers }
-            });
-
-            if (response.errors) {
-                throw new Error(response.errors[0].message);
-            }
-
-            console.log("[SYNC] Request successful:", response.data.syncMarketData);
-            setTimeout(() => calculateMetrics(currentHoldings), 5000);
-            alert("Market sync started! Your dashboard metrics will update in a few seconds.");
-
+            await syncMarketData(holdingsTickers);
+            setTimeout(refresh, 5000);
+            alert("Market sync started! Metrics will update in seconds.");
         } catch (err: any) {
-            console.error("Sync failed:", err);
-            alert(`Sync Failed: ${err.message || "The cloud engine is still initializing. Please refresh and try again."}`);
-        } finally {
-            setIsSyncing(false);
+            alert(`Sync Failed: ${err.message}`);
         }
     };
 
-    const handleRunOptimization = async () => {
-        setIsOptimizing(true);
+    const handleOptimize = async () => {
         try {
-            console.log("[AI] Triggering AI Optimization via GraphQL...");
-
-            const optimMutation = `
-                mutation RunOptimization($constraints: JSON) {
-                    runOptimization(constraintsJson: $constraints)
-                }
-            `;
-
-            const response: any = await client.graphql({
-                query: optimMutation,
-                variables: { constraints: JSON.stringify({ targetYield: 0.04 }) }
-            });
-
-            if (response.errors) {
-                throw new Error(response.errors[0].message);
-            }
-
-            const rawResult = response.data.runOptimization;
-            const result = JSON.parse(rawResult || "{}");
-
-            if (result.status === 'FAILED') {
-                throw new Error(result.error || "AI Agent failed to process request.");
-            }
-
-            alert("Optimization started! The Moolah AI Agent is now analyzing your portfolio.");
+            await runOptimization(0.04);
+            alert("Optimization started! The AI agent is analyzing your portfolio.");
         } catch (err: any) {
-            console.error("Optimization failed:", err);
             alert(`Optimization Detail: ${err.message}`);
-        } finally {
-            setIsOptimizing(false);
         }
     };
 
-    // Chart Data Generation
+    // Chart logic remains memoized for performance
     const chartData = useMemo(() => {
-        const baseData = [
-            { name: '1', portfolio: 100, benchmark: 100 },
-            { name: '2', portfolio: 105, benchmark: 102 },
-            { name: '3', portfolio: 103, benchmark: 104 },
-            { name: '4', portfolio: 110, benchmark: 108 },
-            { name: '5', portfolio: 115, benchmark: 112 },
-            { name: '6', portfolio: 120, benchmark: 115 },
-            { name: '7', portfolio: 125, benchmark: 118 },
-        ];
-
         const ranges: Record<ChartRange, { labels: string[], multiplier: number }> = {
             '6M': { labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'], multiplier: 1.05 },
             '1Y': { labels: ['Jul', 'Sep', 'Nov', 'Jan', 'Mar', 'May', 'Jul'], multiplier: 1.12 },
@@ -167,34 +50,28 @@ function DashboardHome() {
             '5Y': { labels: ['2021', '2022', '2023', '2024', '2025', '2026'], multiplier: 1.80 },
             '20Y': { labels: ['2006', '2011', '2016', '2021', '2026'], multiplier: 4.5 },
         };
-
         const config = ranges[selectedRange];
         return config.labels.map((label, i) => {
             const progress = i / (config.labels.length - 1);
-            const volatility = 1 + (Math.random() * 0.05 - 0.025);
             return {
                 name: label,
-                portfolio: Math.floor(marketValue * (0.8 + progress * 0.2 * config.multiplier) * volatility),
-                benchmark: Math.floor(marketValue * (0.75 + progress * 0.25 * (config.multiplier * 0.95)) * volatility),
+                portfolio: Math.floor(marketValue * (0.8 + progress * 0.2 * config.multiplier) * (1 + (Math.random() * 0.04 - 0.02))),
+                benchmark: Math.floor(marketValue * (0.75 + progress * 0.25 * (config.multiplier * 0.9)) * (1 + (Math.random() * 0.03 - 0.015))),
             };
         });
     }, [selectedRange, marketValue]);
-
-    // ROI Calculation
-    const roiPercentage = totalInvested > 0 ? ((marketValue - totalInvested) / totalInvested) * 100 : 0;
-    const isPositive = roiPercentage >= 0;
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 w-fit">Dashboard</h1>
+                    <h1 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 w-fit text-primary">Dashboard</h1>
                     <p className="text-slate-400">Portfolio performance and AI intelligence.</p>
                 </div>
                 <Button
                     variant="outline"
                     size="sm"
-                    onClick={handleSyncData}
+                    onClick={handleSync}
                     disabled={isSyncing || holdingsTickers.length === 0}
                     className="border-white/5 bg-slate-900/50 hover:bg-slate-800 text-slate-300 gap-2"
                 >
@@ -253,11 +130,7 @@ function DashboardHome() {
                                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
                                 <XAxis dataKey="name" stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
                                 <YAxis stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
-                                <Tooltip
-                                    contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }}
-                                    itemStyle={{ fontSize: '12px' }}
-                                    labelStyle={{ color: '#94a3b8', marginBottom: '4px' }}
-                                />
+                                <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }} itemStyle={{ fontSize: '12px' }} />
                                 <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', paddingBottom: '20px' }} />
                                 <Line type="monotone" dataKey="portfolio" name="Your Portfolio" stroke="#10b981" strokeWidth={3} dot={false} activeDot={{ r: 6, strokeWidth: 0 }} />
                                 <Line type="monotone" dataKey="benchmark" name="VIG Benchmark" stroke="#06b6d4" strokeWidth={2} strokeDasharray="5 5" dot={false} />
@@ -277,15 +150,14 @@ function DashboardHome() {
                                 <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all" />
                             </div>
                             <p className="text-xs text-slate-400 mb-4">Generate recommendations based on latest market data.</p>
-                            <Button onClick={handleRunOptimization} disabled={isOptimizing} size="sm" className="w-full bg-emerald-600 hover:bg-emerald-500 text-white">
+                            <Button onClick={handleOptimize} disabled={isOptimizing} size="sm" className="w-full bg-emerald-600 hover:bg-emerald-500 text-white">
                                 {isOptimizing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                                 {isOptimizing ? "Optimizing..." : "Start Optimization"}
                             </Button>
                         </div>
-
-                        <div className="p-4 bg-slate-800/40 border border-white/5 rounded-xl hover:bg-slate-800/60 transition-all">
+                        <div className="p-4 bg-slate-800/40 border border-white/5 rounded-xl">
                             <h4 className="font-bold text-slate-300 mb-2">Manage Holdings</h4>
-                            <p className="text-xs text-slate-400 mb-4">Update your portfolio positions manually or via CSV.</p>
+                            <p className="text-xs text-slate-400 mb-4">Update your portfolio positions manually.</p>
                             <Link to="/dashboard/holdings">
                                 <Button variant="outline" size="sm" className="w-full border-white/10 text-slate-300">View Holdings</Button>
                             </Link>
@@ -312,9 +184,14 @@ function StatsCard({ title, value, icon, trend, color = "text-slate-50" }: any) 
     );
 }
 
+/**
+ * DashboardPage - Main wrapper for the authenticated dashboard area.
+ * Handles sidebar navigation and auth enforcement.
+ */
 export default function DashboardPage() {
-    const { signOut, user, authStatus } = useAuthenticator((context) => [context.authStatus]);
+    const { signOut, user, authStatus } = useAuthenticator();
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         if (authStatus === 'unauthenticated') navigate('/login');
@@ -327,34 +204,30 @@ export default function DashboardPage() {
             <aside className="w-64 border-r border-white/5 bg-slate-900/20 flex flex-col">
                 <div className="p-6">
                     <div className="flex items-center gap-3">
-                        <img src="/logo.png" alt="Moolah Logo" className="w-8 h-8 object-contain rounded-lg shadow-lg border border-white/10 bg-slate-900" />
+                        <img src="/logo.png" alt="Moolah" className="w-8 h-8 rounded-lg" />
                         <span className="font-bold tracking-tight text-lg">Moolah</span>
                     </div>
                 </div>
 
                 <nav className="flex-grow px-4 space-y-2 mt-4">
-                    <SidebarLink to="/dashboard/home" icon={<LayoutDashboard className="w-4 h-4" />} label="Overview" />
-                    <SidebarLink to="/dashboard/holdings" icon={<Database className="w-4 h-4" />} label="Holdings" />
-                    <SidebarLink to="/dashboard/recommendations" icon={<Sparkles className="w-4 h-4" />} label="Buy Suggestions" />
-                    <SidebarLink to="/dashboard/settings" icon={<SettingsIcon className="w-4 h-4" />} label="Settings" />
+                    <SidebarLink to="/dashboard/home" icon={<LayoutDashboard className="w-4 h-4" />} label="Overview" active={location.pathname === '/dashboard/home'} />
+                    <SidebarLink to="/dashboard/holdings" icon={<Database className="w-4 h-4" />} label="Holdings" active={location.pathname === '/dashboard/holdings'} />
+                    <SidebarLink to="/dashboard/recommendations" icon={<Sparkles className="w-4 h-4" />} label="Suggestions" active={location.pathname === '/dashboard/recommendations'} />
+                    <SidebarLink to="/dashboard/settings" icon={<SettingsIcon className="w-4 h-4" />} label="Settings" active={location.pathname === '/dashboard/settings'} />
                 </nav>
 
-                <div className="p-4 mt-auto border-t border-white/5">
-                    <div className="flex items-center gap-3 px-3 py-2 mb-4">
-                        <div className="w-8 h-8 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center text-[10px] uppercase font-bold text-slate-400">
-                            {user?.username?.substring(0, 2) || 'U'}
+                <div className="p-4 mt-auto border-t border-white/5 text-sm">
+                    <div className="flex items-center gap-3 px-3 py-2 mb-4 bg-white/5 rounded-xl border border-white/5">
+                        <div className="w-7 h-7 rounded-full bg-emerald-500/20 flex items-center justify-center text-[10px] font-bold text-emerald-400 border border-emerald-500/20">
+                            {user?.username?.substring(0, 2).toUpperCase()}
                         </div>
-                        <div className="flex flex-col overflow-hidden">
-                            <span className="text-sm font-medium truncate text-slate-200">{user?.username}</span>
-                            <span className="text-[10px] text-slate-500 truncate">Pro Account</span>
-                        </div>
+                        <span className="truncate">{user?.username}</span>
                     </div>
-                    <button onClick={signOut} className="flex items-center gap-3 w-full px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                    <button onClick={signOut} className="flex items-center gap-3 w-full px-3 py-2 text-slate-400 hover:text-white transition-colors">
                         <LogOut className="w-4 h-4" /> Sign Out
                     </button>
                 </div>
             </aside>
-
             <main className="flex-grow p-8 overflow-y-auto">
                 <Outlet />
             </main>
@@ -362,14 +235,13 @@ export default function DashboardPage() {
     );
 }
 
-function SidebarLink({ to, icon, label }: any) {
-    const location = useLocation();
-    const active = location.pathname === to;
+function SidebarLink({ to, icon, label, active }: any) {
     return (
-        <Link to={to} className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all ${active ? 'bg-emerald-500/10 text-emerald-400 font-medium' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'}`}>
+        <Link to={to} className={cn(
+            "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all",
+            active ? "bg-emerald-500/10 text-emerald-400 font-medium" : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+        )}>
             {icon} {label}
         </Link>
     );
 }
-
-export { DashboardHome }

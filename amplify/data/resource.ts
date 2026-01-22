@@ -2,10 +2,22 @@ import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 import { orchestrator } from '../functions/orchestrator/resource';
 import { marketWorker } from '../functions/market-worker/resource';
 
+/**
+ * Moolah Data Schema - Domain-Driven Design
+ * 
+ * We separate data into two primary domains:
+ * 1. User Domain: Owned records (Holdings, Recommendations, Settings).
+ * 2. Market Domain: Global read-only data (Prices, Fundamentals, Dividends).
+ * 
+ * Authorization:
+ * - Owners can full-access their own data.
+ * - Authenticated users can read shared market data.
+ */
 const schema = a.schema({
-    // User Specific Data
+    // --- USER DOMAIN ---
+
     UserSettings: a.model({
-        settingsJson: a.json(), // Stores constraints, tax inputs, preferences
+        settingsJson: a.json(), // Constraints, tax inputs, preferences
     }).authorization((allow) => [allow.owner()]),
 
     Holding: a.model({
@@ -17,8 +29,8 @@ const schema = a.schema({
 
     Recommendation: a.model({
         status: a.string().required(), // 'PENDING', 'COMPLETED', 'FAILED'
-        packetJson: a.json(), // The full canonical output
-        explanationJson: a.json(), // AI generated explanation
+        packetJson: a.json(), // Recommended rebalance distribution
+        explanationJson: a.json(), // Human-readable AI reasoning
     }).authorization((allow) => [allow.owner()]),
 
     AuditLog: a.model({
@@ -27,7 +39,8 @@ const schema = a.schema({
         metadata: a.json(),
     }).authorization((allow) => [allow.owner(), allow.group('Admin')]),
 
-    // Market Data - Global
+    // --- MARKET DOMAIN ---
+
     MarketPrice: a.model({
         ticker: a.string().required(),
         date: a.string().required(), // YYYY-MM-DD
@@ -77,7 +90,11 @@ const schema = a.schema({
             allow.authenticated().to(['read']),
         ]),
 
-    // Custom Mutations
+    // --- ORCHESTRATION MUTATIONS ---
+
+    /**
+     * Trigger the AI reasoning engine to suggest portfolio optimizations.
+     */
     runOptimization: a.mutation()
         .arguments({
             constraintsJson: a.json(),
@@ -86,6 +103,9 @@ const schema = a.schema({
         .authorization((allow) => [allow.authenticated()])
         .handler(a.handler.function(orchestrator)),
 
+    /**
+     * On-demand synchronization of market data for specific tickers.
+     */
     syncMarketData: a.mutation()
         .arguments({
             tickers: a.string().array(),

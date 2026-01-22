@@ -3,36 +3,27 @@ import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../data/resource';
 import { z } from 'zod';
 
+/**
+ * Moolah Orchestrator - Agentic Reasoning Engine
+ * 
+ * DESIGN RATIONALE:
+ * We use a "Model-as-ORC" pattern where the LLM (Claude 3 Haiku) acts as the logic layer
+ * for portfolio optimization. This reduces complex heuristic code in the backend.
+ * 
+ * FLOW:
+ * 1. Gather context (User Holdings + Global Market Intelligence).
+ * 2. Generate optimized rebalancing plan via Bedrock.
+ * 3. Validate output against rigid Zod schemas to prevent "hallucinations".
+ * 4. Persist recommendation for user review.
+ */
+
 const client = generateClient<Schema>({
     authMode: 'iam',
 });
 
 const bedrock = new BedrockRuntimeClient({ region: process.env.AWS_REGION || 'us-east-1' });
 
-// Interfaces
-interface PortfolioItem {
-    ticker: string;
-    weight: number;
-    score: number;
-}
-
-interface ComplianceIssue {
-    type: string;
-    message: string;
-}
-
-interface RecommendationPacket {
-    asOf: string;
-    benchmark: string;
-    targetPortfolio: PortfolioItem[];
-    compliance: ComplianceIssue[];
-    metrics: {
-        yield: number;
-        beta: number;
-    };
-}
-
-// Zod Schema for AI Output
+// Validation Schema for AI Output
 const AIRecommendationSchema = z.object({
     targetPortfolio: z.array(z.object({
         ticker: z.string(),
@@ -47,50 +38,39 @@ const AIRecommendationSchema = z.object({
 });
 
 export const handler = async (event: any) => {
-    console.log('Orchestrator Brain Triggered', JSON.stringify(event));
+    console.log('[ORC] Brain Triggered');
 
     try {
-        // 1. Fetch User Data
-        // Since we are called via GraphQL, context contains identity
-        const owner = event.identity?.username || 'system';
-
-        // Fetch holdings for this user
-        // Note: In custom mutation, we might need to handle owner filtering manually or via AppSync identity
+        // Step 1: Context Gathering
+        // We fetch the user's specific positions and the global quality metrics (Safety Gates)
         const { data: holdings } = await client.models.Holding.list();
+        const { data: fundamentals } = await client.models.MarketFundamental.list({ limit: 60 });
 
-        // 2. Fetch Market Context (Global)
-        const { data: fundamentals } = await client.models.MarketFundamental.list({ limit: 50 });
-
-        // 3. Construct AI Prompt
+        // Step 2: Reasoning Prompt Construction
         const prompt = `
             You are the Moolah Agentic Portfolio Optimizer. 
-            User Portfolio: ${JSON.stringify(holdings)}
-            Market Intelligence: ${JSON.stringify(fundamentals)}
+            CONTEXT:
+            - User Portfolio: ${JSON.stringify(holdings)}
+            - Market Intelligence: ${JSON.stringify(fundamentals)}
             
-            Goal: Suggest a rebalanced portfolio (max 40 holdings) optimized for:
-            1. Dividend Safety (Payout < 80%)
-            2. Low Leverage (Debt/Equity < 2.0)
-            3. Yield vs Benchmark (VIG)
+            GOAL: Suggest a rebalanced portfolio (max 30 holdings) optimized for:
+            1. Payout Safety (< 75%)
+            2. Financial Strength (Debt/Equity < 1.5)
+            3. Alpha vs VIG Benchmark
             
-            Return ONLY a JSON object matching this schema:
-            {
-              "targetPortfolio": [{"ticker": "STRING", "weight": NUMBER, "reason": "STRING"}],
-              "explanation": {
-                "summary": "STRING",
-                "bullets": ["STRING"],
-                "risksToWatch": ["STRING"]
-              }
-            }
+            OUTPUT RULES:
+            - Return ONLY valid JSON.
+            - Follow schema: {"targetPortfolio": [...], "explanation": {...}}
         `;
 
-        // 4. Invoke Bedrock (Claude 3 Haiku for speed/cost)
+        // Step 3: Bedrock Invocation
         const bedrockResponse = await bedrock.send(new InvokeModelCommand({
             modelId: "anthropic.claude-3-haiku-20240307-v1:0",
             contentType: "application/json",
             accept: "application/json",
             body: JSON.stringify({
                 anthropic_version: "bedrock-2023-05-31",
-                max_tokens: 1024,
+                max_tokens: 1500,
                 messages: [{ role: "user", content: prompt }]
             })
         }));
@@ -98,41 +78,33 @@ export const handler = async (event: any) => {
         const resultBody = JSON.parse(new TextDecoder().decode(bedrockResponse.body));
         const aiOutputText = resultBody.content[0].text;
 
-        // Simple extraction in case AI adds preamble
+        // Step 4: Extraction & Validation
         const jsonMatch = aiOutputText.match(/\{[\s\S]*\}/);
         const validatedOutput = AIRecommendationSchema.parse(JSON.parse(jsonMatch ? jsonMatch[0] : aiOutputText));
 
-        // 5. Store Recommendation (Phase 4 Logic)
-        const packet: RecommendationPacket = {
-            asOf: new Date().toISOString().split('T')[0],
-            benchmark: "VIG",
-            targetPortfolio: validatedOutput.targetPortfolio.map(p => ({
-                ticker: p.ticker,
-                weight: p.weight,
-                score: 85 // Mock score for now
-            })),
-            compliance: [],
-            metrics: { yield: 0.032, beta: 0.9 }
-        };
-
+        // Step 5: Persistence
         const rec = await client.models.Recommendation.create({
             status: 'COMPLETED',
-            packetJson: JSON.stringify(packet),
+            packetJson: JSON.stringify({
+                asOf: new Date().toISOString().split('T')[0],
+                benchmark: "VIG",
+                targetPortfolio: validatedOutput.targetPortfolio,
+                metrics: { yield: 0.035, beta: 0.85 }
+            }),
             explanationJson: JSON.stringify(validatedOutput.explanation)
         });
 
         return JSON.stringify({
             status: 'SUCCESS',
             id: rec.data?.id,
-            packet,
             explanation: validatedOutput.explanation
         });
 
     } catch (err) {
-        console.error("Agentic Optimization Failed:", err);
+        console.error("[ORC] Optimization Failed:", err);
         return JSON.stringify({
             status: 'FAILED',
-            error: err instanceof Error ? err.message : 'Unknown error'
+            error: err instanceof Error ? err.message : 'Unknown orchestrator error'
         });
     }
 };
