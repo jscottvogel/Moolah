@@ -11,11 +11,12 @@ applications:
       phases:
         preBuild:
           commands:
-            - echo "Starting build for UI workspace..."
+            - echo "Starting build for UI..."
         build:
           commands:
-            # Change to root and run workspace build. npx ensures the binary is found.
-            - cd .. && npx next build ui
+            # IMPORTANT: Run build using workspace flag from the project root.
+            # This ensures the 'next' binary (hoisted to root) is correctly found.
+            - cd .. && npm run build -w ui
       artifacts:
         baseDirectory: .next
         files:
