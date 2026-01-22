@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { client } from '../client';
+import { getClient } from '../client';
 
 /**
  * Hook to manage portfolio metrics, ROI, and income calculations.
@@ -18,6 +18,7 @@ export function usePortfolioMetrics() {
         let marketTotal = 0;
         let incomeTotal = 0;
         const tickers: string[] = [];
+        const client = getClient();
 
         for (const holding of holdings) {
             tickers.push(holding.ticker);
@@ -61,12 +62,13 @@ export function usePortfolioMetrics() {
     }, []);
 
     useEffect(() => {
+        const client = getClient();
         const sub = client.models.Holding.observeQuery().subscribe({
             next: ({ items }) => {
                 setCurrentHoldings(items);
                 calculateMetrics(items);
             },
-            error: (err) => console.error("[METRICS] ObserveQuery failed:", err)
+            error: (err: any) => console.error("[METRICS] ObserveQuery failed:", err)
         });
         return () => sub.unsubscribe();
     }, [calculateMetrics]);

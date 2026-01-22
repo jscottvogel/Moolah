@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, Button } from '@/components/ui';
 import { TrendingUp, Info, PlusCircle, Loader2, Sparkles } from 'lucide-react';
-import { client } from '../client';
+import { getClient } from '../client';
 import { useNavigate } from 'react-router-dom';
 
 export default function RecommendationsPage() {
@@ -12,6 +12,7 @@ export default function RecommendationsPage() {
 
     useEffect(() => {
         const fetchSuggestions = async () => {
+            const client = getClient();
             setIsLoading(true);
             try {
                 // Fetch top quality stocks from our Market database
@@ -48,6 +49,7 @@ export default function RecommendationsPage() {
 
         setIsActionLoading(stock.symbol);
         try {
+            const client = getClient();
             await client.models.Holding.create({
                 ticker: stock.symbol,
                 shares,

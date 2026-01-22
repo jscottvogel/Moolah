@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { client } from '../client';
+import { getClient } from '../client';
 
 /**
  * Hook for managing cloud-side orchestration actions (Sync, Optimize).
@@ -13,6 +13,7 @@ export function useCloudActions() {
         if (!tickers.length) return;
         setIsSyncing(true);
         try {
+            const client = getClient();
             console.log("[CLOUD] Syncing tickers:", tickers);
             const syncMutation = `
                 mutation SyncMarketData($tickers: [String]) {
@@ -26,7 +27,6 @@ export function useCloudActions() {
 
             if (response.errors) {
                 console.error("[CLOUD] GraphQL Errors:", response.errors);
-                // Extracting as much detail as possible from GraphQL errors
                 const detailedError = response.errors.map((e: any) => e.message).join(", ");
                 throw new Error(detailedError || "Cloud sync mutation failed.");
             }
@@ -48,13 +48,13 @@ export function useCloudActions() {
     const runOptimization = async (targetYield: number = 0.04) => {
         setIsOptimizing(true);
         try {
+            const client = getClient();
             console.log("[CLOUD] Running optimization with target yield:", targetYield);
             const optimMutation = `
                 mutation RunOptimization($constraints: AWSJSON) {
                     runOptimization(constraintsJson: $constraints)
                 }
             `;
-            // Note: AWSJSON expects a stringified JSON
             const response: any = await client.graphql({
                 query: optimMutation,
                 variables: { constraints: JSON.stringify({ targetYield }) }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, Button } from '@/components/ui';
 import { Plus, Trash2, AlertCircle, Loader2, Edit3, X, Check } from 'lucide-react';
-import { client } from '../client';
+import { getClient } from '../client';
 import type { Schema } from '../../../../amplify/data/resource';
 
 /**
@@ -19,12 +19,13 @@ export default function HoldingsPage() {
     const [editCost, setEditCost] = useState("");
 
     useEffect(() => {
+        const client = getClient();
         const sub = client.models.Holding.observeQuery().subscribe({
-            next: ({ items }) => {
+            next: ({ items }: any) => {
                 setHoldings([...items]);
                 setIsLoading(false);
             },
-            error: (err) => console.error("[HOLDINGS] Sync failed:", err),
+            error: (err: any) => console.error("[HOLDINGS] Sync failed:", err),
         });
         return () => sub.unsubscribe();
     }, []);
@@ -40,10 +41,11 @@ export default function HoldingsPage() {
 
         setIsSaving(true);
         try {
+            const client = getClient();
             await client.models.Holding.create({ ticker, shares, costBasis });
             // Direct GraphQL sync trigger
             const syncMutation = `mutation SyncMarketData($t: [String]) { syncMarketData(tickers: $t) }`;
-            client.graphql({ query: syncMutation, variables: { t: [ticker] } }).catch(e => console.warn(e));
+            client.graphql({ query: syncMutation, variables: { t: [ticker] } }).catch((e: any) => console.warn(e));
         } catch (err) {
             alert("Save failed");
         } finally {
@@ -58,6 +60,7 @@ export default function HoldingsPage() {
 
         setIsSaving(true);
         try {
+            const client = getClient();
             await client.models.Holding.update({ id, shares, costBasis });
             setEditingId(null);
         } catch (err) {
@@ -69,7 +72,8 @@ export default function HoldingsPage() {
 
     const handleDelete = async (id: string) => {
         if (!window.confirm("Remove this holding?")) return;
-        await client.models.Holding.delete({ id }).catch(e => alert(e.message));
+        const client = getClient();
+        await client.models.Holding.delete({ id }).catch((e: any) => alert(e.message));
     };
 
     return (
