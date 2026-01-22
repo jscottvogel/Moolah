@@ -47,11 +47,13 @@ export default function HoldingsPage() {
                 shares,
                 costBasis,
             });
-            // Auto-trigger sync for the new ticker to populate income metrics
-            client.mutations.syncMarketData({ tickers: [ticker] });
+            // Defensive check: mutations might not be available immediately during deployment
+            if (client.mutations && typeof client.mutations.syncMarketData === 'function') {
+                client.mutations.syncMarketData({ tickers: [ticker] });
+            }
         } catch (err) {
             console.error("Error adding holding:", err);
-            alert("Failed to add holding.");
+            alert("Failed to add holding. Please check your network or try again.");
         } finally {
             setIsSaving(false);
         }

@@ -73,13 +73,16 @@ function DashboardHome() {
         if (holdingsTickers.length === 0) return;
         setIsSyncing(true);
         try {
-            await client.mutations.syncMarketData({ tickers: holdingsTickers });
-            // Re-calculate after a short delay to allow backend persistence to settle
-            setTimeout(() => calculateMetrics(currentHoldings), 5000);
-            alert("Market data sync requested. Metrics will update shortly.");
+            if (client.mutations && typeof client.mutations.syncMarketData === 'function') {
+                await client.mutations.syncMarketData({ tickers: holdingsTickers });
+                setTimeout(() => calculateMetrics(currentHoldings), 5000);
+                alert("Market data sync requested. Metrics will update shortly.");
+            } else {
+                alert("Market sync is currently being updated. Please try again in 1-2 minutes.");
+            }
         } catch (err) {
             console.error("Sync failed:", err);
-            alert("Failed to sync market data.");
+            alert("Failed to sync market data. Check your network.");
         } finally {
             setIsSyncing(false);
         }
@@ -88,6 +91,10 @@ function DashboardHome() {
     const handleRunOptimization = async () => {
         setIsOptimizing(true);
         try {
+            if (!client.mutations || typeof client.mutations.runOptimization !== 'function') {
+                throw new Error("AI Optimizer is initializing. Please refresh in a moment.");
+            }
+
             const { data: rawResult, errors } = await client.mutations.runOptimization({
                 constraintsJson: JSON.stringify({ targetYield: 0.04 })
             });

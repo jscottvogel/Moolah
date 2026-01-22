@@ -45,6 +45,9 @@ marketQueue.grantConsumeMessages(backend.marketWorker.resources.lambda);
 marketQueue.grantSendMessages(backend.marketScheduler.resources.lambda);
 (backend.marketScheduler.resources.lambda as any).addEnvironment('MARKET_QUEUE_URL', marketQueue.queueUrl);
 
+// 2.5 Pass API Keys
+(backend.marketWorker.resources.lambda as any).addEnvironment('ALPHA_VANTAGE_API_KEY', process.env.ALPHA_VANTAGE_API_KEY || '');
+
 // 3. EventBridge Schedule (Daily)
 const marketSchedulerStack = Stack.of(backend.marketScheduler.resources.lambda);
 const dailyRule = new events.Rule(marketSchedulerStack, 'DailyMarketRefreshRule', {
