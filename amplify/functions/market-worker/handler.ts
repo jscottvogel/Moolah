@@ -1,11 +1,14 @@
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../data/resource';
 
-// Initialize the data client with IAM auth for backend access
+// Initialize the data client
 const client = generateClient<Schema>({
     authMode: 'iam',
 });
 
+const sqs = new SQSClient({});
+const QUEUE_URL = process.env.MARKET_QUEUE_URL;
 const ALPHA_VANTAGE_API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
 
 export const handler = async (event: any) => {
@@ -19,7 +22,7 @@ export const handler = async (event: any) => {
                 const body = JSON.parse(record.body);
                 const { ticker, type } = body;
                 await processTicker(ticker, type);
-                await new Promise(r => setTimeout(r, 12000)); // Respect rate limits
+                await new Promise(r => setTimeout(r, 12000)); // Respect Alpha Vantage free tier limits
             } catch (error) {
                 console.error(`Error processing SQS record:`, error);
             }
@@ -27,25 +30,27 @@ export const handler = async (event: any) => {
         return;
     }
 
-    // Case 2: Triggered via AppSync Mutation (Direct call)
-    // The event will contain arguments if called via a.mutation()
+    // Case 2: Triggered via AppSync Mutation (Direct sync)
+    // We offload to SQS to return "ACCEPTED" immediately to the UI
     if (event.arguments && event.arguments.tickers) {
         const { tickers } = event.arguments;
-        console.log('Processing AppSync request for tickers:', tickers);
+        console.log('Offloading tickers to SQS:', tickers);
 
         for (const ticker of tickers) {
             try {
-                // For direct sync, we fetch both Price and Fundamentals
-                await processTicker(ticker, 'PRICE');
-                await processTicker(ticker, 'FUNDAMENTAL');
-                // Note: We might hit rate limits here if too many tickers are requested at once.
-                // In a production app, we'd send these to SQS instead of processing inline.
-                await new Promise(r => setTimeout(r, 2000));
+                await sqs.send(new SendMessageCommand({
+                    QueueUrl: QUEUE_URL,
+                    MessageBody: JSON.stringify({ ticker, type: 'PRICE' })
+                }));
+                await sqs.send(new SendMessageCommand({
+                    QueueUrl: QUEUE_URL,
+                    MessageBody: JSON.stringify({ ticker, type: 'FUNDAMENTAL' })
+                }));
             } catch (error) {
-                console.error(`Error syncing ticker ${ticker}:`, error);
+                console.error(`Error offloading ticker ${ticker}:`, error);
             }
         }
-        return JSON.stringify({ status: 'SUCCESS', count: tickers.length });
+        return JSON.stringify({ status: 'ACCEPTED', count: tickers.length });
     }
 
     console.warn('Unknown event type received by Market Worker');
@@ -76,6 +81,9 @@ async function fetchAndStorePrice(ticker: string) {
             adjustedClose: parseFloat(latestMetrics["5. adjusted close"]),
             volume: parseFloat(latestMetrics["6. volume"]),
         });
+        console.log(`[ALPHAVANTAGE] Stored price for ${ticker}`);
+    } else {
+        console.error(`[ALPHAVANTAGE] No price data for ${ticker}. Response:`, JSON.stringify(data));
     }
 }
 
@@ -98,6 +106,9 @@ async function fetchAndStoreFundamentals(ticker: string) {
             dataJson: JSON.stringify(data),
             qualityScore: calculateQualityScore(payoutRatio, debtToEquity),
         });
+        console.log(`[ALPHAVANTAGE] Stored fundamentals for ${ticker}`);
+    } else {
+        console.error(`[ALPHAVANTAGE] No fundamentals for ${ticker}. Response:`, JSON.stringify(data));
     }
 }
 

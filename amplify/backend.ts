@@ -41,6 +41,10 @@ const marketQueue = new sqs.Queue(customStack, 'MarketDataQueue', {
 // Worker consumes queue
 marketQueue.grantConsumeMessages(backend.marketWorker.resources.lambda);
 
+// Worker also needs to send to queue when triggered via AppSync mutation
+marketQueue.grantSendMessages(backend.marketWorker.resources.lambda);
+(backend.marketWorker.resources.lambda as any).addEnvironment('MARKET_QUEUE_URL', marketQueue.queueUrl);
+
 // Scheduler sends to queue
 marketQueue.grantSendMessages(backend.marketScheduler.resources.lambda);
 (backend.marketScheduler.resources.lambda as any).addEnvironment('MARKET_QUEUE_URL', marketQueue.queueUrl);
