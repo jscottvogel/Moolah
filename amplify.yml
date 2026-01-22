@@ -3,6 +3,7 @@ backend:
   phases:
     build:
       commands:
+        # Install everything for the whole workspace at the root
         - npm install
         - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID --outputs-out-dir ui
 applications:
@@ -11,7 +12,8 @@ applications:
       phases:
         preBuild:
           commands:
-            - npm install
+            # DO NOT run npm install here, it breaks React Hooks by double-loading React in workspaces
+            - echo "Skipping local install, relying on root install"
         build:
           commands:
             - npm run build
@@ -22,4 +24,4 @@ applications:
       cache:
         paths:
           - .next/cache/**/*
-          - node_modules/**/*
+          - ../node_modules/**/*
