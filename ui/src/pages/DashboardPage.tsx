@@ -83,18 +83,30 @@ function DashboardHome() {
         if (holdingsTickers.length === 0) return;
         setIsSyncing(true);
         try {
-            const mutations: any = client.mutations;
-            if (mutations?.syncMarketData) {
-                await mutations.syncMarketData({ tickers: holdingsTickers });
-                setTimeout(() => calculateMetrics(currentHoldings), 5000);
-                alert("Market sync started. Prices and yields will update shortly.");
-            } else {
-                console.warn("syncMarketData mutation not found. Available:", Object.keys(mutations || {}));
-                alert("The Sync feature is still being wired up in the cloud. Please refresh your browser (Cmd/Ctrl + R).");
+            console.log("[SYNC] Triggering Market Data Sync via GraphQL...");
+
+            const syncMutation = `
+                mutation SyncMarketData($tickers: [String]) {
+                    syncMarketData(tickers: $tickers)
+                }
+            `;
+
+            const response: any = await client.graphql({
+                query: syncMutation,
+                variables: { tickers: holdingsTickers }
+            });
+
+            if (response.errors) {
+                throw new Error(response.errors[0].message);
             }
+
+            console.log("[SYNC] Request successful:", response.data.syncMarketData);
+            setTimeout(() => calculateMetrics(currentHoldings), 5000);
+            alert("Market sync started! Your dashboard metrics will update in a few seconds.");
+
         } catch (err: any) {
             console.error("Sync failed:", err);
-            alert(`Failed: Check network or refresh the page.`);
+            alert(`Sync Failed: ${err.message || "The cloud engine is still initializing. Please refresh and try again."}`);
         } finally {
             setIsSyncing(false);
         }
@@ -103,19 +115,31 @@ function DashboardHome() {
     const handleRunOptimization = async () => {
         setIsOptimizing(true);
         try {
-            const mutations: any = client.mutations;
-            if (!mutations?.runOptimization) {
-                console.error("AI mutation missing. Available mutations:", Object.keys(mutations || {}));
-                throw new Error("The AI Optimizer is being deployed. Please refresh your browser (Cmd/Ctrl + R) to link the new engine.");
+            console.log("[AI] Triggering AI Optimization via GraphQL...");
+
+            const optimMutation = `
+                mutation RunOptimization($constraints: JSON) {
+                    runOptimization(constraintsJson: $constraints)
+                }
+            `;
+
+            const response: any = await client.graphql({
+                query: optimMutation,
+                variables: { constraints: JSON.stringify({ targetYield: 0.04 }) }
+            });
+
+            if (response.errors) {
+                throw new Error(response.errors[0].message);
             }
 
-            const { data: rawResult, errors } = await mutations.runOptimization({
-                constraintsJson: JSON.stringify({ targetYield: 0.04 })
-            });
-            if (errors) throw new Error(errors[0].message);
+            const rawResult = response.data.runOptimization;
             const result = JSON.parse(rawResult || "{}");
-            if (result.status === 'FAILED') throw new Error(result.error);
-            alert("Optimization started! The AI agent is analyzing your portfolio.");
+
+            if (result.status === 'FAILED') {
+                throw new Error(result.error || "AI Agent failed to process request.");
+            }
+
+            alert("Optimization started! The Moolah AI Agent is now analyzing your portfolio.");
         } catch (err: any) {
             console.error("Optimization failed:", err);
             alert(`Optimization Detail: ${err.message}`);

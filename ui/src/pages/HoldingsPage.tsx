@@ -47,12 +47,13 @@ export default function HoldingsPage() {
                 shares,
                 costBasis,
             });
-            // Defensive check: mutations might not be available immediately during deployment
-            const mutations = client.mutations as any;
-            if (mutations && typeof mutations.syncMarketData === 'function') {
-                console.log(`[SYNC] Triggering sync for added ticker: ${ticker}`);
-                mutations.syncMarketData({ tickers: [ticker] });
-            }
+            // Direct GraphQL call to bypass client generation lag
+            const syncMutation = `mutation SyncMarketData($tickers: [String]) { syncMarketData(tickers: $tickers) }`;
+            client.graphql({
+                query: syncMutation,
+                variables: { tickers: [ticker] }
+            }).catch(e => console.warn("Auto-sync background request failed:", e));
+
         } catch (err) {
             console.error("Error adding holding:", err);
             alert("Failed to add holding. Please check your network or try again.");
