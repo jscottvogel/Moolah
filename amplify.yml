@@ -11,12 +11,11 @@ applications:
       phases:
         preBuild:
           commands:
-            # We already installed everything at the root
-            - echo "Using workspace dependencies..."
+            - echo "Starting build for UI workspace..."
         build:
           commands:
-            # Run the build from the project root to ensure Next.js binary is found in workspaces
-            - cd .. && npm run build -w ui
+            # Change to root and run workspace build. npx ensures the binary is found.
+            - cd .. && npx next build ui
       artifacts:
         baseDirectory: .next
         files:
