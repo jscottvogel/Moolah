@@ -1,10 +1,47 @@
 import { Link, Routes, Route, useNavigate, Outlet, useLocation } from 'react-router-dom';
-import { Wallet, DollarSign, TrendingUp, Calendar, ArrowUpRight, LogOut, LayoutDashboard, Database, Settings as SettingsIcon } from 'lucide-react';
+import { Wallet, DollarSign, TrendingUp, Calendar, ArrowUpRight, LogOut, LayoutDashboard, Database, Settings as SettingsIcon, Loader2, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, Button } from '@/components/ui';
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { generateClient } from 'aws-amplify/data';
+import type { Schema } from '../../../amplify/data/resource';
+
+const client = generateClient<Schema>();
 
 function DashboardHome() {
+    const [totalValue, setTotalValue] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isOptimizing, setIsOptimizing] = useState(false);
+
+    useEffect(() => {
+        const sub = client.models.Holding.observeQuery().subscribe({
+            next: ({ items }) => {
+                const total = items.reduce((acc, current) => {
+                    return acc + (current.shares * (current.costBasis || 0));
+                }, 0);
+                setTotalValue(total);
+                setIsLoading(false);
+            },
+        });
+        return () => sub.unsubscribe();
+    }, []);
+
+    const handleRunOptimization = async () => {
+        setIsOptimizing(true);
+        try {
+            const { data, errors } = await client.mutations.runOptimization({
+                constraintsJson: JSON.stringify({ targetYield: 0.04 })
+            });
+            if (errors) throw errors;
+            alert("Optimization started! Check 'Recommendations' in a few moments.");
+        } catch (err) {
+            console.error("Optimization failed:", err);
+            alert("Failed to start optimization.");
+        } finally {
+            setIsOptimizing(false);
+        }
+    };
+
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <div>
@@ -13,7 +50,12 @@ function DashboardHome() {
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <StatsCard title="Total Value" value="$0.00" icon={<Wallet className="h-4 w-4" />} trend="+0.0%" />
+                <StatsCard
+                    title="Total Value"
+                    value={isLoading ? "..." : `$${totalValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                    icon={<Wallet className="h-4 w-4" />}
+                    trend="+0.0%"
+                />
                 <StatsCard title="Est. Annual Income" value="$0.00" icon={<DollarSign className="h-4 w-4" />} trend="0.00% YOC" color="text-emerald-400" />
                 <StatsCard title="VIG Benchmark" value="+12.4%" icon={<TrendingUp className="h-4 w-4" />} trend="1 Year Return" color="text-cyan-400" />
                 <StatsCard title="Next Rebalance" value="Feb 1" icon={<Calendar className="h-4 w-4" />} trend="Scheduled" />
@@ -45,13 +87,23 @@ function DashboardHome() {
                                 <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all" />
                             </div>
                             <p className="text-xs text-slate-400 mb-4">Generate recommendations based on latest market data.</p>
-                            <Button size="sm" className="w-full bg-emerald-600 hover:bg-emerald-500 text-white">Start Optimization</Button>
+                            <Button
+                                onClick={handleRunOptimization}
+                                disabled={isOptimizing}
+                                size="sm"
+                                className="w-full bg-emerald-600 hover:bg-emerald-500 text-white"
+                            >
+                                {isOptimizing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                                {isOptimizing ? "Optimizing..." : "Start Optimization"}
+                            </Button>
                         </div>
 
                         <div className="p-4 bg-slate-800/40 border border-white/5 rounded-xl hover:bg-slate-800/60 transition-all">
                             <h4 className="font-bold text-slate-300 mb-2">Sync Holdings</h4>
                             <p className="text-xs text-slate-400 mb-4">Update your portfolio positions manually or via CSV.</p>
-                            <Button variant="outline" size="sm" className="w-full border-white/10 text-slate-300">Manage Holdings</Button>
+                            <Link to="/dashboard/holdings">
+                                <Button variant="outline" size="sm" className="w-full border-white/10 text-slate-300">Manage Holdings</Button>
+                            </Link>
                         </div>
                     </CardContent>
                 </Card>
@@ -103,6 +155,7 @@ export default function DashboardPage() {
                 <nav className="flex-grow px-4 space-y-2 mt-4">
                     <SidebarLink to="/dashboard/home" icon={<LayoutDashboard className="w-4 h-4" />} label="Overview" />
                     <SidebarLink to="/dashboard/holdings" icon={<Database className="w-4 h-4" />} label="Holdings" />
+                    <SidebarLink to="/dashboard/recommendations" icon={<Sparkles className="w-4 h-4" />} label="Buy Suggestions" />
                     <SidebarLink to="/dashboard/settings" icon={<SettingsIcon className="w-4 h-4" />} label="Settings" />
                 </nav>
 

@@ -1,4 +1,5 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
+import { orchestrator } from '../functions/orchestrator/resource';
 
 const schema = a.schema({
     // User Specific Data
@@ -36,7 +37,7 @@ const schema = a.schema({
         .secondaryIndexes((index) => [index("ticker").sortKeys(["date"])])
         .authorization((allow) => [
             allow.authenticated().to(['read']),
-            allow.guest().to(['read']), // Allow public read for landing page demo if needed
+            allow.guest().to(['read']),
         ]),
 
     MarketFundamental: a.model({
@@ -46,7 +47,7 @@ const schema = a.schema({
         dividendYield: a.float(),
         payoutRatio: a.float(),
         debtToEquity: a.float(),
-        qualityScore: a.float(), // Pre-calculated
+        qualityScore: a.float(),
     })
         .secondaryIndexes((index) => [index("ticker").sortKeys(["asOf"])])
         .authorization((allow) => [
@@ -58,7 +59,7 @@ const schema = a.schema({
         exDate: a.string().required(),
         amount: a.float(),
         paymentDate: a.string(),
-        isCut: a.boolean(), // Flag for safety gate
+        isCut: a.boolean(),
     })
         .secondaryIndexes((index) => [index("ticker").sortKeys(["exDate"])])
         .authorization((allow) => [
@@ -74,6 +75,15 @@ const schema = a.schema({
         .authorization((allow) => [
             allow.authenticated().to(['read']),
         ]),
+
+    // Custom Mutation for AI Orchestration
+    runOptimization: a.mutation()
+        .arguments({
+            constraintsJson: a.json(),
+        })
+        .returns(a.string())
+        .authorization((allow) => [allow.authenticated()])
+        .handler(a.handler.function(orchestrator)),
 });
 
 export type Schema = ClientSchema<typeof schema>;

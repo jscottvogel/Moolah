@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import DashboardPage, { DashboardHome } from './pages/DashboardPage';
 import HoldingsPage from './pages/HoldingsPage';
+import RecommendationsPage from './pages/RecommendationsPage';
 
 // Placeholder Layout
 function Layout({ children }: { children: React.ReactNode }) {
@@ -22,6 +23,7 @@ function App() {
                             <Route index element={<Navigate to="/dashboard/home" replace />} />
                             <Route path="home" element={<DashboardHome />} />
                             <Route path="holdings" element={<HoldingsPage />} />
+                            <Route path="recommendations" element={<RecommendationsPage />} />
                         </Route>
                         {/* Fallback to home */}
                         <Route path="*" element={<Navigate to="/" replace />} />
