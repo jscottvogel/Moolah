@@ -47,6 +47,8 @@ export default function HoldingsPage() {
                 shares,
                 costBasis,
             });
+            // Auto-trigger sync for the new ticker to populate income metrics
+            client.mutations.syncMarketData({ tickers: [ticker] });
         } catch (err) {
             console.error("Error adding holding:", err);
             alert("Failed to add holding.");

@@ -1,5 +1,6 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 import { orchestrator } from '../functions/orchestrator/resource';
+import { marketWorker } from '../functions/market-worker/resource';
 
 const schema = a.schema({
     // User Specific Data
@@ -76,7 +77,7 @@ const schema = a.schema({
             allow.authenticated().to(['read']),
         ]),
 
-    // Custom Mutation for AI Orchestration
+    // Custom Mutations
     runOptimization: a.mutation()
         .arguments({
             constraintsJson: a.json(),
@@ -84,6 +85,14 @@ const schema = a.schema({
         .returns(a.string())
         .authorization((allow) => [allow.authenticated()])
         .handler(a.handler.function(orchestrator)),
+
+    syncMarketData: a.mutation()
+        .arguments({
+            tickers: a.string().array(),
+        })
+        .returns(a.string())
+        .authorization((allow) => [allow.authenticated()])
+        .handler(a.handler.function(marketWorker)),
 });
 
 export type Schema = ClientSchema<typeof schema>;

@@ -1,8 +1,8 @@
 import { Link, Routes, Route, useNavigate, Outlet, useLocation } from 'react-router-dom';
-import { Wallet, DollarSign, TrendingUp, Calendar, ArrowUpRight, LogOut, LayoutDashboard, Database, Settings as SettingsIcon, Loader2, Sparkles } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, Button } from '@/components/ui';
+import { Wallet, DollarSign, TrendingUp, Calendar, ArrowUpRight, LogOut, LayoutDashboard, Database, Settings as SettingsIcon, Loader2, Sparkles, RefreshCw } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, Button, cn } from '@/components/ui';
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../../amplify/data/resource';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
@@ -23,60 +23,86 @@ function DashboardHome() {
     const [totalValue, setTotalValue] = useState(0);
     const [annualIncome, setAnnualIncome] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSyncing, setIsSyncing] = useState(false);
     const [isOptimizing, setIsOptimizing] = useState(false);
+    const [holdingsTickers, setHoldingsTickers] = useState<string[]>([]);
+    const [currentHoldings, setCurrentHoldings] = useState<any[]>([]);
+
+    const calculateMetrics = useCallback(async (holdings: any[]) => {
+        let total = 0;
+        let income = 0;
+        const tickers: string[] = [];
+
+        for (const holding of holdings) {
+            tickers.push(holding.ticker);
+            const currentVal = holding.shares * (holding.costBasis || 0);
+            total += currentVal;
+
+            try {
+                const { data: fundamentals } = await client.models.MarketFundamental.listMarketFundamentalByTickerAndAsOf(
+                    { ticker: holding.ticker },
+                    { limit: 1, sortDirection: 'desc' }
+                );
+
+                if (fundamentals && fundamentals.length > 0) {
+                    const yieldPct = fundamentals[0].dividendYield || 0;
+                    income += currentVal * yieldPct;
+                }
+            } catch (e) {
+                console.warn(`Could not fetch yield for ${holding.ticker}`, e);
+            }
+        }
+
+        setHoldingsTickers(tickers);
+        setTotalValue(total);
+        setAnnualIncome(income);
+        setIsLoading(false);
+    }, []);
 
     useEffect(() => {
         const sub = client.models.Holding.observeQuery().subscribe({
-            next: async ({ items }) => {
-                let total = 0;
-                let income = 0;
-
-                // For each holding, we try to find the latest fundamental data for yield
-                // and the latest price. Since these are in global tables, we fetch them.
-                for (const holding of items) {
-                    const currentVal = holding.shares * (holding.costBasis || 0);
-                    total += currentVal;
-
-                    try {
-                        // Fetch latest fundamental for this ticker
-                        const { data: fundamentals } = await client.models.MarketFundamental.listMarketFundamentalByTickerAndAsOf(
-                            { ticker: holding.ticker },
-                            { limit: 1, sortDirection: 'desc' }
-                        );
-
-                        if (fundamentals && fundamentals.length > 0) {
-                            const yieldPct = fundamentals[0].dividendYield || 0;
-                            // Estimated Income = Value * Yield
-                            // Note: Yield is usually a percentage (0.025 = 2.5%)
-                            income += currentVal * yieldPct;
-                        }
-                    } catch (e) {
-                        console.warn(`Could not fetch yield for ${holding.ticker}`, e);
-                    }
-                }
-
-                setTotalValue(total);
-                setAnnualIncome(income);
-                setIsLoading(false);
+            next: ({ items }) => {
+                setCurrentHoldings(items);
+                calculateMetrics(items);
             },
         });
         return () => sub.unsubscribe();
-    }, []);
+    }, [calculateMetrics]);
+
+    const handleSyncData = async () => {
+        if (holdingsTickers.length === 0) return;
+        setIsSyncing(true);
+        try {
+            await client.mutations.syncMarketData({ tickers: holdingsTickers });
+            // Re-calculate after a short delay to allow backend persistence to settle
+            setTimeout(() => calculateMetrics(currentHoldings), 5000);
+            alert("Market data sync requested. Metrics will update shortly.");
+        } catch (err) {
+            console.error("Sync failed:", err);
+            alert("Failed to sync market data.");
+        } finally {
+            setIsSyncing(false);
+        }
+    };
 
     const handleRunOptimization = async () => {
         setIsOptimizing(true);
         try {
-            const { data, errors } = await client.mutations.runOptimization({
+            const { data: rawResult, errors } = await client.mutations.runOptimization({
                 constraintsJson: JSON.stringify({ targetYield: 0.04 })
             });
-            if (errors) {
-                console.error("Mutation errors:", errors);
-                throw new Error(errors[0].message);
+
+            if (errors) throw new Error(errors[0].message);
+
+            const result = JSON.parse(rawResult || "{}");
+            if (result.status === 'FAILED') {
+                throw new Error(result.error || "AI Agent failed to process request.");
             }
+
             alert("Optimization started! The AI agent is analyzing your portfolio.");
         } catch (err: any) {
             console.error("Optimization failed:", err);
-            alert(`Failed to start optimization: ${err.message || 'Unknown error'}`);
+            alert(`Failed: ${err.message}`);
         } finally {
             setIsOptimizing(false);
         }
@@ -84,9 +110,21 @@ function DashboardHome() {
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <div>
-                <h1 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 w-fit">Dashboard</h1>
-                <p className="text-slate-400">Portfolio overview and key metrics.</p>
+            <div className="flex justify-between items-center">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 w-fit">Dashboard</h1>
+                    <p className="text-slate-400">Portfolio overview and key metrics.</p>
+                </div>
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleSyncData}
+                    disabled={isSyncing || holdingsTickers.length === 0}
+                    className="border-white/5 bg-slate-900/50 hover:bg-slate-800 text-slate-300 gap-2"
+                >
+                    <RefreshCw className={cn("w-4 h-4", isSyncing && "animate-spin")} />
+                    {isSyncing ? "Syncing..." : "Sync Market Data"}
+                </Button>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -100,8 +138,8 @@ function DashboardHome() {
                     title="Est. Annual Income"
                     value={isLoading ? "..." : `$${annualIncome.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                     icon={<DollarSign className="h-4 w-4" />}
-                    trend={`${totalValue > 0 ? ((annualIncome / totalValue) * 100).toFixed(2) : '0.00'}% Yield`}
-                    color="text-emerald-400"
+                    trend={annualIncome > 0 ? `${((annualIncome / totalValue) * 100).toFixed(2)}% Yield` : (holdingsTickers.length > 0 ? "Sync Required" : "0.00% Yield")}
+                    color={annualIncome > 0 ? "text-emerald-400" : "text-amber-400"}
                 />
                 <StatsCard title="VIG Benchmark" value="+12.4%" icon={<TrendingUp className="h-4 w-4" />} trend="1 Year Return" color="text-cyan-400" />
                 <StatsCard title="Next Rebalance" value="Feb 1" icon={<Calendar className="h-4 w-4" />} trend="Scheduled" />
@@ -116,43 +154,12 @@ function DashboardHome() {
                         <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={mockChartData}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-                                <XAxis
-                                    dataKey="name"
-                                    stroke="#64748b"
-                                    fontSize={12}
-                                    tickLine={false}
-                                    axisLine={false}
-                                />
-                                <YAxis
-                                    stroke="#64748b"
-                                    fontSize={12}
-                                    tickLine={false}
-                                    axisLine={false}
-                                    tickFormatter={(value) => `$${value}`}
-                                />
-                                <Tooltip
-                                    contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }}
-                                    itemStyle={{ fontSize: '12px' }}
-                                />
+                                <XAxis dataKey="name" stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
+                                <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value}`} />
+                                <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }} itemStyle={{ fontSize: '12px' }} />
                                 <Legend verticalAlign="top" height={36} />
-                                <Line
-                                    type="monotone"
-                                    dataKey="portfolio"
-                                    name="Your Portfolio"
-                                    stroke="#10b981"
-                                    strokeWidth={3}
-                                    dot={false}
-                                    activeDot={{ r: 6 }}
-                                />
-                                <Line
-                                    type="monotone"
-                                    dataKey="benchmark"
-                                    name="VIG Benchmark"
-                                    stroke="#06b6d4"
-                                    strokeWidth={2}
-                                    strokeDasharray="5 5"
-                                    dot={false}
-                                />
+                                <Line type="monotone" dataKey="portfolio" name="Your Portfolio" stroke="#10b981" strokeWidth={3} dot={false} activeDot={{ r: 6 }} />
+                                <Line type="monotone" dataKey="benchmark" name="VIG Benchmark" stroke="#06b6d4" strokeWidth={2} strokeDasharray="5 5" dot={false} />
                             </LineChart>
                         </ResponsiveContainer>
                     </CardContent>
@@ -169,22 +176,17 @@ function DashboardHome() {
                                 <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all" />
                             </div>
                             <p className="text-xs text-slate-400 mb-4">Generate recommendations based on latest market data.</p>
-                            <Button
-                                onClick={handleRunOptimization}
-                                disabled={isOptimizing}
-                                size="sm"
-                                className="w-full bg-emerald-600 hover:bg-emerald-500 text-white"
-                            >
+                            <Button onClick={handleRunOptimization} disabled={isOptimizing} size="sm" className="w-full bg-emerald-600 hover:bg-emerald-500 text-white">
                                 {isOptimizing ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                                 {isOptimizing ? "Optimizing..." : "Start Optimization"}
                             </Button>
                         </div>
 
                         <div className="p-4 bg-slate-800/40 border border-white/5 rounded-xl hover:bg-slate-800/60 transition-all">
-                            <h4 className="font-bold text-slate-300 mb-2">Sync Holdings</h4>
+                            <h4 className="font-bold text-slate-300 mb-2">Manage Holdings</h4>
                             <p className="text-xs text-slate-400 mb-4">Update your portfolio positions manually or via CSV.</p>
                             <Link to="/dashboard/holdings">
-                                <Button variant="outline" size="sm" className="w-full border-white/10 text-slate-300">Manage Holdings</Button>
+                                <Button variant="outline" size="sm" className="w-full border-white/10 text-slate-300">View Holdings</Button>
                             </Link>
                         </div>
                     </CardContent>
@@ -214,18 +216,13 @@ export default function DashboardPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (authStatus === 'unauthenticated') {
-            navigate('/login');
-        }
+        if (authStatus === 'unauthenticated') navigate('/login');
     }, [authStatus, navigate]);
 
-    if (authStatus !== 'authenticated') {
-        return null;
-    }
+    if (authStatus !== 'authenticated') return null;
 
     return (
-        <div className="min-h-screen bg-slate-950 flex">
-            {/* Sidebar */}
+        <div className="min-h-screen bg-slate-950 flex font-sans text-slate-200">
             <aside className="w-64 border-r border-white/5 bg-slate-900/20 flex flex-col">
                 <div className="p-6">
                     <div className="flex items-center gap-3">
@@ -251,16 +248,12 @@ export default function DashboardPage() {
                             <span className="text-[10px] text-slate-500 truncate">Pro Account</span>
                         </div>
                     </div>
-                    <button
-                        onClick={signOut}
-                        className="flex items-center gap-3 w-full px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all"
-                    >
+                    <button onClick={signOut} className="flex items-center gap-3 w-full px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">
                         <LogOut className="w-4 h-4" /> Sign Out
                     </button>
                 </div>
             </aside>
 
-            {/* Main Content */}
             <main className="flex-grow p-8 overflow-y-auto">
                 <Outlet />
             </main>
@@ -272,13 +265,7 @@ function SidebarLink({ to, icon, label }: any) {
     const location = useLocation();
     const active = location.pathname === to;
     return (
-        <Link
-            to={to}
-            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all ${active
-                ? 'bg-emerald-500/10 text-emerald-400 font-medium'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
-                }`}
-        >
+        <Link to={to} className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all ${active ? 'bg-emerald-500/10 text-emerald-400 font-medium' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'}`}>
             {icon} {label}
         </Link>
     );
