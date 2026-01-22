@@ -60,13 +60,13 @@ export const handler: Handler = async (event, context) => {
         explanation = getFallbackExplanation(packet);
     }
 
-    // 4. Return or Store
-    // usually store to DynamoDB here
-
-    return {
-        statusCode: 200,
-        body: JSON.stringify({ packet, explanation }),
+    // 4. Final Return (must be string for AppSync)
+    const result = {
+        packet,
+        explanation
     };
+
+    return JSON.stringify(result);
 };
 
 async function generateSafeExplanation(packet: RecommendationPacket) {

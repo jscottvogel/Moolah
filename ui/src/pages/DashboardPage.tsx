@@ -5,8 +5,19 @@ import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useEffect, useState } from 'react';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../../amplify/data/resource';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 const client = generateClient<Schema>();
+
+const mockChartData = [
+    { name: 'Jul', portfolio: 4000, benchmark: 2400 },
+    { name: 'Aug', portfolio: 3000, benchmark: 1398 },
+    { name: 'Sep', portfolio: 2000, benchmark: 9800 },
+    { name: 'Oct', portfolio: 2780, benchmark: 3908 },
+    { name: 'Nov', portfolio: 1890, benchmark: 4800 },
+    { name: 'Dec', portfolio: 2390, benchmark: 3800 },
+    { name: 'Jan', portfolio: 3490, benchmark: 4300 },
+];
 
 function DashboardHome() {
     const [totalValue, setTotalValue] = useState(0);
@@ -66,13 +77,49 @@ function DashboardHome() {
                     <CardHeader>
                         <CardTitle className="text-lg">Portfolio vs Benchmark</CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        <div className="h-[300px] flex items-center justify-center border-2 border-dashed border-slate-800 rounded-xl bg-slate-950/50">
-                            <div className="text-center text-slate-500">
-                                <TrendingUp className="w-8 h-8 mx-auto mb-2 opacity-20" />
-                                <p className="text-sm">Charts will appear once you track holdings.</p>
-                            </div>
-                        </div>
+                    <CardContent className="h-[350px] w-full pt-4">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={mockChartData}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                                <XAxis
+                                    dataKey="name"
+                                    stroke="#64748b"
+                                    fontSize={12}
+                                    tickLine={false}
+                                    axisLine={false}
+                                />
+                                <YAxis
+                                    stroke="#64748b"
+                                    fontSize={12}
+                                    tickLine={false}
+                                    axisLine={false}
+                                    tickFormatter={(value) => `$${value}`}
+                                />
+                                <Tooltip
+                                    contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }}
+                                    itemStyle={{ fontSize: '12px' }}
+                                />
+                                <Legend verticalAlign="top" height={36} />
+                                <Line
+                                    type="monotone"
+                                    dataKey="portfolio"
+                                    name="Your Portfolio"
+                                    stroke="#10b981"
+                                    strokeWidth={3}
+                                    dot={false}
+                                    activeDot={{ r: 6 }}
+                                />
+                                <Line
+                                    type="monotone"
+                                    dataKey="benchmark"
+                                    name="VIG Benchmark"
+                                    stroke="#06b6d4"
+                                    strokeWidth={2}
+                                    strokeDasharray="5 5"
+                                    dot={false}
+                                />
+                            </LineChart>
+                        </ResponsiveContainer>
                     </CardContent>
                 </Card>
 
