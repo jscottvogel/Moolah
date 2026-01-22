@@ -2,13 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../../amplify/data/resource';
 
-const client = generateClient<Schema>();
-
 /**
  * Hook to manage portfolio metrics, ROI, and income calculations.
  * Encapsulates data fetching from Amplify and reactive updates.
  */
 export function usePortfolioMetrics() {
+    const client = generateClient<Schema>();
     const [totalInvested, setTotalInvested] = useState(0);
     const [marketValue, setMarketValue] = useState(0);
     const [annualIncome, setAnnualIncome] = useState(0);
@@ -61,7 +60,7 @@ export function usePortfolioMetrics() {
         setMarketValue(marketTotal);
         setAnnualIncome(incomeTotal);
         setIsLoading(false);
-    }, []);
+    }, [client]);
 
     useEffect(() => {
         const sub = client.models.Holding.observeQuery().subscribe({
@@ -72,7 +71,7 @@ export function usePortfolioMetrics() {
             error: (err) => console.error("[METRICS] ObserveQuery failed:", err)
         });
         return () => sub.unsubscribe();
-    }, [calculateMetrics]);
+    }, [client, calculateMetrics]);
 
     const roiPercentage = totalInvested > 0 ? ((marketValue - totalInvested) / totalInvested) * 100 : 0;
 

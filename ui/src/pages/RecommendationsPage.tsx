@@ -5,9 +5,8 @@ import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../../amplify/data/resource';
 import { useNavigate } from 'react-router-dom';
 
-const client = generateClient<Schema>();
-
 export default function RecommendationsPage() {
+    const client = generateClient<Schema>();
     const [suggestions, setSuggestions] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isActionLoading, setIsActionLoading] = useState<string | null>(null);
@@ -38,7 +37,7 @@ export default function RecommendationsPage() {
         };
 
         fetchSuggestions();
-    }, []);
+    }, [client]);
 
     const handleAddToHoldings = async (stock: any) => {
         const sharesStr = window.prompt(`How many shares of ${stock.symbol} would you like to add?`, "10");

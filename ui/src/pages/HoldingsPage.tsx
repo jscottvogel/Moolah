@@ -4,13 +4,12 @@ import { Plus, Trash2, AlertCircle, Loader2, Edit3, X, Check } from 'lucide-reac
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../../amplify/data/resource';
 
-const client = generateClient<Schema>();
-
 /**
  * HoldingsPage - Provides a granular view of user portfolio positions.
  * Supports inline editing, manual entry, and automated market sync triggers.
  */
 export default function HoldingsPage() {
+    const client = generateClient<Schema>();
     const [holdings, setHoldings] = useState<Array<Schema['Holding']['type']>>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
@@ -29,7 +28,7 @@ export default function HoldingsPage() {
             error: (err) => console.error("[HOLDINGS] Sync failed:", err),
         });
         return () => sub.unsubscribe();
-    }, []);
+    }, [client]);
 
     const handleAdd = async () => {
         const ticker = window.prompt("Ticker (e.g. AAPL):")?.toUpperCase();
