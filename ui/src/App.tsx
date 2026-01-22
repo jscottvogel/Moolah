@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Authenticator } from '@aws-amplify/ui-react';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
+import DashboardPage, { DashboardHome } from './pages/DashboardPage';
+import HoldingsPage from './pages/HoldingsPage';
 
 // Placeholder Layout
 function Layout({ children }: { children: React.ReactNode }) {
@@ -17,7 +18,11 @@ function App() {
                     <Routes>
                         <Route path="/" element={<LandingPage />} />
                         <Route path="/login" element={<LoginPage />} />
-                        <Route path="/dashboard/*" element={<DashboardPage />} />
+                        <Route path="/dashboard" element={<DashboardPage />}>
+                            <Route index element={<Navigate to="/dashboard/home" replace />} />
+                            <Route path="home" element={<DashboardHome />} />
+                            <Route path="holdings" element={<HoldingsPage />} />
+                        </Route>
                         {/* Fallback to home */}
                         <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
@@ -26,5 +31,8 @@ function App() {
         </Authenticator.Provider>
     );
 }
+
+// Extracting DashboardHome out of DashboardPage.tsx for better route management helper...
+
 
 export default App;

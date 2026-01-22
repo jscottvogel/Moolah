@@ -1,14 +1,5 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 
-/*
-  Data Model based on requirements:
-  - User Settings
-  - Holdings
-  - Recommendations
-  - Market Data (Shared)
-  - Provider Cache (Shared/Internal)
-*/
-
 const schema = a.schema({
     // User Specific Data
     UserSettings: a.model({
@@ -17,22 +8,24 @@ const schema = a.schema({
 
     Holding: a.model({
         ticker: a.string().required(),
-        shares: a.float().required(), // Using float for fractional shares support
-        costBasis: a.float(), // Total cost basis or per share? Usually per share or total. Let's assume per share for simplicity or total. MVP: user enters data.
+        shares: a.float().required(),
+        costBasis: a.float(),
         purchaseDate: a.date(),
     }).authorization((allow) => [allow.owner()]),
 
     Recommendation: a.model({
-        status: a.string(), // 'PENDING', 'COMPLETED', 'FAILED'
+        status: a.string().required(), // 'PENDING', 'COMPLETED', 'FAILED'
         packetJson: a.json(), // The full canonical output
-        createdAt: a.datetime(), // Sort key usually
+        explanationJson: a.json(), // AI generated explanation
     }).authorization((allow) => [allow.owner()]),
 
-    // Market Data - Global
-    // Authorization: 
-    // - Readers: Authenticated users (so they can see charts/data in validation UI)
-    // - Writers: Backend Services (IAM)
+    AuditLog: a.model({
+        action: a.string().required(),
+        details: a.string(),
+        metadata: a.json(),
+    }).authorization((allow) => [allow.owner(), allow.group('Admin')]),
 
+    // Market Data - Global
     MarketPrice: a.model({
         ticker: a.string().required(),
         date: a.string().required(), // YYYY-MM-DD
@@ -43,12 +36,17 @@ const schema = a.schema({
         .secondaryIndexes((index) => [index("ticker").sortKeys(["date"])])
         .authorization((allow) => [
             allow.authenticated().to(['read']),
+            allow.guest().to(['read']), // Allow public read for landing page demo if needed
         ]),
 
     MarketFundamental: a.model({
-        ticker: a.string().required(), // Access pattern: Get by ticker
-        asOf: a.string(), // YYYY-MM-DD
-        dataJson: a.json(), // Store full fundamental object
+        ticker: a.string().required(),
+        asOf: a.string().required(),
+        dataJson: a.json(),
+        dividendYield: a.float(),
+        payoutRatio: a.float(),
+        debtToEquity: a.float(),
+        qualityScore: a.float(), // Pre-calculated
     })
         .secondaryIndexes((index) => [index("ticker").sortKeys(["asOf"])])
         .authorization((allow) => [
@@ -60,21 +58,21 @@ const schema = a.schema({
         exDate: a.string().required(),
         amount: a.float(),
         paymentDate: a.string(),
+        isCut: a.boolean(), // Flag for safety gate
     })
         .secondaryIndexes((index) => [index("ticker").sortKeys(["exDate"])])
         .authorization((allow) => [
             allow.authenticated().to(['read']),
         ]),
 
-    // Provider Cache for AlphaVantage throttling
     ProviderCache: a.model({
-        cacheKey: a.string().required(), // e.g. "PRICES_AAPL_2023-01-01"
+        cacheKey: a.string().required(),
         responseJson: a.json(),
-        ttl: a.integer(), // Epoch timestamp for expiration
+        ttl: a.integer(),
     })
         .identifier(["cacheKey"])
         .authorization((allow) => [
-            allow.authenticated().to(['read']), // Maybe only backend needs this? But keeping it accessible for debug is fine.
+            allow.authenticated().to(['read']),
         ]),
 });
 
@@ -85,7 +83,7 @@ export const data = defineData({
     authorizationModes: {
         defaultAuthorizationMode: 'userPool',
         apiKeyAuthorizationMode: {
-            expiresInDays: 30, // Default
+            expiresInDays: 30,
         },
     },
 });

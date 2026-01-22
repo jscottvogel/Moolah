@@ -13,7 +13,7 @@ export default function LandingPage() {
             <header className="fixed w-full z-50 glass border-b border-white/5">
                 <div className="container mx-auto px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-amber-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">M</div>
+                        <img src="/logo.png" alt="Moolah Logo" className="w-10 h-10 object-contain rounded-xl shadow-lg border border-white/10 bg-slate-900" />
                         <div className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-amber-400">
                             Moolah
                         </div>

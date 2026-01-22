@@ -1,4 +1,4 @@
-import { Link, Routes, Route, useNavigate } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { Wallet, DollarSign, TrendingUp, Calendar, ArrowUpRight, LogOut, LayoutDashboard, Database, Settings as SettingsIcon } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, Button } from '@/components/ui';
 import { useAuthenticator } from '@aws-amplify/ui-react';
@@ -95,13 +95,13 @@ export default function DashboardPage() {
             <aside className="w-64 border-r border-white/5 bg-slate-900/20 flex flex-col">
                 <div className="p-6">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-amber-500 rounded-lg flex items-center justify-center text-white font-bold text-lg">M</div>
+                        <img src="/logo.png" alt="Moolah Logo" className="w-8 h-8 object-contain rounded-lg shadow-lg border border-white/10 bg-slate-900" />
                         <span className="font-bold tracking-tight text-lg">Moolah</span>
                     </div>
                 </div>
 
                 <nav className="flex-grow px-4 space-y-2 mt-4">
-                    <SidebarLink to="/dashboard" icon={<LayoutDashboard className="w-4 h-4" />} label="Overview" active />
+                    <SidebarLink to="/dashboard/home" icon={<LayoutDashboard className="w-4 h-4" />} label="Overview" />
                     <SidebarLink to="/dashboard/holdings" icon={<Database className="w-4 h-4" />} label="Holdings" />
                     <SidebarLink to="/dashboard/settings" icon={<SettingsIcon className="w-4 h-4" />} label="Settings" />
                 </nav>
@@ -127,17 +127,15 @@ export default function DashboardPage() {
 
             {/* Main Content */}
             <main className="flex-grow p-8 overflow-y-auto">
-                <Routes>
-                    <Route index element={<DashboardHome />} />
-                    <Route path="holdings" element={<div>Holdings Page (Coming Soon)</div>} />
-                    <Route path="settings" element={<div>Settings Page (Coming Soon)</div>} />
-                </Routes>
+                <Outlet />
             </main>
         </div>
     );
 }
 
-function SidebarLink({ to, icon, label, active = false }: any) {
+function SidebarLink({ to, icon, label }: any) {
+    const location = useLocation();
+    const active = location.pathname === to;
     return (
         <Link
             to={to}
@@ -150,3 +148,5 @@ function SidebarLink({ to, icon, label, active = false }: any) {
         </Link>
     );
 }
+
+export { DashboardHome }

@@ -8,7 +8,7 @@ const components = {
         return (
             <View textAlign="center" padding="large">
                 <div className="flex flex-col items-center gap-4 mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-amber-500 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-xl">M</div>
+                    <img src="/logo.png" alt="Moolah Logo" className="w-20 h-20 object-contain rounded-2xl shadow-xl border border-white/10 bg-slate-900" />
                     <Heading level={3} color="white">Moolah</Heading>
                 </div>
             </View>
