@@ -11,12 +11,11 @@ applications:
       phases:
         preBuild:
           commands:
-            - echo "Starting build for UI..."
+            - echo "Starting frontend build..."
         build:
           commands:
-            # IMPORTANT: Run build using workspace flag from the project root.
-            # This ensures the 'next' binary (hoisted to root) is correctly found.
-            - cd .. && npm run build -w ui
+            # Using the explicit path to the hoisted binary avoids PATH resolution issues in monorepos.
+            - ../node_modules/.bin/next build
       artifacts:
         baseDirectory: .next
         files:
