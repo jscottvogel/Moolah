@@ -24,20 +24,26 @@ export function DashboardHome() {
 
     const handleSync = async () => {
         try {
+            console.log("[DASHBOARD] Syncing market data...");
             await syncMarketData(holdingsTickers);
             setTimeout(refresh, 5000);
             alert("Market sync started! Metrics will update in seconds.");
         } catch (err: any) {
-            alert(`Sync Failed: ${err.message}`);
+            console.error("[DASHBOARD] Sync failure:", err);
+            const errorMessage = err.message || JSON.stringify(err) || "Unknown synchronization error. Please try again.";
+            alert(`Sync Failed: ${errorMessage}`);
         }
     };
 
     const handleOptimize = async () => {
         try {
+            console.log("[DASHBOARD] Running AI optimization...");
             await runOptimization(0.04);
             alert("Optimization started! The AI agent is analyzing your portfolio.");
         } catch (err: any) {
-            alert(`Optimization Detail: ${err.message}`);
+            console.error("[DASHBOARD] Optimization failure:", err);
+            const errorMessage = err.message || JSON.stringify(err) || "Unknown optimization error. Please try again.";
+            alert(`Optimization Detail: ${errorMessage}`);
         }
     };
 
