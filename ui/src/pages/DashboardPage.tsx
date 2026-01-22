@@ -1,7 +1,8 @@
-import { Link, Routes, Route } from 'react-router-dom';
+import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import { Wallet, DollarSign, TrendingUp, Calendar, ArrowUpRight, LogOut, LayoutDashboard, Database, Settings as SettingsIcon } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, Button } from '@/components/ui';
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import { useEffect } from 'react';
 
 function DashboardHome() {
     return (
@@ -75,7 +76,18 @@ function StatsCard({ title, value, icon, trend, color = "text-slate-50" }: any) 
 }
 
 export default function DashboardPage() {
-    const { signOut, user } = useAuthenticator();
+    const { signOut, user, authStatus } = useAuthenticator((context) => [context.authStatus]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (authStatus === 'unauthenticated') {
+            navigate('/login');
+        }
+    }, [authStatus, navigate]);
+
+    if (authStatus !== 'authenticated') {
+        return null;
+    }
 
     return (
         <div className="min-h-screen bg-slate-950 flex">
@@ -130,8 +142,8 @@ function SidebarLink({ to, icon, label, active = false }: any) {
         <Link
             to={to}
             className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all ${active
-                    ? 'bg-emerald-500/10 text-emerald-400 font-medium'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                ? 'bg-emerald-500/10 text-emerald-400 font-medium'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                 }`}
         >
             {icon} {label}
