@@ -91,19 +91,38 @@ const BackendTestPage = () => {
         fetchHoldings();
 
         // Listen for background work logs (AuditLog)
+        // Defensively check if AuditLog exists in the schema to prevent crash
+        if (!client.models.AuditLog) {
+            console.warn("[DIAG] AuditLog model not found in client schema. Background logs will be disabled.");
+            addLog('error', 'Diagnostics: AuditLog model not found. Service logs unavailable.');
+            return;
+        }
+
         const sub = client.models.AuditLog.observeQuery().subscribe({
             next: ({ items }: any) => {
+                const now = Date.now();
                 const recentLogs = items
-                    .filter((i: any) => new Date(i.createdAt).getTime() > Date.now() - 300000) // Last 5 mins
-                    .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+                    .filter((i: any) => (now - new Date(i.createdAt).getTime()) < 60000) // Last 60 seconds only
+                    .sort((a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
-                recentLogs.forEach((log: any) => {
-                    addLog('debug', `[SERVICE] ${log.action}: ${log.details}`);
-                });
+                if (recentLogs.length > 0) {
+                    setLogs(prev => {
+                        // Prevent duplicates by checking existing messages
+                        const existingMessages = new Set(prev.map(l => l.message));
+                        const newEntries = recentLogs
+                            .filter((log: any) => !existingMessages.has(`[SERVICE] ${log.action}: ${log.details}`))
+                            .map((log: any) => ({
+                                type: 'debug' as const,
+                                message: `[SERVICE] ${log.action}: ${log.details}`,
+                                timestamp: new Date(log.createdAt).toLocaleTimeString()
+                            }));
+                        return [...newEntries.reverse(), ...prev];
+                    });
+                }
             }
         });
         return () => sub.unsubscribe();
-    }, []);
+    }, [client]);
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-12">
