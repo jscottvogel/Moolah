@@ -18,6 +18,10 @@ const BackendTestPage = () => {
     };
 
     const fetchHoldings = async () => {
+        if (!client) {
+            addLog('error', 'Amplify Client not initialized. Check console for configuration errors.');
+            return;
+        }
         addLog('info', 'Executing: models.Holding.list()');
         try {
             const { data: items } = await client.models.Holding.list();
@@ -88,12 +92,14 @@ const BackendTestPage = () => {
     };
 
     useEffect(() => {
+        if (!client) return;
         fetchHoldings();
 
         // Listen for background work logs (AuditLog)
         // Defensively check if AuditLog exists in the schema to prevent crash
-        if (!client.models.AuditLog) {
-            const availableModels = Object.keys(client.models || {}).join(', ');
+        if (!client.models || !client.models.AuditLog) {
+            const currentModels = client.models ? Object.keys(client.models) : [];
+            const availableModels = currentModels.join(', ');
             console.warn(`[DIAG] AuditLog model not found. Available models: ${availableModels}`);
             addLog('error', `Diagnostics: AuditLog model missing. Available: ${availableModels}`);
             return;
