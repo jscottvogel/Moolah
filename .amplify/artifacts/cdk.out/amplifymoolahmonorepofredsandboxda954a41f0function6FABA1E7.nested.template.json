@@ -144,6 +144,12 @@
       "MARKET_QUEUE_URL": {
        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef"
       },
+      "AMPLIFY_DATA_GRAPHQL_ENDPOINT": {
+       "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258GraphQLUrl"
+      },
+      "AWS_APPSYNC_GRAPHQL_ENDPOINT": {
+       "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258GraphQLUrl"
+      },
       "GRAPHQL_REGION": {
        "Ref": "AWS::Region"
       }
@@ -542,6 +548,9 @@
    "Type": "String"
   },
   "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258GraphQLUrl": {
    "Type": "String"
   }
  }

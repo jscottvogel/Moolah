@@ -361,7 +361,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/abde4f86b51f82e1610a00003020259bef8d71ef3d97e0a5f8d9ef2fc091d7be.json"
+       "/d3714e89c98dfd50ae6e1d3d96b17b101058ad016926a3acfd21853daf85d230.json"
       ]
      ]
     }
@@ -401,6 +401,12 @@
        "CustomInfraStack696189F0",
        "Outputs.amplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef"
       ]
+     },
+     "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258GraphQLUrl": {
+      "Fn::GetAtt": [
+       "data7552DF31",
+       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258GraphQLUrl"
+      ]
      }
     },
     "Tags": [
@@ -429,7 +435,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/318f3d6145c8a08e96216ae1b3aec107347b3e284dafb5675f8036bc0dc0069a.json"
+       "/ca02429bec098908d3ec9d833f4c3a24089a728639c74f13da7dee1f91a3207b.json"
       ]
      ]
     }

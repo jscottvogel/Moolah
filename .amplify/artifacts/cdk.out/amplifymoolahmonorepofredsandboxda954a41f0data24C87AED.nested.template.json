@@ -382,6 +382,18 @@
     "Environment": {
      "Variables": {
       "AMPLIFY_SSM_ENV_CONFIG": "{}",
+      "AMPLIFY_DATA_GRAPHQL_ENDPOINT": {
+       "Fn::GetAtt": [
+        "amplifyDataGraphQLAPI42A6FA33",
+        "GraphQLUrl"
+       ]
+      },
+      "AWS_APPSYNC_GRAPHQL_ENDPOINT": {
+       "Fn::GetAtt": [
+        "amplifyDataGraphQLAPI42A6FA33",
+        "GraphQLUrl"
+       ]
+      },
       "GRAPHQL_REGION": {
        "Ref": "AWS::Region"
       }
@@ -730,6 +742,18 @@
        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef"
       },
       "ALPHA_VANTAGE_API_KEY": "U43UQ3TEGNOPXBXP",
+      "AMPLIFY_DATA_GRAPHQL_ENDPOINT": {
+       "Fn::GetAtt": [
+        "amplifyDataGraphQLAPI42A6FA33",
+        "GraphQLUrl"
+       ]
+      },
+      "AWS_APPSYNC_GRAPHQL_ENDPOINT": {
+       "Fn::GetAtt": [
+        "amplifyDataGraphQLAPI42A6FA33",
+        "GraphQLUrl"
+       ]
+      },
       "GRAPHQL_REGION": {
        "Ref": "AWS::Region"
       }
@@ -847,7 +871,7 @@
       "ApiId"
      ]
     },
-    "Expires": 1771797347
+    "Expires": 1771800150
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
