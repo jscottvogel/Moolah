@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getClient } from '../client';
+import type { Schema } from '../../../amplify/data/resource';
+
+type Holding = Schema['Holding']['type'];
 
 /**
  * Hook to manage portfolio metrics, ROI, and income calculations.
@@ -11,9 +14,9 @@ export function usePortfolioMetrics() {
     const [annualIncome, setAnnualIncome] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     const [holdingsTickers, setHoldingsTickers] = useState<string[]>([]);
-    const [currentHoldings, setCurrentHoldings] = useState<any[]>([]);
+    const [currentHoldings, setCurrentHoldings] = useState<Holding[]>([]);
 
-    const calculateMetrics = useCallback(async (holdings: any[]) => {
+    const calculateMetrics = useCallback(async (holdings: Holding[]) => {
         let costTotal = 0;
         let marketTotal = 0;
         let incomeTotal = 0;
@@ -64,7 +67,7 @@ export function usePortfolioMetrics() {
     useEffect(() => {
         const client = getClient();
         const sub = client.models.Holding.observeQuery().subscribe({
-            next: ({ items }) => {
+            next: ({ items }: { items: Holding[] }) => {
                 setCurrentHoldings(items);
                 calculateMetrics(items);
             },

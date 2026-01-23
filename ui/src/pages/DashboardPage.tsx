@@ -135,7 +135,7 @@ export function DashboardHome() {
                             <LineChart data={chartData}>
                                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
                                 <XAxis dataKey="name" stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} />
-                                <YAxis stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
+                                <YAxis stroke="#64748b" fontSize={10} tickLine={false} axisLine={false} tickFormatter={(value: number) => `$${(value / 1000).toFixed(0)}k`} />
                                 <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }} itemStyle={{ fontSize: '12px' }} />
                                 <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', paddingBottom: '20px' }} />
                                 <Line type="monotone" dataKey="portfolio" name="Your Portfolio" stroke="#10b981" strokeWidth={3} dot={false} activeDot={{ r: 6, strokeWidth: 0 }} />
@@ -175,7 +175,15 @@ export function DashboardHome() {
     );
 }
 
-function StatsCard({ title, value, icon, trend, color = "text-slate-50" }: any) {
+interface StatsCardProps {
+    title: string;
+    value: string | number;
+    icon: React.ReactNode;
+    trend: React.ReactNode;
+    color?: string;
+}
+
+function StatsCard({ title, value, icon, trend, color = "text-slate-50" }: StatsCardProps) {
     return (
         <Card className="bg-slate-900/40 border-white/5 overflow-hidden relative">
             <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
@@ -242,7 +250,14 @@ export default function DashboardPage() {
     );
 }
 
-function SidebarLink({ to, icon, label, active }: any) {
+interface SidebarLinkProps {
+    to: string;
+    icon: React.ReactNode;
+    label: string;
+    active: boolean;
+}
+
+function SidebarLink({ to, icon, label, active }: SidebarLinkProps) {
     return (
         <Link to={to} className={cn(
             "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all",

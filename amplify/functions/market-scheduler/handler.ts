@@ -1,56 +1,62 @@
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
-import { Amplify } from 'aws-amplify';
-import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '../../data/resource';
+import { SignatureV4 } from '@smithy/signature-v4';
+import { HttpRequest } from '@smithy/protocol-http';
+import { Sha256 } from '@aws-crypto/sha256-js';
+import { defaultProvider } from '@aws-sdk/credential-provider-node';
 import type { Handler } from 'aws-lambda';
 
 /**
- * Moolah Market Scheduler - ULTIMATE RELIABILITY EDITION
+ * Moolah Market Scheduler - "NUCLEAR OPTION" NO-LIBRARY EDITION
  */
 
 const getEnv = (key: string) => process.env[key];
 
-let cachedClient: any = null;
-function getClient() {
-    const graphqlEndpoint = getEnv('AMPLIFY_DATA_GRAPHQL_ENDPOINT');
-    const awsRegion = getEnv('AWS_REGION') || 'us-east-1';
-
-    if (!cachedClient) {
-        try {
-            const currentConfig = Amplify.getConfig();
-            if (!currentConfig.API?.GraphQL?.endpoint && graphqlEndpoint) {
-                Amplify.configure({
-                    version: "1",
-                    data: {
-                        url: graphqlEndpoint,
-                        aws_region: awsRegion,
-                        default_authorization_type: "AWS_IAM",
-                        authorization_types: ["AWS_IAM"]
-                    }
-                } as any);
-            }
-            cachedClient = generateClient<Schema>({
-                authMode: 'iam',
-            });
-        } catch (e) {
-            console.error('[SCHEDULER] Failed to initialize data client:', e);
-            throw e;
-        }
-    }
-    return cachedClient;
-}
+// 1. Core Config Getters
+const getCfg = () => ({
+    endpoint: getEnv('AMPLIFY_DATA_GRAPHQL_ENDPOINT') || getEnv('AWS_APPSYNC_GRAPHQL_ENDPOINT'),
+    region: getEnv('GRAPHQL_REGION') || getEnv('AWS_REGION') || 'us-east-1'
+});
 
 const WATCHLIST = ["MSFT", "AAPL", "JNJ", "XOM", "CVX", "KO", "PEP", "V", "MA", "PG"];
 
+async function signedRequest(query: string, variables: any = {}) {
+    const { endpoint, region } = getCfg();
+    if (!endpoint) throw new Error("AppSync Endpoint missing");
+
+    const url = new URL(endpoint);
+    const body = JSON.stringify({ query, variables });
+    const signer = new SignatureV4({
+        credentials: defaultProvider(),
+        region: region,
+        service: 'appsync',
+        sha256: Sha256
+    });
+    const request = new HttpRequest({
+        method: 'POST',
+        hostname: url.hostname,
+        path: url.pathname,
+        body: body,
+        headers: { 'Content-Type': 'application/json', host: url.hostname }
+    });
+    const signed = await signer.sign(request);
+    const response = await fetch(endpoint, {
+        method: signed.method,
+        headers: signed.headers as any,
+        body: signed.body
+    });
+    const result: any = await response.json();
+    if (result.errors) throw new Error(result.errors[0].message);
+    return result.data;
+}
+
+
 export const handler: Handler = async (event) => {
-    console.log('[SCHEDULER] Triggered by cron event');
+    console.log('[SCHEDULER] Pulse');
+    const sqs = new SQSClient({ region: getEnv('AWS_REGION') || 'us-east-1' });
     const queueUrl = getEnv('MARKET_QUEUE_URL');
-    const awsRegion = getEnv('AWS_REGION') || 'us-east-1';
-    const sqs = new SQSClient({ region: awsRegion });
 
     for (const ticker of WATCHLIST) {
         try {
-            console.log(`[SQS] Dispatching: ${ticker}`);
             await sqs.send(new SendMessageCommand({
                 QueueUrl: queueUrl,
                 MessageBody: JSON.stringify({ ticker, type: 'PRICE' })
@@ -59,23 +65,20 @@ export const handler: Handler = async (event) => {
                 QueueUrl: queueUrl,
                 MessageBody: JSON.stringify({ ticker, type: 'FUNDAMENTAL' })
             }));
-        } catch (error) {
-            console.error(`[SQS] Dispatch Fail for ${ticker}:`, error);
-        }
+        } catch (error) { console.error(`[SQS] Fail: ${ticker}`, error); }
     }
 
     try {
-        const client = getClient();
-        await client.models.AuditLog.create({
-            action: 'SCHEDULED_SYNC_DISPATCHED',
-            details: `Dispatched SQS refresh for ${WATCHLIST.length} watchlist tickers.`
+        const mutation = `mutation L($i: CreateAuditLogInput!) { createAuditLog(input: $i) { id } }`;
+        await signedRequest(mutation, {
+            i: {
+                action: 'SCHEDULED_SYNC_DISPATCHED',
+                details: `Dispatched ${WATCHLIST.length} tickers.`
+            }
         });
     } catch (e) {
-        console.error("[SCHEDULER] Audit logging failed:", e);
+        console.error("[SCHEDULER] Audit Fail:", e);
     }
 
-    return {
-        statusCode: 200,
-        body: `Dispatched ${WATCHLIST.length} ticker updates.`,
-    };
+    return { statusCode: 200, body: "OK" };
 };

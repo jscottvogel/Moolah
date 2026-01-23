@@ -23,8 +23,12 @@
     "typescript": "^5.3.0"
   },
   "dependencies": {
+    "@aws-crypto/sha256-js": "^5.2.0",
     "@aws-sdk/client-bedrock-runtime": "^3.974.0",
     "@aws-sdk/client-sqs": "^3.974.0",
+    "@aws-sdk/credential-provider-node": "^3.972.1",
+    "@smithy/protocol-http": "^5.3.8",
+    "@smithy/signature-v4": "^5.3.8",
     "aws-amplify": "^6.16.0",
     "dotenv": "^17.2.3",
     "zod": "^3.25.17"

@@ -1,16 +1,22 @@
 import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedrock-runtime";
-import { Amplify } from 'aws-amplify';
-import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '../../data/resource';
+import { SignatureV4 } from '@smithy/signature-v4';
+import { HttpRequest } from '@smithy/protocol-http';
+import { Sha256 } from '@aws-crypto/sha256-js';
+import { defaultProvider } from '@aws-sdk/credential-provider-node';
 import { z } from 'zod';
 
 /**
- * Moolah Orchestrator - "PROVEN & NO-FAIL" EDITION
+ * Moolah Orchestrator - "NUCLEAR OPTION" NO-LIBRARY EDITION
  */
 
 const getEnv = (key: string) => process.env[key];
 
-// 1. Validation Schema
+// 1. Core Config Getters
+const getCfg = () => ({
+    endpoint: getEnv('AMPLIFY_DATA_GRAPHQL_ENDPOINT') || getEnv('AWS_APPSYNC_GRAPHQL_ENDPOINT'),
+    region: getEnv('GRAPHQL_REGION') || getEnv('AWS_REGION') || 'us-east-1'
+});
+
 const AIRecommendationSchema = z.object({
     targetPortfolio: z.array(z.object({
         ticker: z.string(),
@@ -24,64 +30,59 @@ const AIRecommendationSchema = z.object({
     })
 });
 
-// 2. Client Factory
-let cachedClient: any = null;
-function getClient() {
-    if (!cachedClient) {
-        const endpoint = getEnv('AMPLIFY_DATA_GRAPHQL_ENDPOINT') || getEnv('AWS_APPSYNC_GRAPHQL_ENDPOINT');
-        const region = getEnv('GRAPHQL_REGION') || getEnv('AWS_REGION') || 'us-east-1';
+async function signedRequest(query: string, variables: any = {}) {
+    const { endpoint, region } = getCfg();
+    if (!endpoint) throw new Error("AppSync Endpoint missing");
 
-        if (!endpoint) throw new Error("GraphQL endpoint is missing.");
-
-        try {
-            Amplify.configure({
-                API: {
-                    GraphQL: {
-                        endpoint: endpoint,
-                        region: region,
-                        defaultAuthMode: 'iam'
-                    }
-                }
-            });
-            cachedClient = generateClient<Schema>({ authMode: 'iam' });
-        } catch (e) {
-            console.error('[ORC] Client Init Failed:', e);
-            throw e;
-        }
-    }
-    return cachedClient;
+    const url = new URL(endpoint);
+    const body = JSON.stringify({ query, variables });
+    const signer = new SignatureV4({
+        credentials: defaultProvider(),
+        region: region,
+        service: 'appsync',
+        sha256: Sha256
+    });
+    const request = new HttpRequest({
+        method: 'POST',
+        hostname: url.hostname,
+        path: url.pathname,
+        body: body,
+        headers: { 'Content-Type': 'application/json', host: url.hostname }
+    });
+    const signed = await signer.sign(request);
+    const response = await fetch(endpoint, {
+        method: signed.method,
+        headers: signed.headers as any,
+        body: signed.body
+    });
+    const result: any = await response.json();
+    if (result.errors) throw new Error(result.errors[0].message);
+    return result.data;
 }
 
-/**
- * Direct GraphQL calls for maximum reliability.
- */
 async function logToAudit(action: string, details: string) {
     try {
-        const client = getClient();
-        const mutation = `mutation Log($input: CreateAuditLogInput!) { createAuditLog(input: $input) { id } }`;
-        await client.graphql({ query: mutation, variables: { input: { action, details } } });
+        const mutation = `mutation L($i: CreateAuditLogInput!) { createAuditLog(input: $i) { id } }`;
+        await signedRequest(mutation, { i: { action, details } });
     } catch (e) { console.error('[ORC] Audit Fail:', e); }
 }
 
 export const handler = async (event: any) => {
     console.log('[ORC] Pulse');
-    const client = getClient();
     const bedrock = new BedrockRuntimeClient({ region: getEnv('AWS_REGION') || 'us-east-1' });
 
     try {
-        // Step 1: Context (Direct GraphQL to be 100% sure if models fail)
+        // Step 1: Context
         const qHoldings = `query List { listHoldings { items { ticker shares } } }`;
-        const rHoldings: any = await client.graphql({ query: qHoldings });
-        const holdings = rHoldings.data?.listHoldings?.items || [];
+        const resH = await signedRequest(qHoldings);
+        const holdings = resH.listHoldings.items;
 
-        const qFundamentals = `query List { listMarketFundamentals(limit: 60) { items { ticker dividendYield payoutRatio debtToEquity } } }`;
-        const rFundamentals: any = await client.graphql({ query: qFundamentals });
-        const fundamentals = rFundamentals.data?.listMarketFundamentals?.items || [];
+        const qMarket = `query List { listMarketFundamentals(limit: 60) { items { ticker dividendYield payoutRatio debtToEquity } } }`;
+        const resM = await signedRequest(qMarket);
+        const fundamentals = resM.listMarketFundamentals.items;
 
         // Step 2: Reasoning
         const prompt = `You are the Moolah Optimizer. Context: Holdings=${JSON.stringify(holdings)}, Market=${JSON.stringify(fundamentals)}. Suggest rebalance. JSON schema: {"targetPortfolio": [...], "explanation": {...}}`;
-
-        // Step 3: Bedrock
         const bResp = await bedrock.send(new InvokeModelCommand({
             modelId: "anthropic.claude-3-haiku-20240307-v1:0",
             contentType: "application/json",
@@ -96,30 +97,27 @@ export const handler = async (event: any) => {
         const resultBody = JSON.parse(new TextDecoder().decode(bResp.body));
         const aiText = resultBody.content[0].text;
         const jsonMatch = aiText.match(/\{[\s\S]*\}/);
-        const validated = AIRecommendationSchema.parse(JSON.parse(jsonMatch ? jsonMatch[0] : aiText));
+        const val = AIRecommendationSchema.parse(JSON.parse(jsonMatch ? jsonMatch[0] : aiText));
 
-        // Step 4: Persist
-        const mCreate = `mutation Create($input: CreateRecommendationInput!) { createRecommendation(input: $input) { id } }`;
-        const rCreate: any = await client.graphql({
-            query: mCreate,
-            variables: {
-                input: {
-                    status: 'COMPLETED',
-                    packetJson: JSON.stringify({
-                        asOf: new Date().toISOString().split('T')[0],
-                        targetPortfolio: validated.targetPortfolio
-                    }),
-                    explanationJson: JSON.stringify(validated.explanation)
-                }
+        // Step 3: Persist
+        const mutation = `mutation C($i: CreateRecommendationInput!) { createRecommendation(input: $i) { id } }`;
+        const resC = await signedRequest(mutation, {
+            i: {
+                status: 'COMPLETED',
+                packetJson: JSON.stringify({
+                    asOf: new Date().toISOString().split('T')[0],
+                    targetPortfolio: val.targetPortfolio
+                }),
+                explanationJson: JSON.stringify(val.explanation)
             }
         });
 
-        await logToAudit('AI_OPTIM_SUCCESS', `Ready with ${validated.targetPortfolio.length} tickers.`);
+        await logToAudit('AI_OPTIM_SUCCESS', `Ready: ${val.targetPortfolio.length} tickers.`);
 
         return JSON.stringify({
             status: 'SUCCESS',
-            id: rCreate.data?.createRecommendation?.id,
-            explanation: validated.explanation
+            id: resC.createRecommendation.id,
+            explanation: val.explanation
         });
 
     } catch (err: any) {

@@ -136,13 +136,16 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "fca7954b6e06ad14f9a221a6f4fc82fdb479b6760e6d92bca86f688076f75d12.zip"
+     "S3Key": "61342ba1db2f8240c6d5f08c2f4a9ea79d23e364fe91ff2eac3b99fecdadbe90.zip"
     },
     "Environment": {
      "Variables": {
       "AMPLIFY_SSM_ENV_CONFIG": "{}",
       "MARKET_QUEUE_URL": {
        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef"
+      },
+      "GRAPHQL_REGION": {
+       "Ref": "AWS::Region"
       }
      }
     },
@@ -182,7 +185,7 @@
    "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/market-scheduler-lambda/Resource",
-    "aws:asset:path": "asset.fca7954b6e06ad14f9a221a6f4fc82fdb479b6760e6d92bca86f688076f75d12",
+    "aws:asset:path": "asset.61342ba1db2f8240c6d5f08c2f4a9ea79d23e364fe91ff2eac3b99fecdadbe90",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }

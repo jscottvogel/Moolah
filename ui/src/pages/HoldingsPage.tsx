@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, Button } from '@/components/ui';
 import { Plus, Trash2, AlertCircle, Loader2, Edit3, X, Check } from 'lucide-react';
 import { getClient } from '../client';
-import type { Schema } from '../../../../amplify/data/resource';
+import type { Schema } from '../../../amplify/data/resource';
 
 /**
  * HoldingsPage - Provides a granular view of user portfolio positions.

@@ -2,8 +2,9 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { usePortfolioMetrics } from '../hooks/usePortfolioMetrics';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { generateClient } from 'aws-amplify/data';
+import type { Schema } from '../../../amplify/data/resource';
 
-const client = generateClient();
+const client = generateClient<Schema>();
 
 describe('usePortfolioMetrics Hook', () => {
     beforeEach(() => {

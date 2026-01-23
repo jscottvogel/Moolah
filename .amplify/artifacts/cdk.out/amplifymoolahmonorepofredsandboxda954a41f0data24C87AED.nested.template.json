@@ -377,11 +377,14 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "54c3c80119bc611684472537d4eea29ca442dfe50980f225b74530b5d37d36c8.zip"
+     "S3Key": "560c0a07abf28f39da7fc98cc681492db7668600175d0f6a89d99aa63e5cbbed.zip"
     },
     "Environment": {
      "Variables": {
-      "AMPLIFY_SSM_ENV_CONFIG": "{}"
+      "AMPLIFY_SSM_ENV_CONFIG": "{}",
+      "GRAPHQL_REGION": {
+       "Ref": "AWS::Region"
+      }
      }
     },
     "EphemeralStorage": {
@@ -420,7 +423,7 @@
    "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/orchestrator-lambda/Resource",
-    "aws:asset:path": "asset.54c3c80119bc611684472537d4eea29ca442dfe50980f225b74530b5d37d36c8",
+    "aws:asset:path": "asset.560c0a07abf28f39da7fc98cc681492db7668600175d0f6a89d99aa63e5cbbed",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -718,7 +721,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "ca95634279115b8bd5f4f9c670268f17963ea67a3e814e81eb84504b399c12c8.zip"
+     "S3Key": "40e46411bfa85acb84004ef12810eb725cd041620768a55c0134141f4bfc4918.zip"
     },
     "Environment": {
      "Variables": {
@@ -726,7 +729,10 @@
       "MARKET_QUEUE_URL": {
        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef"
       },
-      "ALPHA_VANTAGE_API_KEY": ""
+      "ALPHA_VANTAGE_API_KEY": "U43UQ3TEGNOPXBXP",
+      "GRAPHQL_REGION": {
+       "Ref": "AWS::Region"
+      }
      }
     },
     "EphemeralStorage": {
@@ -765,7 +771,7 @@
    "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/market-worker-lambda/Resource",
-    "aws:asset:path": "asset.ca95634279115b8bd5f4f9c670268f17963ea67a3e814e81eb84504b399c12c8",
+    "aws:asset:path": "asset.40e46411bfa85acb84004ef12810eb725cd041620768a55c0134141f4bfc4918",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -841,7 +847,7 @@
       "ApiId"
      ]
     },
-    "Expires": 1771792718
+    "Expires": 1771797347
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",

@@ -24,7 +24,7 @@ const components = {
 };
 
 export default function LoginPage() {
-    const { authStatus } = useAuthenticator((context) => [context.authStatus]);
+    const { authStatus } = useAuthenticator((context: any) => [context.authStatus]);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -37,7 +37,7 @@ export default function LoginPage() {
     return (
         <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-emerald-950/20 via-slate-950 to-slate-950">
             <Authenticator components={components}>
-                {({ signOut, user }) => (
+                {({ signOut, user }: { signOut?: () => void; user?: any }) => (
                     <main>
                         <h1>Hello {user?.username}</h1>
                         <button onClick={signOut}>Sign out</button>
