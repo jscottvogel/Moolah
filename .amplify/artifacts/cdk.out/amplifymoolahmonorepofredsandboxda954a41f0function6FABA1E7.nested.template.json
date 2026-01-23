@@ -66,6 +66,34 @@
        "Resource": {
         "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDArn"
        }
+      },
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:Query",
+        "dynamodb:GetItem",
+        "dynamodb:Scan",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogNestedStackAuditLogNestedStackResource38318EC9Outputsamplifymoolahmon3B08AB0D"
+       }
+      },
+      {
+       "Action": [
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogNestedStackAuditLogNestedStackResource38318EC9Outputsamplifymoolahmon3B08AB0D"
+       }
       }
      ],
      "Version": "2012-10-17"
@@ -93,7 +121,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "49ae2a5a7438474e08d6b0e81f9efa5de1f42443c750b433c72faae9e5c210db.zip"
+     "S3Key": "4efa4cf48ccf21255e242bc0880d6178a249db53446fa04ad203a811ac96e9ee.zip"
     },
     "Environment": {
      "Variables": {
@@ -139,7 +167,7 @@
    "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/market-scheduler-lambda/Resource",
-    "aws:asset:path": "asset.49ae2a5a7438474e08d6b0e81f9efa5de1f42443c750b433c72faae9e5c210db",
+    "aws:asset:path": "asset.4efa4cf48ccf21255e242bc0880d6178a249db53446fa04ad203a811ac96e9ee",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -487,6 +515,9 @@
  },
  "Parameters": {
   "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDArn": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogNestedStackAuditLogNestedStackResource38318EC9Outputsamplifymoolahmon3B08AB0D": {
    "Type": "String"
   },
   "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef": {

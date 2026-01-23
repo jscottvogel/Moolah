@@ -94,6 +94,11 @@ export const handler = async (event: any) => {
             explanationJson: JSON.stringify(validatedOutput.explanation)
         });
 
+        await client.models.AuditLog.create({
+            action: 'AI_OPTIMIZATION_SUCCESS',
+            details: `Generated recommendation with ${validatedOutput.targetPortfolio.length} tickers. Summary: ${validatedOutput.explanation.summary.substring(0, 100)}...`
+        });
+
         return JSON.stringify({
             status: 'SUCCESS',
             id: rec.data?.id,
@@ -102,6 +107,12 @@ export const handler = async (event: any) => {
 
     } catch (err) {
         console.error("[ORC] Optimization Failed:", err);
+
+        await client.models.AuditLog.create({
+            action: 'AI_OPTIMIZATION_FAILED',
+            details: err instanceof Error ? err.message : 'Unknown orchestrator error'
+        });
+
         return JSON.stringify({
             status: 'FAILED',
             error: err instanceof Error ? err.message : 'Unknown orchestrator error'

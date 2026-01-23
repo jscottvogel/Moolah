@@ -1,5 +1,11 @@
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
+import { generateClient } from 'aws-amplify/data';
+import type { Schema } from '../../data/resource';
 import type { Handler } from 'aws-lambda';
+
+const client = generateClient<Schema>({
+    authMode: 'iam',
+});
 
 const sqs = new SQSClient({});
 const QUEUE_URL = process.env.MARKET_QUEUE_URL;
@@ -25,6 +31,15 @@ export const handler: Handler = async (event) => {
         } catch (error) {
             console.error(`[SQS] Failed to dispatch ${ticker}:`, error);
         }
+    }
+
+    try {
+        await client.models.AuditLog.create({
+            action: 'SCHEDULED_SYNC_DISPATCHED',
+            details: `Dispatched SQS refresh for ${WATCHLIST.length} watchlist tickers.`
+        });
+    } catch (e) {
+        console.error("Failed to write to AuditLog:", e);
     }
 
     return {

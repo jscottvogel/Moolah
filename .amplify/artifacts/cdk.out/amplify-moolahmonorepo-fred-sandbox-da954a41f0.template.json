@@ -304,6 +304,12 @@
        "Outputs.amplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDArn"
       ]
      },
+     "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef": {
+      "Fn::GetAtt": [
+       "CustomInfraStack696189F0",
+       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef"
+      ]
+     },
      "referencetoamplifymoolahmonorepofredsandboxda954a41f0authNestedStackauthNestedStackResource40A6ED80Outputsamplifymoolahmonorepofredsandboxda954a41f0authamplifyAuthUserPoolC1C2BFC0Ref": {
       "Fn::GetAtt": [
        "auth179371D7",
@@ -355,7 +361,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/31150845063d1bbb7d41994ad599da28cb4e98e47a65f76e18032802b49b96b9.json"
+       "/adb11feb42113c1a234d95ef42fa4121a21ede553aeff042e0df954efe08e065.json"
       ]
      ]
     }
@@ -376,6 +382,12 @@
       "Fn::GetAtt": [
        "CustomInfraStack696189F0",
        "Outputs.amplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDArn"
+      ]
+     },
+     "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogNestedStackAuditLogNestedStackResource38318EC9Outputsamplifymoolahmon3B08AB0D": {
+      "Fn::GetAtt": [
+       "data7552DF31",
+       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogNestedStackAuditLogNestedStackResource38318EC9Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogAuditLogTableDB115562TableArn"
       ]
      },
      "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef": {
@@ -411,7 +423,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/21af065d958bc1c5932f6f6df4d4ae98f194e34539e0d49e4433f604d23aa9b0.json"
+       "/ac7eef4d457eb30711626badc5ea29ed3e0bc0430797bb79ef3232859894545d.json"
       ]
      ]
     }

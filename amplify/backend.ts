@@ -80,4 +80,9 @@ for (const modelName of Object.keys(tables)) {
     if (['MarketPrice', 'MarketFundamental', 'MarketDividend', 'ProviderCache', 'AuditLog'].includes(modelName)) {
         table.grantReadWriteData(backend.marketWorker.resources.lambda);
     }
+
+    // Market Scheduler needs to log its start to AuditLog
+    if (modelName === 'AuditLog') {
+        table.grantReadWriteData(backend.marketScheduler.resources.lambda);
+    }
 }
