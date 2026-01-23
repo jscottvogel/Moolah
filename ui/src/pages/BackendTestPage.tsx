@@ -67,7 +67,8 @@ const BackendTestPage = () => {
         addLog('info', 'Invoking Mutation: syncMarketData(["MSFT", "AAPL"])');
         try {
             const result = await syncMarketData(['MSFT', 'AAPL']);
-            addLog('success', `Result: ${result}`);
+            addLog('success', `Result Raw: ${JSON.stringify(result)}`);
+            addLog('info', 'Note: Data is processed asynchronously via SQS. Check back in 30-60 seconds.');
         } catch (err: any) {
             addLog('error', `Failed: ${err.message}`);
         }
@@ -77,7 +78,10 @@ const BackendTestPage = () => {
         addLog('info', 'Invoking Mutation: runOptimization(targetYield: 0.05)');
         try {
             const result = await runOptimization(0.05);
-            addLog('success', `Result Status: ${result.status} (Packet size: ${JSON.stringify(result.packet || {}).length} bytes)`);
+            addLog('success', `Result Status: ${result.status || 'OK'}`);
+            if (result.explanation) {
+                addLog('info', `AI Explanation: ${result.explanation.summary?.substring(0, 100)}...`);
+            }
         } catch (err: any) {
             addLog('error', `Failed: ${err.message}`);
         }
@@ -233,6 +237,37 @@ const BackendTestPage = () => {
                         </table>
                     </div>
                 )}
+            </section>
+
+            {/* Market Data Monitor */}
+            <section className="bg-slate-900/40 border border-white/5 rounded-2xl overflow-hidden backdrop-blur-md">
+                <div className="px-6 py-4 border-b border-white/5 flex justify-between items-center bg-emerald-500/5">
+                    <div className="flex items-center gap-2">
+                        <TrendingUp className="w-4 h-4 text-emerald-400" />
+                        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-400">Market Intelligence (Global)</h2>
+                    </div>
+                    <button
+                        onClick={async () => {
+                            addLog('info', 'Fetching MarketPrice records...');
+                            try {
+                                const { data } = await client.models.MarketPrice.list({ limit: 10 });
+                                addLog('success', `Found ${data.length} price points.`);
+                                // Logic to display could be added here, for now we log keys
+                                if (data.length > 0) {
+                                    addLog('info', `Latest Tickers: ${[...new Set(data.map((p: any) => p.ticker))].join(', ')}`);
+                                }
+                            } catch (e: any) {
+                                addLog('error', `Market Fetch Failed: ${e.message}`);
+                            }
+                        }}
+                        className="text-[10px] font-bold text-emerald-400 hover:text-white transition-colors"
+                    >
+                        [ Refresh Market Data ]
+                    </button>
+                </div>
+                <div className="p-6 text-center text-slate-500 text-xs italic">
+                    Note: Global market data is shared across all users. Testing sync adds data to this shared pool.
+                </div>
             </section>
         </div>
     );

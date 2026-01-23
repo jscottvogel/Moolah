@@ -9,11 +9,17 @@ export function useCloudActions() {
     const [isSyncing, setIsSyncing] = useState(false);
     const [isOptimizing, setIsOptimizing] = useState(false);
 
+    const getActiveClient = () => {
+        const client = getClient();
+        if (!client) throw new Error("Amplify Data Client could not be initialized. Check your configuration.");
+        return client;
+    };
+
     const syncMarketData = async (tickers: string[]) => {
         if (!tickers.length) return;
         setIsSyncing(true);
         try {
-            const client = getClient();
+            const client = getActiveClient();
             console.log("[CLOUD] Syncing tickers:", tickers);
             const syncMutation = `
                 mutation SyncMarketData($tickers: [String]) {
@@ -48,7 +54,7 @@ export function useCloudActions() {
     const runOptimization = async (targetYield: number = 0.04) => {
         setIsOptimizing(true);
         try {
-            const client = getClient();
+            const client = getActiveClient();
             console.log("[CLOUD] Running optimization with target yield:", targetYield);
             const optimMutation = `
                 mutation RunOptimization($constraints: AWSJSON) {
