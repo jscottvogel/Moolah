@@ -24,4 +24,10 @@ test.describe('Moolah Portfolio Flow', () => {
         await page.goto('/login');
         await expect(page.getByRole('button', { name: /Sign In/i })).toBeVisible();
     });
+
+    test('should be able to access the diagnostics page directly (unauthenticated redirect test)', async ({ page }) => {
+        await page.goto('/dashboard/debug');
+        // It should redirect to login if not authenticated
+        await expect(page).toHaveURL(/.*login/);
+    });
 });

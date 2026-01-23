@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getClient } from '../client';
 import { useCloudActions } from '../hooks/useCloudActions';
-import { Activity, Database, RefreshCw, Sparkles, Plus, Trash2, ChevronRight, Terminal } from 'lucide-react';
+import { Activity, Database, RefreshCw, Sparkles, Plus, Trash2, ChevronRight, Terminal, TrendingUp } from 'lucide-react';
 
 /**
  * BackendTestPage - A diagnostic utility to exercise and verify backend responsiveness.
