@@ -8,12 +8,12 @@ import { Activity, Database, RefreshCw, Sparkles, Plus, Trash2, ChevronRight, Te
  * Provides direct interaction with Data Models and Custom Mutations.
  */
 const BackendTestPage = () => {
-    const [logs, setLogs] = useState<{ type: 'info' | 'error' | 'success', message: string, timestamp: string }[]>([]);
+    const [logs, setLogs] = useState<{ type: 'info' | 'error' | 'success' | 'debug', message: string, timestamp: string }[]>([]);
     const [holdings, setHoldings] = useState<any[]>([]);
     const { syncMarketData, runOptimization, isSyncing, isOptimizing } = useCloudActions();
     const client = getClient();
 
-    const addLog = (type: 'info' | 'error' | 'success', message: string) => {
+    const addLog = (type: 'info' | 'error' | 'success' | 'debug', message: string) => {
         setLogs(prev => [{ type, message, timestamp: new Date().toLocaleTimeString() }, ...prev]);
     };
 
@@ -89,6 +89,20 @@ const BackendTestPage = () => {
 
     useEffect(() => {
         fetchHoldings();
+
+        // Listen for background work logs (AuditLog)
+        const sub = client.models.AuditLog.observeQuery().subscribe({
+            next: ({ items }: any) => {
+                const recentLogs = items
+                    .filter((i: any) => new Date(i.createdAt).getTime() > Date.now() - 300000) // Last 5 mins
+                    .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+                recentLogs.forEach((log: any) => {
+                    addLog('debug', `[SERVICE] ${log.action}: ${log.details}`);
+                });
+            }
+        });
+        return () => sub.unsubscribe();
     }, []);
 
     return (
@@ -180,7 +194,8 @@ const BackendTestPage = () => {
                                 <span className="text-slate-600 flex-shrink-0 tabular-nums">[{log.timestamp}]</span>
                                 <span className={
                                     log.type === 'error' ? 'text-rose-500' :
-                                        log.type === 'success' ? 'text-emerald-400' : 'text-blue-400'
+                                        log.type === 'success' ? 'text-emerald-400' :
+                                            log.type === 'debug' ? 'text-amber-400' : 'text-blue-400'
                                 }>
                                     {log.type.toUpperCase()}
                                 </span>

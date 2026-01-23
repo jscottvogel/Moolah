@@ -81,8 +81,19 @@ async function fetchAndStorePrice(ticker: string) {
             adjustedClose: parseFloat(latestMetrics["5. adjusted close"]),
             volume: parseFloat(latestMetrics["6. volume"]),
         });
+
+        await client.models.AuditLog.create({
+            action: 'MARKET_SYNC_SUCCESS',
+            details: `Updated price for ${ticker} (${latestDate}): $${latestMetrics["4. close"]}`
+        });
+
         console.log(`[ALPHAVANTAGE] Stored price for ${ticker}`);
     } else {
+        const errorMsg = data["Note"] || data["Error Message"] || "Unknown AlphaVantage error";
+        await client.models.AuditLog.create({
+            action: 'MARKET_SYNC_ERROR',
+            details: `Failed to fetch price for ${ticker}: ${errorMsg}`
+        });
         console.error(`[ALPHAVANTAGE] No price data for ${ticker}. Response:`, JSON.stringify(data));
     }
 }
@@ -106,8 +117,19 @@ async function fetchAndStoreFundamentals(ticker: string) {
             dataJson: JSON.stringify(data),
             qualityScore: calculateQualityScore(payoutRatio, debtToEquity),
         });
+
+        await client.models.AuditLog.create({
+            action: 'FUNDAMENTAL_SYNC_SUCCESS',
+            details: `Updated fundamentals for ${ticker}. Yield: ${dividendYield}`
+        });
+
         console.log(`[ALPHAVANTAGE] Stored fundamentals for ${ticker}`);
     } else {
+        const errorMsg = data["Note"] || data["Error Message"] || "Unknown AlphaVantage error";
+        await client.models.AuditLog.create({
+            action: 'FUNDAMENTAL_SYNC_ERROR',
+            details: `Failed to fetch fundamentals for ${ticker}: ${errorMsg}`
+        });
         console.error(`[ALPHAVANTAGE] No fundamentals for ${ticker}. Response:`, JSON.stringify(data));
     }
 }

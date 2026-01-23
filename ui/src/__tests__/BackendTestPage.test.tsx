@@ -15,6 +15,11 @@ vi.mock('../client', () => ({
             },
             MarketPrice: {
                 list: vi.fn().mockResolvedValue({ data: [] })
+            },
+            AuditLog: {
+                observeQuery: vi.fn().mockReturnValue({
+                    subscribe: vi.fn().mockReturnValue({ unsubscribe: vi.fn() })
+                })
             }
         }
     })
