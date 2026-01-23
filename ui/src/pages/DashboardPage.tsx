@@ -220,6 +220,7 @@ export default function DashboardPage() {
                     <SidebarLink to="/dashboard/holdings" icon={<Database className="w-4 h-4" />} label="Holdings" active={location.pathname === '/dashboard/holdings'} />
                     <SidebarLink to="/dashboard/recommendations" icon={<Sparkles className="w-4 h-4" />} label="Suggestions" active={location.pathname === '/dashboard/recommendations'} />
                     <SidebarLink to="/dashboard/settings" icon={<SettingsIcon className="w-4 h-4" />} label="Settings" active={location.pathname === '/dashboard/settings'} />
+                    <SidebarLink to="/dashboard/debug" icon={<Activity className="w-4 h-4" />} label="Diagnostics" active={location.pathname === '/dashboard/debug'} />
                 </nav>
 
                 <div className="p-4 mt-auto border-t border-white/5 text-sm">

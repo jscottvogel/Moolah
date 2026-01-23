@@ -5,6 +5,8 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage, { DashboardHome } from './pages/DashboardPage';
 import HoldingsPage from './pages/HoldingsPage';
 import RecommendationsPage from './pages/RecommendationsPage';
+import BackendTestPage from './pages/BackendTestPage';
+
 
 // Placeholder Settings Page
 function SettingsPage() {
@@ -40,6 +42,8 @@ function App() {
                             <Route path="holdings" element={<HoldingsPage />} />
                             <Route path="recommendations" element={<RecommendationsPage />} />
                             <Route path="settings" element={<SettingsPage />} />
+                            <Route path="debug" element={<BackendTestPage />} />
+
                         </Route>
                         {/* Fallback to home */}
                         <Route path="*" element={<Navigate to="/" replace />} />
