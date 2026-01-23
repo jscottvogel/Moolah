@@ -50,6 +50,12 @@ export const handler = async (event: any) => {
                 console.error(`Error offloading ticker ${ticker}:`, error);
             }
         }
+
+        await client.models.AuditLog.create({
+            action: 'SYNC_OFFLOAD_ACCEPTED',
+            details: `Dispatched SQS refresh for: ${tickers.join(', ')}`
+        });
+
         return JSON.stringify({ status: 'ACCEPTED', count: tickers.length });
     }
 

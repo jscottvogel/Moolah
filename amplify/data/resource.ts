@@ -37,7 +37,11 @@ const schema = a.schema({
         action: a.string().required(),
         details: a.string(),
         metadata: a.json(),
-    }).authorization((allow) => [allow.owner(), allow.group('Admin')]),
+    }).authorization((allow) => [
+        allow.authenticated().to(['read']),
+        allow.owner(),
+        allow.guest().to(['read', 'create']),
+    ]),
 
     // --- MARKET DOMAIN ---
 

@@ -93,8 +93,9 @@ const BackendTestPage = () => {
         // Listen for background work logs (AuditLog)
         // Defensively check if AuditLog exists in the schema to prevent crash
         if (!client.models.AuditLog) {
-            console.warn("[DIAG] AuditLog model not found in client schema. Background logs will be disabled.");
-            addLog('error', 'Diagnostics: AuditLog model not found. Service logs unavailable.');
+            const availableModels = Object.keys(client.models || {}).join(', ');
+            console.warn(`[DIAG] AuditLog model not found. Available models: ${availableModels}`);
+            addLog('error', `Diagnostics: AuditLog model missing. Available: ${availableModels}`);
             return;
         }
 

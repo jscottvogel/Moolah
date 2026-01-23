@@ -76,8 +76,8 @@ for (const modelName of Object.keys(tables)) {
     // Orchestrator needs access to everything (Settings, Holdings, Recs)
     table.grantReadWriteData(backend.orchestrator.resources.lambda);
 
-    // Market Worker needs access to Market Data and Cache
-    if (['MarketPrice', 'MarketFundamental', 'MarketDividend', 'ProviderCache'].includes(modelName)) {
+    // Market Worker needs access to Market Data, Cache, and AuditLogs
+    if (['MarketPrice', 'MarketFundamental', 'MarketDividend', 'ProviderCache', 'AuditLog'].includes(modelName)) {
         table.grantReadWriteData(backend.marketWorker.resources.lambda);
     }
 }
