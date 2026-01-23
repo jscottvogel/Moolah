@@ -682,7 +682,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "a5431bd32e8433bbfde4c3aea6205d33bc07eda70de9a2a2d41e7119ddefb6dc.zip"
+     "S3Key": "2bdb24be83b52f472acda508faec370eddc80c8cc6c6e63cf6aa03a43afe25df.zip"
     },
     "Environment": {
      "Variables": {
@@ -729,7 +729,7 @@
    "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/market-worker-lambda/Resource",
-    "aws:asset:path": "asset.a5431bd32e8433bbfde4c3aea6205d33bc07eda70de9a2a2d41e7119ddefb6dc",
+    "aws:asset:path": "asset.2bdb24be83b52f472acda508faec370eddc80c8cc6c6e63cf6aa03a43afe25df",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -805,7 +805,7 @@
       "ApiId"
      ]
     },
-    "Expires": 1771774684
+    "Expires": 1771774902
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",

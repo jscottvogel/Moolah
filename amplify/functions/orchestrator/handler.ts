@@ -17,10 +17,6 @@ import { z } from 'zod';
  * 4. Persist recommendation for user review.
  */
 
-const client = generateClient<Schema>({
-    authMode: 'iam',
-});
-
 const bedrock = new BedrockRuntimeClient({ region: process.env.AWS_REGION || 'us-east-1' });
 
 // Validation Schema for AI Output
@@ -40,7 +36,15 @@ const AIRecommendationSchema = z.object({
 export const handler = async (event: any) => {
     console.log('[ORC] Brain Triggered');
 
+    // Lazy initialization of the Data Client inside the handler
+    // to ensure environment variables are present.
+    console.log('[ORC] Relevant Env Keys:', Object.keys(process.env).filter(k => k.startsWith('AMPLIFY_')));
+    const client = generateClient<Schema>({
+        authMode: 'iam',
+    });
+
     try {
+
         // Step 1: Context Gathering
         // We fetch the user's specific positions and the global quality metrics (Safety Gates)
         const { data: holdings } = await client.models.Holding.list();

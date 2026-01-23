@@ -2,17 +2,37 @@ import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../data/resource';
 
-// Initialize the data client
-const client = generateClient<Schema>({
-    authMode: 'iam',
-});
+// Initialize the data client lazily to handle potential environment issues
+let cachedClient: any = null;
+
+function getInternalClient() {
+    if (!cachedClient) {
+        console.log('[WORKER] Initializing internal Data Client...');
+        // Debug: Log relevant env vars (safely)
+        const envKeys = Object.keys(process.env).filter(k => k.startsWith('AMPLIFY_') || k.includes('GRAPHQL'));
+        console.log('[WORKER] Relevant Env Keys:', envKeys);
+
+        try {
+            cachedClient = generateClient<Schema>({
+                authMode: 'iam',
+            });
+            console.log('[WORKER] Internal Data Client generated.');
+        } catch (e: any) {
+            console.error('[WORKER] Failed to generate internal client:', e);
+            throw e;
+        }
+    }
+    return cachedClient;
+}
 
 const sqs = new SQSClient({});
 const QUEUE_URL = process.env.MARKET_QUEUE_URL;
 const ALPHA_VANTAGE_API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
 
 export const handler = async (event: any) => {
-    console.log('Market Worker Triggered', JSON.stringify(event));
+    console.log('Market Worker Triggered');
+    const client = getInternalClient();
+
 
     // Case 1: Triggered via SQS (Array of records)
     if (event.Records) {
@@ -87,6 +107,7 @@ async function processTicker(ticker: string, type: string) {
 
 async function fetchAndStorePrice(ticker: string) {
     console.log(`[ALPHAVANTAGE] Fetching price for ${ticker}`);
+    const client = getInternalClient();
     const resp = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${ALPHA_VANTAGE_API_KEY}`);
     const data: any = await resp.json();
 
@@ -121,6 +142,7 @@ async function fetchAndStorePrice(ticker: string) {
 
 async function fetchAndStoreFundamentals(ticker: string) {
     console.log(`[ALPHAVANTAGE] Fetching fundamentals for ${ticker}`);
+    const client = getInternalClient();
     const resp = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${ticker}&apikey=${ALPHA_VANTAGE_API_KEY}`);
     const data: any = await resp.json();
 
@@ -154,6 +176,7 @@ async function fetchAndStoreFundamentals(ticker: string) {
         console.error(`[ALPHAVANTAGE] No fundamentals for ${ticker}. Response:`, JSON.stringify(data));
     }
 }
+
 
 function calculateQualityScore(payout: number, debt: number) {
     let score = 100;
