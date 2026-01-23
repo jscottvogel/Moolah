@@ -90,9 +90,12 @@ for (const modelName of Object.keys(tables)) {
 // 5. Pass GraphQL Endpoint for Data Client Initialization
 // This is critical for the "generateClient" call inside Lambdas
 const graphqlUrl = backend.data.resources.graphqlApi.graphqlUrl;
+const region = Stack.of(backend.data.resources.graphqlApi).region;
 
 [backend.marketWorker, backend.orchestrator, backend.marketScheduler].forEach((func) => {
     (func.resources.lambda as any).addEnvironment('AMPLIFY_DATA_GRAPHQL_ENDPOINT', graphqlUrl);
+    (func.resources.lambda as any).addEnvironment('AWS_APPSYNC_GRAPHQL_ENDPOINT', graphqlUrl);
+    (func.resources.lambda as any).addEnvironment('GRAPHQL_REGION', region);
 
     // Grant AppSync GraphQL Permissions
     func.resources.lambda.addToRolePolicy(
@@ -102,6 +105,7 @@ const graphqlUrl = backend.data.resources.graphqlApi.graphqlUrl;
         })
     );
 });
+
 
 
 
