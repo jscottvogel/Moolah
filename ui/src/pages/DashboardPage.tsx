@@ -1,5 +1,5 @@
 import { Link, useNavigate, Outlet, useLocation } from 'react-router-dom';
-import { Wallet, DollarSign, TrendingUp, Calendar, ArrowUpRight, LogOut, LayoutDashboard, Database, Settings as SettingsIcon, Loader2, Sparkles, RefreshCw, TrendingDown } from 'lucide-react';
+import { Wallet, DollarSign, TrendingUp, Calendar, ArrowUpRight, LogOut, LayoutDashboard, Database, Settings as SettingsIcon, Loader2, Sparkles, RefreshCw, TrendingDown, Activity } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, Button, cn } from '@/components/ui';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { useEffect, useState, useMemo } from 'react';
