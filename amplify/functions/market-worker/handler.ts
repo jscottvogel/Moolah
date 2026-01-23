@@ -32,35 +32,50 @@ export const handler = async (event: any) => {
 
     // Case 2: Triggered via AppSync Mutation (Direct sync)
     // We offload to SQS to return "ACCEPTED" immediately to the UI
-    if (event.arguments && event.arguments.tickers) {
-        const { tickers } = event.arguments;
+    if (event.arguments && (event.arguments.tickers || event.info?.fieldName === 'syncMarketData')) {
+        const tickers = event.arguments?.tickers || [];
         console.log('Offloading tickers to SQS:', tickers);
 
-        for (const ticker of tickers) {
-            try {
-                await sqs.send(new SendMessageCommand({
-                    QueueUrl: QUEUE_URL,
-                    MessageBody: JSON.stringify({ ticker, type: 'PRICE' })
-                }));
-                await sqs.send(new SendMessageCommand({
-                    QueueUrl: QUEUE_URL,
-                    MessageBody: JSON.stringify({ ticker, type: 'FUNDAMENTAL' })
-                }));
-            } catch (error) {
-                console.error(`Error offloading ticker ${ticker}:`, error);
+        try {
+            if (!QUEUE_URL) {
+                throw new Error("MARKET_QUEUE_URL environment variable is missing.");
             }
+
+            for (const ticker of tickers) {
+                try {
+                    await sqs.send(new SendMessageCommand({
+                        QueueUrl: QUEUE_URL,
+                        MessageBody: JSON.stringify({ ticker, type: 'PRICE' })
+                    }));
+                    await sqs.send(new SendMessageCommand({
+                        QueueUrl: QUEUE_URL,
+                        MessageBody: JSON.stringify({ ticker, type: 'FUNDAMENTAL' })
+                    }));
+                } catch (error) {
+                    console.error(`Error offloading ticker ${ticker}:`, error);
+                }
+            }
+
+            await client.models.AuditLog.create({
+                action: 'SYNC_OFFLOAD_ACCEPTED',
+                details: `Dispatched SQS refresh for: ${tickers.join(', ')}`
+            });
+
+            return JSON.stringify({ status: 'ACCEPTED', count: tickers.length });
+        } catch (err: any) {
+            console.error('[WORKER] Mutation Handler Failed:', err);
+            // We still want to return a string since the schema requires it
+            return JSON.stringify({
+                status: 'FAILED',
+                error: err.message || 'Internal lambda error'
+            });
         }
-
-        await client.models.AuditLog.create({
-            action: 'SYNC_OFFLOAD_ACCEPTED',
-            details: `Dispatched SQS refresh for: ${tickers.join(', ')}`
-        });
-
-        return JSON.stringify({ status: 'ACCEPTED', count: tickers.length });
     }
 
     console.warn('Unknown event type received by Market Worker');
+    return JSON.stringify({ status: 'IGNORED', detail: 'Unknown event type' });
 };
+
 
 async function processTicker(ticker: string, type: string) {
     if (type === 'PRICE') {
