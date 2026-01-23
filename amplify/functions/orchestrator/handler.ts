@@ -33,25 +33,25 @@ function getClient() {
     const awsRegion = getEnv('AWS_REGION') || 'us-east-1';
 
     if (!cachedClient) {
-        console.log('[ORC] DISCOVERY: GraphQL Endpoint present?', !!graphqlEndpoint);
+        console.log(`[ORC] DISCOVERY: GraphQL Endpoint: ${graphqlEndpoint ? 'PRESENT' : 'MISSING'}`);
         try {
             const currentConfig = Amplify.getConfig();
             if (!currentConfig.API?.GraphQL?.endpoint && graphqlEndpoint) {
-                console.log('[ORC] Manual Amplify configuration triggered.');
+                console.log('[ORC] Manually configuring Amplify with v6 Outputs structure...');
                 Amplify.configure({
-                    API: {
-                        GraphQL: {
-                            endpoint: graphqlEndpoint,
-                            region: awsRegion,
-                            defaultAuthMode: 'iam'
-                        }
+                    version: "1",
+                    data: {
+                        url: graphqlEndpoint,
+                        aws_region: awsRegion,
+                        default_authorization_type: "AWS_IAM",
+                        authorization_types: ["AWS_IAM"]
                     }
-                });
+                } as any);
             }
             cachedClient = generateClient<Schema>({
                 authMode: 'iam',
             });
-            console.log('[ORC] Data Client Generated.');
+            console.log('[ORC] Data Client initialized successfully.');
         } catch (e) {
             console.error('[ORC] CRITICAL: Client Generation Failed:', e);
             throw e;
@@ -59,6 +59,7 @@ function getClient() {
     }
     return cachedClient;
 }
+
 
 export const handler = async (event: any) => {
     console.log('[ORC] Brain Triggered');

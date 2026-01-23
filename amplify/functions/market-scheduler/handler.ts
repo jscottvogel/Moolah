@@ -1,45 +1,77 @@
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
+import { Amplify } from 'aws-amplify';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../data/resource';
 import type { Handler } from 'aws-lambda';
 
-const client = generateClient<Schema>({
-    authMode: 'iam',
-});
+/**
+ * Moolah Market Scheduler - ULTIMATE RELIABILITY EDITION
+ */
 
-const sqs = new SQSClient({});
-const QUEUE_URL = process.env.MARKET_QUEUE_URL;
+const getEnv = (key: string) => process.env[key];
 
-// In a real app, we'd query the list of tickers we care about from DynamoDB.
-// For the MVP sync, we define a core list of 'watch' tickers.
+let cachedClient: any = null;
+function getClient() {
+    const graphqlEndpoint = getEnv('AMPLIFY_DATA_GRAPHQL_ENDPOINT');
+    const awsRegion = getEnv('AWS_REGION') || 'us-east-1';
+
+    if (!cachedClient) {
+        try {
+            const currentConfig = Amplify.getConfig();
+            if (!currentConfig.API?.GraphQL?.endpoint && graphqlEndpoint) {
+                Amplify.configure({
+                    version: "1",
+                    data: {
+                        url: graphqlEndpoint,
+                        aws_region: awsRegion,
+                        default_authorization_type: "AWS_IAM",
+                        authorization_types: ["AWS_IAM"]
+                    }
+                } as any);
+            }
+            cachedClient = generateClient<Schema>({
+                authMode: 'iam',
+            });
+        } catch (e) {
+            console.error('[SCHEDULER] Failed to initialize data client:', e);
+            throw e;
+        }
+    }
+    return cachedClient;
+}
+
 const WATCHLIST = ["MSFT", "AAPL", "JNJ", "XOM", "CVX", "KO", "PEP", "V", "MA", "PG"];
 
 export const handler: Handler = async (event) => {
-    console.log('Market Scheduler triggered by cron event');
+    console.log('[SCHEDULER] Triggered by cron event');
+    const queueUrl = getEnv('MARKET_QUEUE_URL');
+    const awsRegion = getEnv('AWS_REGION') || 'us-east-1';
+    const sqs = new SQSClient({ region: awsRegion });
 
     for (const ticker of WATCHLIST) {
         try {
-            console.log(`[SQS] Dispatching refresh message for ${ticker}`);
+            console.log(`[SQS] Dispatching: ${ticker}`);
             await sqs.send(new SendMessageCommand({
-                QueueUrl: QUEUE_URL,
+                QueueUrl: queueUrl,
                 MessageBody: JSON.stringify({ ticker, type: 'PRICE' })
             }));
             await sqs.send(new SendMessageCommand({
-                QueueUrl: QUEUE_URL,
+                QueueUrl: queueUrl,
                 MessageBody: JSON.stringify({ ticker, type: 'FUNDAMENTAL' })
             }));
         } catch (error) {
-            console.error(`[SQS] Failed to dispatch ${ticker}:`, error);
+            console.error(`[SQS] Dispatch Fail for ${ticker}:`, error);
         }
     }
 
     try {
+        const client = getClient();
         await client.models.AuditLog.create({
             action: 'SCHEDULED_SYNC_DISPATCHED',
             details: `Dispatched SQS refresh for ${WATCHLIST.length} watchlist tickers.`
         });
     } catch (e) {
-        console.error("Failed to write to AuditLog:", e);
+        console.error("[SCHEDULER] Audit logging failed:", e);
     }
 
     return {

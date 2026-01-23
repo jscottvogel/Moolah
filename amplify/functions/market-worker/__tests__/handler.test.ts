@@ -49,12 +49,13 @@ describe('Market Worker Handler', () => {
         const result = JSON.parse(resultRaw);
 
         expect(Amplify.configure).toHaveBeenCalledWith(expect.objectContaining({
-            API: expect.objectContaining({
-                GraphQL: expect.objectContaining({
-                    endpoint: 'https://appsync.test.url'
-                })
+            version: "1",
+            data: expect.objectContaining({
+                url: 'https://appsync.test.url',
+                default_authorization_type: "AWS_IAM"
             })
         }));
+
         expect(result.status).toBe('ACCEPTED');
     });
 

@@ -33,29 +33,28 @@ function getClient() {
     const awsRegion = getEnv('AWS_REGION') || 'us-east-1';
 
     if (!cachedClient) {
-        console.log('[WORKER] DISCOVERY: GraphQL Endpoint present?', !!graphqlEndpoint);
+        console.log(`[WORKER] DISCOVERY: GraphQL Endpoint: ${graphqlEndpoint ? 'PRESENT' : 'MISSING'}`);
 
-        // MANUALLY CONFIGURE AMPLIFY if automatic discovery fails in this execution context
         try {
-            // Check if already configured
             const currentConfig = Amplify.getConfig();
             if (!currentConfig.API?.GraphQL?.endpoint && graphqlEndpoint) {
-                console.log('[WORKER] Manual Amplify configuration triggered.');
+                console.log('[WORKER] Manually configuring Amplify with v6 Outputs structure...');
+                // We use the new "AmplifyOutputs" structure required by v6
                 Amplify.configure({
-                    API: {
-                        GraphQL: {
-                            endpoint: graphqlEndpoint,
-                            region: awsRegion,
-                            defaultAuthMode: 'iam'
-                        }
+                    version: "1",
+                    data: {
+                        url: graphqlEndpoint,
+                        aws_region: awsRegion,
+                        default_authorization_type: "AWS_IAM",
+                        authorization_types: ["AWS_IAM"]
                     }
-                });
+                } as any);
             }
 
             cachedClient = generateClient<Schema>({
                 authMode: 'iam',
             });
-            console.log('[WORKER] Data Client Generated.');
+            console.log('[WORKER] Data Client initialized successfully.');
         } catch (e) {
             console.error('[WORKER] CRITICAL: Data Client Generation Failed:', e);
             throw e;
@@ -63,6 +62,7 @@ function getClient() {
     }
     return cachedClient;
 }
+
 
 export const handler = async (event: any) => {
     console.log('[WORKER] Incoming Event');

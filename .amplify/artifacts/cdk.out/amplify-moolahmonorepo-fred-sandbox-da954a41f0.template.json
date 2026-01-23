@@ -361,7 +361,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/7258a1b5cfc26b45680cff418fbb40100de0176254676a57d33eeb365260e197.json"
+       "/9f076a482b9c8bc9ac739e3099378d931e8cb8a78b81e581392ced64dd4dca45.json"
       ]
      ]
     }
@@ -388,6 +388,12 @@
       "Fn::GetAtt": [
        "data7552DF31",
        "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogNestedStackAuditLogNestedStackResource38318EC9Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogAuditLogTableDB115562TableArn"
+      ]
+     },
+     "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258Arn": {
+      "Fn::GetAtt": [
+       "data7552DF31",
+       "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258Arn"
       ]
      },
      "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef": {
@@ -423,7 +429,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/ac7eef4d457eb30711626badc5ea29ed3e0bc0430797bb79ef3232859894545d.json"
+       "/3ae0dd25bc45ff787fc8a1b1c60e3189638ee6b5ff88da48e2435b0b108a095b.json"
       ]
      ]
     }

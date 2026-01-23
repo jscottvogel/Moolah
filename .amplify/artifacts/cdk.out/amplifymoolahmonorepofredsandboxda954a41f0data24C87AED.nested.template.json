@@ -332,6 +332,24 @@
          "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheProviderCacheTableAFED7434TableArn"
         ]
        }
+      },
+      {
+       "Action": "appsync:GraphQL",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "amplifyDataGraphQLAPI42A6FA33",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
       }
      ],
      "Version": "2012-10-17"
@@ -359,7 +377,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "59fc9aa3ab7b861c49b56b9348ca42771ac5ae41aace7853cf0cb9473751bab6.zip"
+     "S3Key": "54c3c80119bc611684472537d4eea29ca442dfe50980f225b74530b5d37d36c8.zip"
     },
     "Environment": {
      "Variables": {
@@ -402,7 +420,7 @@
    "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/orchestrator-lambda/Resource",
-    "aws:asset:path": "asset.59fc9aa3ab7b861c49b56b9348ca42771ac5ae41aace7853cf0cb9473751bab6",
+    "aws:asset:path": "asset.54c3c80119bc611684472537d4eea29ca442dfe50980f225b74530b5d37d36c8",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -655,6 +673,24 @@
          "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataProviderCacheProviderCacheTableAFED7434TableArn"
         ]
        }
+      },
+      {
+       "Action": "appsync:GraphQL",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Fn::GetAtt": [
+            "amplifyDataGraphQLAPI42A6FA33",
+            "Arn"
+           ]
+          },
+          "/*"
+         ]
+        ]
+       }
       }
      ],
      "Version": "2012-10-17"
@@ -682,7 +718,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "2bdb24be83b52f472acda508faec370eddc80c8cc6c6e63cf6aa03a43afe25df.zip"
+     "S3Key": "ca95634279115b8bd5f4f9c670268f17963ea67a3e814e81eb84504b399c12c8.zip"
     },
     "Environment": {
      "Variables": {
@@ -729,7 +765,7 @@
    "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/market-worker-lambda/Resource",
-    "aws:asset:path": "asset.2bdb24be83b52f472acda508faec370eddc80c8cc6c6e63cf6aa03a43afe25df",
+    "aws:asset:path": "asset.ca95634279115b8bd5f4f9c670268f17963ea67a3e814e81eb84504b399c12c8",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -805,7 +841,7 @@
       "ApiId"
      ]
     },
-    "Expires": 1771774902
+    "Expires": 1771792718
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
@@ -5212,6 +5248,14 @@
     "Fn::GetAtt": [
      "amplifyDataAuditLogNestedStackAuditLogNestedStackResourceF5A0647C",
      "Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogAuditLogTableDB115562TableArn"
+    ]
+   }
+  },
+  "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258Arn": {
+   "Value": {
+    "Fn::GetAtt": [
+     "amplifyDataGraphQLAPI42A6FA33",
+     "Arn"
     ]
    }
   }

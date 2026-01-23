@@ -94,6 +94,21 @@
        "Resource": {
         "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogNestedStackAuditLogNestedStackResource38318EC9Outputsamplifymoolahmon3B08AB0D"
        }
+      },
+      {
+       "Action": "appsync:GraphQL",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          {
+           "Ref": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258Arn"
+          },
+          "/*"
+         ]
+        ]
+       }
       }
      ],
      "Version": "2012-10-17"
@@ -121,7 +136,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "4efa4cf48ccf21255e242bc0880d6178a249db53446fa04ad203a811ac96e9ee.zip"
+     "S3Key": "fca7954b6e06ad14f9a221a6f4fc82fdb479b6760e6d92bca86f688076f75d12.zip"
     },
     "Environment": {
      "Variables": {
@@ -167,7 +182,7 @@
    "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/market-scheduler-lambda/Resource",
-    "aws:asset:path": "asset.4efa4cf48ccf21255e242bc0880d6178a249db53446fa04ad203a811ac96e9ee",
+    "aws:asset:path": "asset.fca7954b6e06ad14f9a221a6f4fc82fdb479b6760e6d92bca86f688076f75d12",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -518,6 +533,9 @@
    "Type": "String"
   },
   "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogNestedStackAuditLogNestedStackResource38318EC9Outputsamplifymoolahmon3B08AB0D": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258Arn": {
    "Type": "String"
   },
   "referencetoamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputsamplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef": {

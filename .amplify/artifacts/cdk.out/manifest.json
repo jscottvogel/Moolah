@@ -22,7 +22,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/dd434ed29ba813656738b354b0569fbb8d7d30dbf36ef8eedeea7130104b429f.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/130be87008591ee3ab676cc92d06c99e3c62df8e308735e2ef20506c21dc9515.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -5249,6 +5249,12 @@
             "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogNestedStackAuditLogNestedStackResource38318EC9Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogAuditLogTableDB115562TableArn"
           }
         ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data/amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258Arn"
+          }
+        ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/data.NestedStack/data.NestedStackResource": [
           {
             "type": "aws:cdk:logicalId",
@@ -5361,6 +5367,12 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataAuditLogNestedStackAuditLogNestedStackResource38318EC9Outputsamplifymoolahmon3B08AB0D"
+          }
+        ],
+        "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/reference-to-amplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputs.amplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepofredsandboxda954a41f0dataNestedStackdataNestedStackResource21165983Outputsamplifymoolahmonorepofredsandboxda954a41f0dataamplifyDataGraphQLAPI7D61D258Arn"
           }
         ],
         "/amplify-moolahmonorepo-fred-sandbox-da954a41f0/function/reference-to-amplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackNestedStackCustomInfraStackNestedStackResource280B1562Outputs.amplifymoolahmonorepofredsandboxda954a41f0CustomInfraStackMarketDataQueue4B9138EDRef": [
