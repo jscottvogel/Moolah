@@ -8,10 +8,8 @@ import { z } from 'zod';
  * Moolah Orchestrator - ULTIMATE RELIABILITY EDITION
  */
 
-const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
-const GRAPHQL_ENDPOINT = process.env.AMPLIFY_DATA_GRAPHQL_ENDPOINT;
-
-const bedrock = new BedrockRuntimeClient({ region: AWS_REGION });
+// Core Config Discovery
+const getEnv = (key: string) => process.env[key];
 
 // 1. Validation Schema
 const AIRecommendationSchema = z.object({
@@ -31,17 +29,20 @@ const AIRecommendationSchema = z.object({
 let cachedClient: any = null;
 
 function getClient() {
+    const graphqlEndpoint = getEnv('AMPLIFY_DATA_GRAPHQL_ENDPOINT');
+    const awsRegion = getEnv('AWS_REGION') || 'us-east-1';
+
     if (!cachedClient) {
-        console.log('[ORC] DISCOVERY: GraphQL Endpoint present?', !!GRAPHQL_ENDPOINT);
+        console.log('[ORC] DISCOVERY: GraphQL Endpoint present?', !!graphqlEndpoint);
         try {
             const currentConfig = Amplify.getConfig();
-            if (!currentConfig.API?.GraphQL?.endpoint && GRAPHQL_ENDPOINT) {
+            if (!currentConfig.API?.GraphQL?.endpoint && graphqlEndpoint) {
                 console.log('[ORC] Manual Amplify configuration triggered.');
                 Amplify.configure({
                     API: {
                         GraphQL: {
-                            endpoint: GRAPHQL_ENDPOINT,
-                            region: AWS_REGION,
+                            endpoint: graphqlEndpoint,
+                            region: awsRegion,
                             defaultAuthMode: 'iam'
                         }
                     }
@@ -61,9 +62,9 @@ function getClient() {
 
 export const handler = async (event: any) => {
     console.log('[ORC] Brain Triggered');
-
-    // Explicitly grab client at handler start
     const client = getClient();
+    const awsRegion = getEnv('AWS_REGION') || 'us-east-1';
+    const bedrock = new BedrockRuntimeClient({ region: awsRegion });
 
     try {
         // Step 1: Context Gathering (Holdings + Global Fundamentals)

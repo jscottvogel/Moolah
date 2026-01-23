@@ -86,3 +86,14 @@ for (const modelName of Object.keys(tables)) {
         table.grantReadWriteData(backend.marketScheduler.resources.lambda);
     }
 }
+
+// 5. Pass GraphQL Endpoint for Data Client Initialization
+// This is critical for the "generateClient" call inside Lambdas
+const graphqlUrl = backend.data.resources.graphqlApi.graphqlUrl;
+const region = Stack.of(backend.data.resources.graphqlApi).region;
+
+[backend.marketWorker, backend.orchestrator, backend.marketScheduler].forEach((func) => {
+    (func.resources.lambda as any).addEnvironment('AMPLIFY_DATA_GRAPHQL_ENDPOINT', graphqlUrl);
+    (func.resources.lambda as any).addEnvironment('AWS_REGION', region);
+});
+

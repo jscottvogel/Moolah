@@ -7,33 +7,45 @@ import type { Schema } from '../../data/resource';
  * Moolah Market Worker - ULTIMATE RELIABILITY EDITION
  */
 
-// 1. Core Config Discovery
-const QUEUE_URL = process.env.MARKET_QUEUE_URL;
-const ALPHA_VANTAGE_API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
-const GRAPHQL_ENDPOINT = process.env.AMPLIFY_DATA_GRAPHQL_ENDPOINT;
-const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
+/**
+ * Moolah Market Worker - ULTIMATE RELIABILITY EDITION
+ */
+
+// Core Config Discovery (Stateless getters)
+const getEnv = (key: string) => process.env[key];
 
 // 2. SQS Client (Stateless)
-const sqs = new SQSClient({ region: AWS_REGION });
+// We'll initialize this lazily
+let cachedSqs: SQSClient | null = null;
+function getSqs() {
+    if (!cachedSqs) {
+        cachedSqs = new SQSClient({ region: getEnv('AWS_REGION') || 'us-east-1' });
+    }
+    return cachedSqs;
+}
+
 
 // 3. Robust Client Discovery
 let cachedClient: any = null;
 
 function getClient() {
+    const graphqlEndpoint = getEnv('AMPLIFY_DATA_GRAPHQL_ENDPOINT');
+    const awsRegion = getEnv('AWS_REGION') || 'us-east-1';
+
     if (!cachedClient) {
-        console.log('[WORKER] DISCOVERY: GraphQL Endpoint present?', !!GRAPHQL_ENDPOINT);
+        console.log('[WORKER] DISCOVERY: GraphQL Endpoint present?', !!graphqlEndpoint);
 
         // MANUALLY CONFIGURE AMPLIFY if automatic discovery fails in this execution context
         try {
             // Check if already configured
             const currentConfig = Amplify.getConfig();
-            if (!currentConfig.API?.GraphQL?.endpoint && GRAPHQL_ENDPOINT) {
+            if (!currentConfig.API?.GraphQL?.endpoint && graphqlEndpoint) {
                 console.log('[WORKER] Manual Amplify configuration triggered.');
                 Amplify.configure({
                     API: {
                         GraphQL: {
-                            endpoint: GRAPHQL_ENDPOINT,
-                            region: AWS_REGION,
+                            endpoint: graphqlEndpoint,
+                            region: awsRegion,
                             defaultAuthMode: 'iam'
                         }
                     }
@@ -54,6 +66,8 @@ function getClient() {
 
 export const handler = async (event: any) => {
     console.log('[WORKER] Incoming Event');
+    const queueUrl = getEnv('MARKET_QUEUE_URL');
+    const sqs = getSqs();
 
     // A. AppSync Mutation Handler (On-demand)
     if (event.arguments || (event.info && event.info.fieldName === 'syncMarketData')) {
@@ -61,15 +75,15 @@ export const handler = async (event: any) => {
         console.log(`[WORKER] Mutation: syncMarketData for ${tickers.length} tickers`);
 
         try {
-            if (!QUEUE_URL) throw new Error("MARKET_QUEUE_URL env var missing");
+            if (!queueUrl) throw new Error("MARKET_QUEUE_URL env var missing");
 
             for (const ticker of tickers) {
                 await sqs.send(new SendMessageCommand({
-                    QueueUrl: QUEUE_URL,
+                    QueueUrl: queueUrl,
                     MessageBody: JSON.stringify({ ticker, type: 'PRICE' })
                 }));
                 await sqs.send(new SendMessageCommand({
-                    QueueUrl: QUEUE_URL,
+                    QueueUrl: queueUrl,
                     MessageBody: JSON.stringify({ ticker, type: 'FUNDAMENTAL' })
                 }));
             }
@@ -121,9 +135,10 @@ async function processTicker(ticker: string, type: string) {
 async function fetchAndStorePrice(ticker: string) {
     console.log(`[SYNC] Fetching Price: ${ticker}`);
     const client = getClient();
+    const apiKey = getEnv('ALPHA_VANTAGE_API_KEY');
 
     try {
-        const resp = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${ALPHA_VANTAGE_API_KEY}`);
+        const resp = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${apiKey}`);
         const data: any = await resp.json();
         const latestDate = data["Time Series (Daily)"] ? Object.keys(data["Time Series (Daily)"])[0] : null;
 
@@ -151,9 +166,10 @@ async function fetchAndStorePrice(ticker: string) {
 async function fetchAndStoreFundamentals(ticker: string) {
     console.log(`[SYNC] Fetching Fundamentals: ${ticker}`);
     const client = getClient();
+    const apiKey = getEnv('ALPHA_VANTAGE_API_KEY');
 
     try {
-        const resp = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${ticker}&apikey=${ALPHA_VANTAGE_API_KEY}`);
+        const resp = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${ticker}&apikey=${apiKey}`);
         const data: any = await resp.json();
 
         if (data && data.Symbol) {
@@ -181,6 +197,7 @@ async function fetchAndStoreFundamentals(ticker: string) {
         console.error(`[SYNC] Fundamental Exception [${ticker}]:`, e);
     }
 }
+
 
 function calculateQualityScore(payout: number, debt: number) {
     let score = 100;
