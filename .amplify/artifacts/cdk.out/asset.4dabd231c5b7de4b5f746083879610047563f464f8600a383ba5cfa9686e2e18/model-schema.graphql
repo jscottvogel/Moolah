@@ -1,0 +1,76 @@
+type UserSettings @model @auth(rules: [{allow: owner, ownerField: "owner"},
+  {allow: public, provider: iam, operations: [read]}])
+{
+  settingsJson: AWSJSON
+}
+
+type Holding @model @auth(rules: [{allow: owner, ownerField: "owner"},
+  {allow: public, provider: iam, operations: [read]}])
+{
+  ticker: String!
+  shares: Float!
+  costBasis: Float
+  purchaseDate: AWSDate
+}
+
+type Recommendation @model @auth(rules: [{allow: owner, ownerField: "owner"},
+  {allow: public, provider: iam, operations: [create, read]}])
+{
+  status: String!
+  packetJson: AWSJSON
+  explanationJson: AWSJSON
+}
+
+type AuditLog @model @auth(rules: [{allow: private, operations: [read]},
+  {allow: owner, ownerField: "owner"},
+  {allow: public, provider: iam, operations: [read, create]}])
+{
+  action: String!
+  details: String
+  metadata: AWSJSON
+}
+
+type MarketPrice @model @auth(rules: [{allow: private, operations: [read]},
+  {allow: public, provider: iam, operations: [read, create, update]}])
+{
+  ticker: String! @index(sortKeyFields: ["date"], queryField: "listMarketPriceByTickerAndDate")
+  date: String!
+  close: Float
+  adjustedClose: Float
+  volume: Float
+}
+
+type MarketFundamental @model @auth(rules: [{allow: private, operations: [read]},
+  {allow: public, provider: iam, operations: [read, create, update]}])
+{
+  ticker: String! @index(sortKeyFields: ["asOf"], queryField: "listMarketFundamentalByTickerAndAsOf")
+  asOf: String!
+  dataJson: AWSJSON
+  dividendYield: Float
+  payoutRatio: Float
+  debtToEquity: Float
+  qualityScore: Float
+}
+
+type MarketDividend @model @auth(rules: [{allow: private, operations: [read]},
+  {allow: public, provider: iam, operations: [read, create, update]}])
+{
+  ticker: String! @index(sortKeyFields: ["exDate"], queryField: "listMarketDividendByTickerAndExDate")
+  exDate: String!
+  amount: Float
+  paymentDate: String
+  isCut: Boolean
+}
+
+type ProviderCache @model @auth(rules: [{allow: private, operations: [read]},
+  {allow: public, provider: iam, operations: [read, create, update]}])
+{
+  cacheKey: String! @primaryKey
+  responseJson: AWSJSON
+  ttl: Int
+}
+
+type Mutation {
+  runOptimization(constraintsJson: AWSJSON): String @function(name: "FnRunOptimization") @auth(rules: [{allow: private}])
+  syncMarketData(tickers: [String]): String @function(name: "FnSyncMarketData") @auth(rules: [{allow: private}])
+}

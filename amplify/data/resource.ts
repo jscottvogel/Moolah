@@ -20,7 +20,7 @@ const schema = a.schema({
         settingsJson: a.json(), // Constraints, tax inputs, preferences
     }).authorization((allow) => [
         allow.owner(),
-        allow.guest().to(['read']).provider('iam'), // Allow Lambda to read settings
+        allow.guest().to(['read']), // Allow Lambda to read settings
     ]),
 
     Holding: a.model({
@@ -30,7 +30,7 @@ const schema = a.schema({
         purchaseDate: a.date(),
     }).authorization((allow) => [
         allow.owner(),
-        allow.guest().to(['read']).provider('iam'), // Allow Orchestrator to read holdings
+        allow.guest().to(['read']), // Allow Orchestrator to read holdings
     ]),
 
     Recommendation: a.model({
@@ -39,7 +39,7 @@ const schema = a.schema({
         explanationJson: a.json(), // Human-readable AI reasoning
     }).authorization((allow) => [
         allow.owner(),
-        allow.guest().to(['create', 'read']).provider('iam'), // Allow Orchestrator to create recommendations
+        allow.guest().to(['create', 'read']), // Allow Orchestrator to create recommendations
     ]),
 
     AuditLog: a.model({
@@ -49,7 +49,7 @@ const schema = a.schema({
     }).authorization((allow) => [
         allow.authenticated().to(['read']),
         allow.owner(),
-        allow.guest().to(['read', 'create']).provider('iam'), // Allow workers to create logs
+        allow.guest().to(['read', 'create']), // Allow workers to create logs
     ]),
 
     // --- MARKET DOMAIN ---
@@ -64,7 +64,7 @@ const schema = a.schema({
         .secondaryIndexes((index) => [index("ticker").sortKeys(["date"])])
         .authorization((allow) => [
             allow.authenticated().to(['read']),
-            allow.guest().to(['read', 'create', 'update']).provider('iam'),
+            allow.guest().to(['read', 'create', 'update']),
         ]),
 
     MarketFundamental: a.model({
@@ -79,7 +79,7 @@ const schema = a.schema({
         .secondaryIndexes((index) => [index("ticker").sortKeys(["asOf"])])
         .authorization((allow) => [
             allow.authenticated().to(['read']),
-            allow.guest().to(['read', 'create', 'update']).provider('iam'),
+            allow.guest().to(['read', 'create', 'update']),
         ]),
 
     MarketDividend: a.model({
@@ -92,7 +92,7 @@ const schema = a.schema({
         .secondaryIndexes((index) => [index("ticker").sortKeys(["exDate"])])
         .authorization((allow) => [
             allow.authenticated().to(['read']),
-            allow.guest().to(['read', 'create', 'update']).provider('iam'),
+            allow.guest().to(['read', 'create', 'update']),
         ]),
 
     ProviderCache: a.model({
@@ -103,7 +103,7 @@ const schema = a.schema({
         .identifier(["cacheKey"])
         .authorization((allow) => [
             allow.authenticated().to(['read']),
-            allow.guest().to(['read', 'create', 'update']).provider('iam'),
+            allow.guest().to(['read', 'create', 'update']),
         ]),
 
     // --- ORCHESTRATION MUTATIONS ---
@@ -137,13 +137,10 @@ export const data = defineData({
     schema,
     authorizationModes: {
         defaultAuthorizationMode: 'userPool',
-        iamAuthorizationMode: {
-            // IAM is enabled by default if grantReadWriteData is used in backend.ts, 
-            // but we need to satisfy the provider('iam') rules in the schema.
-        },
         apiKeyAuthorizationMode: {
             expiresInDays: 30,
         },
     },
 });
+
 
