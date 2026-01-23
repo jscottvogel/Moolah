@@ -82,22 +82,45 @@ export const handler = async (event: any) => {
         const fundamentals = resM.listMarketFundamentals.items;
 
         // Step 2: Reasoning
-        const prompt = `You are the Moolah Optimizer. Context: Holdings=${JSON.stringify(holdings)}, Market=${JSON.stringify(fundamentals)}. Suggest rebalance. JSON schema: {"targetPortfolio": [...], "explanation": {...}}`;
+        const prompt = `You are the Moolah Optimizer. 
+Context: 
+Holdings: ${JSON.stringify(holdings)}
+Market Fundamentals: ${JSON.stringify(fundamentals)}
+
+Task: Suggest a rebalanced portfolio to optimize for dividends and risk.
+Output must be ONLY a valid JSON object matching this schema:
+{
+  "targetPortfolio": [{"ticker": "string", "weight": number, "reason": "string"}],
+  "explanation": {"summary": "string", "bullets": ["string"], "risksToWatch": ["string"]}
+}
+
+Return ONLY raw JSON. No conversational text or markdown blocks.`;
+
         const bResp = await bedrock.send(new InvokeModelCommand({
             modelId: "anthropic.claude-3-haiku-20240307-v1:0",
             contentType: "application/json",
             accept: "application/json",
             body: JSON.stringify({
                 anthropic_version: "bedrock-2023-05-31",
-                max_tokens: 1500,
+                max_tokens: 2000,
                 messages: [{ role: "user", content: prompt }]
             })
         }));
 
         const resultBody = JSON.parse(new TextDecoder().decode(bResp.body));
-        const aiText = resultBody.content[0].text;
+        const aiText = resultBody.content[0].text.trim();
+        console.log('[ORC] Raw AI Response snippet:', aiText.substring(0, 100));
+
         const jsonMatch = aiText.match(/\{[\s\S]*\}/);
-        const val = AIRecommendationSchema.parse(JSON.parse(jsonMatch ? jsonMatch[0] : aiText));
+        const jsonStr = jsonMatch ? jsonMatch[0] : aiText;
+
+        let val;
+        try {
+            val = AIRecommendationSchema.parse(JSON.parse(jsonStr));
+        } catch (parseErr: any) {
+            console.error('[ORC] JSON Parse Fail. Content:', jsonStr);
+            throw new Error(`AI returned invalid JSON: ${parseErr.message}`);
+        }
 
         // Step 3: Persist
         const mutation = `mutation C($i: CreateRecommendationInput!) { createRecommendation(input: $i) { id } }`;

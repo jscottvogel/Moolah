@@ -114,10 +114,15 @@ export const handler = async (event: any) => {
         for (const record of event.Records) {
             try {
                 const { ticker, type } = JSON.parse(record.body);
+                console.log(`[WORKER] Processing SQS: ${type} for ${ticker}`);
                 if (type === 'PRICE') await fetchPrice(ticker);
                 else await fetchFund(ticker);
-                await new Promise(r => setTimeout(r, 12000));
-            } catch (e) { console.error('[WORKER] SQS Fail:', e); }
+
+                // Reduced delay: 2s between items in a batch to allow more throughput but avoid instant bursts
+                await new Promise(r => setTimeout(r, 2000));
+            } catch (e) {
+                console.error('[WORKER] SQS Item Fail:', e);
+            }
         }
         return;
     }
@@ -127,31 +132,53 @@ export const handler = async (event: any) => {
 
 async function fetchPrice(ticker: string) {
     const apiKey = getEnv('ALPHA_VANTAGE_API_KEY');
-    const resp = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${apiKey}`);
+    console.log(`[WORKER] Fetching price for ${ticker}...`);
+    const resp = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${ticker}&apikey=${apiKey}`);
     const data: any = await resp.json();
-    const latestDate = data["Time Series (Daily)"] ? Object.keys(data["Time Series (Daily)"])[0] : null;
-    if (latestDate) {
-        const m = data["Time Series (Daily)"][latestDate];
+
+    if (data["Note"] || data["Information"] || data["Error Message"]) {
+        const msg = data["Note"] || data["Information"] || data["Error Message"];
+        console.warn(`[WORKER] Alpha Vantage Price Notice for ${ticker}:`, msg);
+        await logToAudit('MARKET_SYNC_NOTICE', `${ticker}: ${msg}`);
+        return;
+    }
+
+    const timeSeries = data["Time Series (Daily)"];
+    if (timeSeries) {
+        const latestDate = Object.keys(timeSeries)[0];
+        const m = timeSeries[latestDate];
         const mutation = `mutation P($i: CreateMarketPriceInput!) { createMarketPrice(input: $i) { id } }`;
-        await signedRequest(mutation, {
+        const res = await signedRequest(mutation, {
             i: {
                 ticker, date: latestDate, close: parseFloat(m["4. close"]),
-                adjustedClose: parseFloat(m["5. adjusted close"]), volume: parseFloat(m["6. volume"])
+                adjustedClose: parseFloat(m["4. close"]), // Fallback if regular daily
+                volume: parseFloat(m["5. volume"])
             }
         });
-        await logToAudit('MARKET_SYNC_SUCCESS', `${ticker} updated.`);
+        console.log(`[WORKER] Price saved for ${ticker} (${latestDate}): ${res.createMarketPrice.id}`);
+        await logToAudit('MARKET_SYNC_SUCCESS', `${ticker} price updated.`);
+    } else {
+        console.error(`[WORKER] No price data found for ${ticker}. Keys:`, Object.keys(data));
     }
 }
 
 async function fetchFund(ticker: string) {
     const apiKey = getEnv('ALPHA_VANTAGE_API_KEY');
+    console.log(`[WORKER] Fetching fundamental for ${ticker}...`);
     const resp = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${ticker}&apikey=${apiKey}`);
     const data: any = await resp.json();
+
+    if (data["Note"] || data["Information"] || data["Error Message"]) {
+        const msg = data["Note"] || data["Information"] || data["Error Message"];
+        console.warn(`[WORKER] Alpha Vantage Fund Notice for ${ticker}:`, msg);
+        return;
+    }
+
     if (data && data.Symbol) {
         const payout = parseFloat(data["PayoutRatio"] || "0");
         const debt = parseFloat(data["DebtToEquityRatioTTM"] || "0");
         const mutation = `mutation F($i: CreateMarketFundamentalInput!) { createMarketFundamental(input: $i) { id } }`;
-        await signedRequest(mutation, {
+        const res = await signedRequest(mutation, {
             i: {
                 ticker, asOf: new Date().toISOString().split('T')[0],
                 dividendYield: parseFloat(data["DividendYield"] || "0"),
@@ -160,6 +187,9 @@ async function fetchFund(ticker: string) {
                 qualityScore: Math.max(0, 100 - (payout > 0.8 ? 40 : 0) - (debt > 2.0 ? 30 : 0))
             }
         });
+        console.log(`[WORKER] Fundamentals saved for ${ticker}: ${res.createMarketFundamental.id}`);
         await logToAudit('FUND_SYNC_SUCCESS', `${ticker} fundamentals.`);
+    } else {
+        console.error(`[WORKER] No fundamental data found for ${ticker}`);
     }
 }
