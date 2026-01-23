@@ -1,101 +1,114 @@
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
+import { Amplify } from 'aws-amplify';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../data/resource';
 
-// Initialize the data client lazily to handle potential environment issues
+/**
+ * Moolah Market Worker - ULTIMATE RELIABILITY EDITION
+ */
+
+// 1. Core Config Discovery
+const QUEUE_URL = process.env.MARKET_QUEUE_URL;
+const ALPHA_VANTAGE_API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
+const GRAPHQL_ENDPOINT = process.env.AMPLIFY_DATA_GRAPHQL_ENDPOINT;
+const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
+
+// 2. SQS Client (Stateless)
+const sqs = new SQSClient({ region: AWS_REGION });
+
+// 3. Robust Client Discovery
 let cachedClient: any = null;
 
-function getInternalClient() {
+function getClient() {
     if (!cachedClient) {
-        console.log('[WORKER] Initializing internal Data Client...');
-        // Debug: Log relevant env vars (safely)
-        const envKeys = Object.keys(process.env).filter(k => k.startsWith('AMPLIFY_') || k.includes('GRAPHQL'));
-        console.log('[WORKER] Relevant Env Keys:', envKeys);
+        console.log('[WORKER] DISCOVERY: GraphQL Endpoint present?', !!GRAPHQL_ENDPOINT);
 
+        // MANUALLY CONFIGURE AMPLIFY if automatic discovery fails in this execution context
         try {
+            // Check if already configured
+            const currentConfig = Amplify.getConfig();
+            if (!currentConfig.API?.GraphQL?.endpoint && GRAPHQL_ENDPOINT) {
+                console.log('[WORKER] Manual Amplify configuration triggered.');
+                Amplify.configure({
+                    API: {
+                        GraphQL: {
+                            endpoint: GRAPHQL_ENDPOINT,
+                            region: AWS_REGION,
+                            defaultAuthMode: 'iam'
+                        }
+                    }
+                });
+            }
+
             cachedClient = generateClient<Schema>({
                 authMode: 'iam',
             });
-            console.log('[WORKER] Internal Data Client generated.');
-        } catch (e: any) {
-            console.error('[WORKER] Failed to generate internal client:', e);
+            console.log('[WORKER] Data Client Generated.');
+        } catch (e) {
+            console.error('[WORKER] CRITICAL: Data Client Generation Failed:', e);
             throw e;
         }
     }
     return cachedClient;
 }
 
-const sqs = new SQSClient({});
-const QUEUE_URL = process.env.MARKET_QUEUE_URL;
-const ALPHA_VANTAGE_API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
-
 export const handler = async (event: any) => {
-    console.log('Market Worker Triggered');
-    const client = getInternalClient();
+    console.log('[WORKER] Incoming Event');
 
+    // A. AppSync Mutation Handler (On-demand)
+    if (event.arguments || (event.info && event.info.fieldName === 'syncMarketData')) {
+        const tickers = event.arguments?.tickers || [];
+        console.log(`[WORKER] Mutation: syncMarketData for ${tickers.length} tickers`);
 
-    // Case 1: Triggered via SQS (Array of records)
+        try {
+            if (!QUEUE_URL) throw new Error("MARKET_QUEUE_URL env var missing");
+
+            for (const ticker of tickers) {
+                await sqs.send(new SendMessageCommand({
+                    QueueUrl: QUEUE_URL,
+                    MessageBody: JSON.stringify({ ticker, type: 'PRICE' })
+                }));
+                await sqs.send(new SendMessageCommand({
+                    QueueUrl: QUEUE_URL,
+                    MessageBody: JSON.stringify({ ticker, type: 'FUNDAMENTAL' })
+                }));
+            }
+
+            const client = getClient();
+            await client.models.AuditLog.create({
+                action: 'SYNC_OFFLOAD_ACCEPTED',
+                details: `Queued SQS refresh for: ${tickers.join(', ')}`
+            });
+
+            return JSON.stringify({ status: 'ACCEPTED', count: tickers.length });
+        } catch (err: any) {
+            console.error('[WORKER] Mutation Error:', err);
+            return JSON.stringify({
+                status: 'FAILED',
+                error: err.message || 'Internal Lambda Error'
+            });
+        }
+    }
+
+    // B. SQS Processor
     if (event.Records) {
-        console.log('Processing SQS batch of size:', event.Records.length);
+        console.log(`[WORKER] SQS: Processing ${event.Records.length} records`);
         for (const record of event.Records) {
             try {
                 const body = JSON.parse(record.body);
                 const { ticker, type } = body;
                 await processTicker(ticker, type);
-                await new Promise(r => setTimeout(r, 12000)); // Respect Alpha Vantage free tier limits
-            } catch (error) {
-                console.error(`Error processing SQS record:`, error);
+                await new Promise(r => setTimeout(r, 12000)); // Rate limiting check
+            } catch (e) {
+                console.error('[WORKER] SQS Processor Error:', e);
             }
         }
         return;
     }
 
-    // Case 2: Triggered via AppSync Mutation (Direct sync)
-    // We offload to SQS to return "ACCEPTED" immediately to the UI
-    if (event.arguments && (event.arguments.tickers || event.info?.fieldName === 'syncMarketData')) {
-        const tickers = event.arguments?.tickers || [];
-        console.log('Offloading tickers to SQS:', tickers);
-
-        try {
-            if (!QUEUE_URL) {
-                throw new Error("MARKET_QUEUE_URL environment variable is missing.");
-            }
-
-            for (const ticker of tickers) {
-                try {
-                    await sqs.send(new SendMessageCommand({
-                        QueueUrl: QUEUE_URL,
-                        MessageBody: JSON.stringify({ ticker, type: 'PRICE' })
-                    }));
-                    await sqs.send(new SendMessageCommand({
-                        QueueUrl: QUEUE_URL,
-                        MessageBody: JSON.stringify({ ticker, type: 'FUNDAMENTAL' })
-                    }));
-                } catch (error) {
-                    console.error(`Error offloading ticker ${ticker}:`, error);
-                }
-            }
-
-            await client.models.AuditLog.create({
-                action: 'SYNC_OFFLOAD_ACCEPTED',
-                details: `Dispatched SQS refresh for: ${tickers.join(', ')}`
-            });
-
-            return JSON.stringify({ status: 'ACCEPTED', count: tickers.length });
-        } catch (err: any) {
-            console.error('[WORKER] Mutation Handler Failed:', err);
-            // We still want to return a string since the schema requires it
-            return JSON.stringify({
-                status: 'FAILED',
-                error: err.message || 'Internal lambda error'
-            });
-        }
-    }
-
-    console.warn('Unknown event type received by Market Worker');
-    return JSON.stringify({ status: 'IGNORED', detail: 'Unknown event type' });
+    console.warn('[WORKER] Event not recognized');
+    return JSON.stringify({ status: 'IGNORED' });
 };
-
 
 async function processTicker(ticker: string, type: string) {
     if (type === 'PRICE') {
@@ -106,77 +119,68 @@ async function processTicker(ticker: string, type: string) {
 }
 
 async function fetchAndStorePrice(ticker: string) {
-    console.log(`[ALPHAVANTAGE] Fetching price for ${ticker}`);
-    const client = getInternalClient();
-    const resp = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${ALPHA_VANTAGE_API_KEY}`);
-    const data: any = await resp.json();
+    console.log(`[SYNC] Fetching Price: ${ticker}`);
+    const client = getClient();
 
-    const dailyData = data["Time Series (Daily)"];
-    if (dailyData) {
-        const latestDate = Object.keys(dailyData)[0];
-        const latestMetrics = dailyData[latestDate];
+    try {
+        const resp = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${ALPHA_VANTAGE_API_KEY}`);
+        const data: any = await resp.json();
+        const latestDate = data["Time Series (Daily)"] ? Object.keys(data["Time Series (Daily)"])[0] : null;
 
-        await client.models.MarketPrice.create({
-            ticker,
-            date: latestDate,
-            close: parseFloat(latestMetrics["4. close"]),
-            adjustedClose: parseFloat(latestMetrics["5. adjusted close"]),
-            volume: parseFloat(latestMetrics["6. volume"]),
-        });
-
-        await client.models.AuditLog.create({
-            action: 'MARKET_SYNC_SUCCESS',
-            details: `Updated price for ${ticker} (${latestDate}): $${latestMetrics["4. close"]}`
-        });
-
-        console.log(`[ALPHAVANTAGE] Stored price for ${ticker}`);
-    } else {
-        const errorMsg = data["Note"] || data["Error Message"] || "Unknown AlphaVantage error";
-        await client.models.AuditLog.create({
-            action: 'MARKET_SYNC_ERROR',
-            details: `Failed to fetch price for ${ticker}: ${errorMsg}`
-        });
-        console.error(`[ALPHAVANTAGE] No price data for ${ticker}. Response:`, JSON.stringify(data));
+        if (latestDate) {
+            const metrics = data["Time Series (Daily)"][latestDate];
+            await client.models.MarketPrice.create({
+                ticker,
+                date: latestDate,
+                close: parseFloat(metrics["4. close"]),
+                adjustedClose: parseFloat(metrics["5. adjusted close"]),
+                volume: parseFloat(metrics["6. volume"]),
+            });
+            await client.models.AuditLog.create({
+                action: 'MARKET_SYNC_SUCCESS',
+                details: `${ticker} @ $${metrics["4. close"]}`
+            });
+        } else {
+            console.error(`[SYNC] Price Missing for ${ticker}:`, JSON.stringify(data).substring(0, 200));
+        }
+    } catch (e: any) {
+        console.error(`[SYNC] Price Exception [${ticker}]:`, e);
     }
 }
 
 async function fetchAndStoreFundamentals(ticker: string) {
-    console.log(`[ALPHAVANTAGE] Fetching fundamentals for ${ticker}`);
-    const client = getInternalClient();
-    const resp = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${ticker}&apikey=${ALPHA_VANTAGE_API_KEY}`);
-    const data: any = await resp.json();
+    console.log(`[SYNC] Fetching Fundamentals: ${ticker}`);
+    const client = getClient();
 
-    if (data && data.Symbol) {
-        const debtToEquity = parseFloat(data["DebtToEquityRatioTTM"] || "0");
-        const payoutRatio = parseFloat(data["PayoutRatio"] || "0");
-        const dividendYield = parseFloat(data["DividendYield"] || "0");
+    try {
+        const resp = await fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${ticker}&apikey=${ALPHA_VANTAGE_API_KEY}`);
+        const data: any = await resp.json();
 
-        await client.models.MarketFundamental.create({
-            ticker,
-            asOf: new Date().toISOString().split('T')[0],
-            dividendYield,
-            payoutRatio,
-            debtToEquity,
-            dataJson: JSON.stringify(data),
-            qualityScore: calculateQualityScore(payoutRatio, debtToEquity),
-        });
+        if (data && data.Symbol) {
+            const dte = parseFloat(data["DebtToEquityRatioTTM"] || "0");
+            const payout = parseFloat(data["PayoutRatio"] || "0");
+            const yld = parseFloat(data["DividendYield"] || "0");
 
-        await client.models.AuditLog.create({
-            action: 'FUNDAMENTAL_SYNC_SUCCESS',
-            details: `Updated fundamentals for ${ticker}. Yield: ${dividendYield}`
-        });
-
-        console.log(`[ALPHAVANTAGE] Stored fundamentals for ${ticker}`);
-    } else {
-        const errorMsg = data["Note"] || data["Error Message"] || "Unknown AlphaVantage error";
-        await client.models.AuditLog.create({
-            action: 'FUNDAMENTAL_SYNC_ERROR',
-            details: `Failed to fetch fundamentals for ${ticker}: ${errorMsg}`
-        });
-        console.error(`[ALPHAVANTAGE] No fundamentals for ${ticker}. Response:`, JSON.stringify(data));
+            await client.models.MarketFundamental.create({
+                ticker,
+                asOf: new Date().toISOString().split('T')[0],
+                dividendYield: yld,
+                payoutRatio: payout,
+                debtToEquity: dte,
+                dataJson: JSON.stringify(data),
+                qualityScore: calculateQualityScore(payout, dte),
+            });
+            await client.models.AuditLog.create({
+                action: 'FUNDAMENTAL_SYNC_SUCCESS',
+                details: `${ticker} Yield: ${yld}`
+            });
+        } else {
+            console.error(`[SYNC] Fundamentals Missing for ${ticker}:`, JSON.stringify(data).substring(0, 200));
+        }
+    } catch (e: any) {
+        console.error(`[SYNC] Fundamental Exception [${ticker}]:`, e);
     }
 }
-
 
 function calculateQualityScore(payout: number, debt: number) {
     let score = 100;

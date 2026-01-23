@@ -93,6 +93,13 @@
                       "delete",
                       "read"
                     ]
+                  },
+                  {
+                    "allow": "public",
+                    "provider": "iam",
+                    "operations": [
+                      "read"
+                    ]
                   }
                 ]
               }
@@ -181,6 +188,13 @@
                       "delete",
                       "read"
                     ]
+                  },
+                  {
+                    "allow": "public",
+                    "provider": "iam",
+                    "operations": [
+                      "read"
+                    ]
                   }
                 ]
               }
@@ -260,6 +274,14 @@
                       "create",
                       "update",
                       "delete",
+                      "read"
+                    ]
+                  },
+                  {
+                    "allow": "public",
+                    "provider": "iam",
+                    "operations": [
+                      "create",
                       "read"
                     ]
                   }
@@ -462,7 +484,9 @@
                     "allow": "public",
                     "provider": "iam",
                     "operations": [
-                      "read"
+                      "read",
+                      "create",
+                      "update"
                     ]
                   }
                 ]
@@ -578,6 +602,15 @@
                     "operations": [
                       "read"
                     ]
+                  },
+                  {
+                    "allow": "public",
+                    "provider": "iam",
+                    "operations": [
+                      "read",
+                      "create",
+                      "update"
+                    ]
                   }
                 ]
               }
@@ -678,6 +711,15 @@
                     "operations": [
                       "read"
                     ]
+                  },
+                  {
+                    "allow": "public",
+                    "provider": "iam",
+                    "operations": [
+                      "read",
+                      "create",
+                      "update"
+                    ]
                   }
                 ]
               }
@@ -753,6 +795,15 @@
                     "allow": "private",
                     "operations": [
                       "read"
+                    ]
+                  },
+                  {
+                    "allow": "public",
+                    "provider": "iam",
+                    "operations": [
+                      "read",
+                      "create",
+                      "update"
                     ]
                   }
                 ]

@@ -1,25 +1,19 @@
 import { BedrockRuntimeClient, InvokeModelCommand } from "@aws-sdk/client-bedrock-runtime";
+import { Amplify } from 'aws-amplify';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../data/resource';
 import { z } from 'zod';
 
 /**
- * Moolah Orchestrator - Agentic Reasoning Engine
- * 
- * DESIGN RATIONALE:
- * We use a "Model-as-ORC" pattern where the LLM (Claude 3 Haiku) acts as the logic layer
- * for portfolio optimization. This reduces complex heuristic code in the backend.
- * 
- * FLOW:
- * 1. Gather context (User Holdings + Global Market Intelligence).
- * 2. Generate optimized rebalancing plan via Bedrock.
- * 3. Validate output against rigid Zod schemas to prevent "hallucinations".
- * 4. Persist recommendation for user review.
+ * Moolah Orchestrator - ULTIMATE RELIABILITY EDITION
  */
 
-const bedrock = new BedrockRuntimeClient({ region: process.env.AWS_REGION || 'us-east-1' });
+const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
+const GRAPHQL_ENDPOINT = process.env.AMPLIFY_DATA_GRAPHQL_ENDPOINT;
 
-// Validation Schema for AI Output
+const bedrock = new BedrockRuntimeClient({ region: AWS_REGION });
+
+// 1. Validation Schema
 const AIRecommendationSchema = z.object({
     targetPortfolio: z.array(z.object({
         ticker: z.string(),
@@ -33,24 +27,50 @@ const AIRecommendationSchema = z.object({
     })
 });
 
+// 2. Client Factory
+let cachedClient: any = null;
+
+function getClient() {
+    if (!cachedClient) {
+        console.log('[ORC] DISCOVERY: GraphQL Endpoint present?', !!GRAPHQL_ENDPOINT);
+        try {
+            const currentConfig = Amplify.getConfig();
+            if (!currentConfig.API?.GraphQL?.endpoint && GRAPHQL_ENDPOINT) {
+                console.log('[ORC] Manual Amplify configuration triggered.');
+                Amplify.configure({
+                    API: {
+                        GraphQL: {
+                            endpoint: GRAPHQL_ENDPOINT,
+                            region: AWS_REGION,
+                            defaultAuthMode: 'iam'
+                        }
+                    }
+                });
+            }
+            cachedClient = generateClient<Schema>({
+                authMode: 'iam',
+            });
+            console.log('[ORC] Data Client Generated.');
+        } catch (e) {
+            console.error('[ORC] CRITICAL: Client Generation Failed:', e);
+            throw e;
+        }
+    }
+    return cachedClient;
+}
+
 export const handler = async (event: any) => {
     console.log('[ORC] Brain Triggered');
 
-    // Lazy initialization of the Data Client inside the handler
-    // to ensure environment variables are present.
-    console.log('[ORC] Relevant Env Keys:', Object.keys(process.env).filter(k => k.startsWith('AMPLIFY_')));
-    const client = generateClient<Schema>({
-        authMode: 'iam',
-    });
+    // Explicitly grab client at handler start
+    const client = getClient();
 
     try {
-
-        // Step 1: Context Gathering
-        // We fetch the user's specific positions and the global quality metrics (Safety Gates)
+        // Step 1: Context Gathering (Holdings + Global Fundamentals)
         const { data: holdings } = await client.models.Holding.list();
         const { data: fundamentals } = await client.models.MarketFundamental.list({ limit: 60 });
 
-        // Step 2: Reasoning Prompt Construction
+        // Step 2: Prompting
         const prompt = `
             You are the Moolah Agentic Portfolio Optimizer. 
             CONTEXT:
@@ -67,7 +87,7 @@ export const handler = async (event: any) => {
             - Follow schema: {"targetPortfolio": [...], "explanation": {...}}
         `;
 
-        // Step 3: Bedrock Invocation
+        // Step 3: Bedrock
         const bedrockResponse = await bedrock.send(new InvokeModelCommand({
             modelId: "anthropic.claude-3-haiku-20240307-v1:0",
             contentType: "application/json",
@@ -86,7 +106,7 @@ export const handler = async (event: any) => {
         const jsonMatch = aiOutputText.match(/\{[\s\S]*\}/);
         const validatedOutput = AIRecommendationSchema.parse(JSON.parse(jsonMatch ? jsonMatch[0] : aiOutputText));
 
-        // Step 5: Persistence
+        // Step 5: Save Results
         const rec = await client.models.Recommendation.create({
             status: 'COMPLETED',
             packetJson: JSON.stringify({
@@ -100,7 +120,7 @@ export const handler = async (event: any) => {
 
         await client.models.AuditLog.create({
             action: 'AI_OPTIMIZATION_SUCCESS',
-            details: `Generated recommendation with ${validatedOutput.targetPortfolio.length} tickers. Summary: ${validatedOutput.explanation.summary.substring(0, 100)}...`
+            details: `Plan ready: ${validatedOutput.targetPortfolio.length} tickers.`
         });
 
         return JSON.stringify({
@@ -109,17 +129,22 @@ export const handler = async (event: any) => {
             explanation: validatedOutput.explanation
         });
 
-    } catch (err) {
-        console.error("[ORC] Optimization Failed:", err);
+    } catch (err: any) {
+        console.error("[ORC] Failure:", err);
 
-        await client.models.AuditLog.create({
-            action: 'AI_OPTIMIZATION_FAILED',
-            details: err instanceof Error ? err.message : 'Unknown orchestrator error'
-        });
+        // Fail-safe audit log
+        try {
+            await client.models.AuditLog.create({
+                action: 'AI_OPTIMIZATION_FAILED',
+                details: err.message || 'Unknown Error'
+            });
+        } catch (e) {
+            console.error("[ORC] Audit fail-safe also failed.");
+        }
 
         return JSON.stringify({
             status: 'FAILED',
-            error: err instanceof Error ? err.message : 'Unknown orchestrator error'
+            error: err.message || 'Internal Orchestrator Error'
         });
     }
 };
