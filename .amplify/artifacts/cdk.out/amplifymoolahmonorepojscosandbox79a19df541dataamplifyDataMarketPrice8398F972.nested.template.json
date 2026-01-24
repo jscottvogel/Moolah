@@ -1,0 +1,2310 @@
+{
+ "Parameters": {
+  "DynamoDBModelTableReadIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of read IOPS the table should support."
+  },
+  "DynamoDBModelTableWriteIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of write IOPS the table should support."
+  },
+  "DynamoDBBillingMode": {
+   "Type": "String",
+   "Default": "PAY_PER_REQUEST",
+   "AllowedValues": [
+    "PAY_PER_REQUEST",
+    "PROVISIONED"
+   ],
+   "Description": "Configure @model types to create DynamoDB tables with PAY_PER_REQUEST or PROVISIONED billing modes."
+  },
+  "DynamoDBEnablePointInTimeRecovery": {
+   "Type": "String",
+   "Default": "false",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Whether to enable Point in Time Recovery on the table."
+  },
+  "DynamoDBEnableServerSideEncryption": {
+   "Type": "String",
+   "Default": "true",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Enable server side encryption powered by KMS."
+  },
+  "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource28AFAD45Outputsamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataAmplifyTableManagerTableManagerC6F389092": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref": {
+   "Type": "String"
+  }
+ },
+ "Conditions": {
+  "HasEnvironmentParameter": {
+   "Fn::Not": [
+    {
+     "Fn::Equals": [
+      "NONE",
+      "NONE"
+     ]
+    }
+   ]
+  },
+  "ShouldUsePayPerRequestBilling": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBBillingMode"
+    },
+    "PAY_PER_REQUEST"
+   ]
+  },
+  "ShouldUsePointInTimeRecovery": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBEnablePointInTimeRecovery"
+    },
+    "true"
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "MarketPriceTable": {
+   "Type": "Custom::AmplifyDynamoDBTable",
+   "Properties": {
+    "ServiceToken": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource28AFAD45Outputsamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataAmplifyTableManagerTableManagerC6F389092"
+    },
+    "tableName": {
+     "Fn::Join": [
+      "",
+      [
+       "MarketPrice-",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "attributeDefinitions": [
+     {
+      "attributeName": "id",
+      "attributeType": "S"
+     },
+     {
+      "attributeName": "ticker",
+      "attributeType": "S"
+     },
+     {
+      "attributeName": "date",
+      "attributeType": "S"
+     }
+    ],
+    "keySchema": [
+     {
+      "attributeName": "id",
+      "keyType": "HASH"
+     }
+    ],
+    "globalSecondaryIndexes": [
+     {
+      "indexName": "marketPricesByTickerAndDate",
+      "keySchema": [
+       {
+        "attributeName": "ticker",
+        "keyType": "HASH"
+       },
+       {
+        "attributeName": "date",
+        "keyType": "RANGE"
+       }
+      ],
+      "projection": {
+       "projectionType": "ALL"
+      },
+      "provisionedThroughput": {
+       "Fn::If": [
+        "ShouldUsePayPerRequestBilling",
+        {
+         "Ref": "AWS::NoValue"
+        },
+        {
+         "ReadCapacityUnits": {
+          "Ref": "DynamoDBModelTableReadIOPS"
+         },
+         "WriteCapacityUnits": {
+          "Ref": "DynamoDBModelTableWriteIOPS"
+         }
+        }
+       ]
+      }
+     }
+    ],
+    "provisionedThroughput": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      {
+       "Ref": "AWS::NoValue"
+      },
+      {
+       "ReadCapacityUnits": {
+        "Ref": "DynamoDBModelTableReadIOPS"
+       },
+       "WriteCapacityUnits": {
+        "Ref": "DynamoDBModelTableWriteIOPS"
+       }
+      }
+     ]
+    },
+    "sseSpecification": {
+     "sseEnabled": false
+    },
+    "streamSpecification": {
+     "streamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "deletionProtectionEnabled": false,
+    "allowDestructiveGraphqlSchemaUpdates": true,
+    "replaceTableUponGsiUpdate": true,
+    "pointInTimeRecoverySpecification": {
+     "Fn::If": [
+      "ShouldUsePointInTimeRecovery",
+      {
+       "PointInTimeRecoveryEnabled": true
+      },
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    },
+    "billingMode": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      "PAY_PER_REQUEST",
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MarketPriceTable/Default/Default"
+   }
+  },
+  "MarketPriceIAMRoleEB5780C3": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:GetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:UpdateItem",
+          "dynamodb:ConditionCheckItem",
+          "dynamodb:DescribeTable",
+          "dynamodb:GetRecords",
+          "dynamodb:GetShardIterator"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "MarketPrice-",
+                {
+                 "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          },
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "MarketPrice-",
+                {
+                 "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "DynamoDBAccess"
+     }
+    ],
+    "RoleName": {
+     "Fn::Join": [
+      "",
+      [
+       "MarketPriceIAMRolef000d2-",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MarketPriceIAMRole/Resource"
+   }
+  },
+  "MarketPriceDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DynamoDBConfig": {
+     "AwsRegion": {
+      "Ref": "AWS::Region"
+     },
+     "TableName": {
+      "Fn::Select": [
+       1,
+       {
+        "Fn::Split": [
+         "/",
+         {
+          "Fn::Select": [
+           5,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "MarketPriceTable",
+               "TableArn"
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "Name": "MarketPriceTable",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "MarketPriceIAMRoleEB5780C3",
+      "Arn"
+     ]
+    },
+    "Type": "AMAZON_DYNAMODB"
+   },
+   "DependsOn": [
+    "MarketPriceIAMRoleEB5780C3"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MarketPriceDataSource/Resource"
+   }
+  },
+  "QuerygetMarketPriceauth0FunctionQuerygetMarketPriceauth0FunctionAppSyncFunctionD862FF6F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetMarketPriceauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/62baca1d1fe8e93eb394d958513556ffc536c35fde7d8fba84f4af8dd76705da.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/QuerygetMarketPriceauth0Function/QuerygetMarketPriceauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetMarketPricepostAuth0FunctionQuerygetMarketPricepostAuth0FunctionAppSyncFunction62BE5172": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetMarketPricepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/QuerygetMarketPricepostAuth0Function/QuerygetMarketPricepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryGetMarketPriceDataResolverFnQueryGetMarketPriceDataResolverFnAppSyncFunctionED091FB7": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketPriceDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryGetMarketPriceDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/08f4d557693d96c1a4efba0f9dc91330e4b19772fd5477c156468843e3d9cb5e.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4c6a2d29f01c6091bd1d9afe16e5849d456c96f17c3b215938c8067399532719.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketPriceDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/QueryGetMarketPriceDataResolverFn/QueryGetMarketPriceDataResolverFn.AppSyncFunction"
+   }
+  },
+  "GetMarketPriceResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "FieldName": "getMarketPrice",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerygetMarketPriceauth0FunctionQuerygetMarketPriceauth0FunctionAppSyncFunctionD862FF6F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetMarketPricepostAuth0FunctionQuerygetMarketPricepostAuth0FunctionAppSyncFunction62BE5172",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryGetMarketPriceDataResolverFnQueryGetMarketPriceDataResolverFnAppSyncFunctionED091FB7",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getMarketPrice\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketPriceTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/queryGetMarketPriceResolver"
+   }
+  },
+  "QuerylistMarketPricesauth0FunctionQuerylistMarketPricesauth0FunctionAppSyncFunctionC0FEA464": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistMarketPricesauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/62baca1d1fe8e93eb394d958513556ffc536c35fde7d8fba84f4af8dd76705da.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/QuerylistMarketPricesauth0Function/QuerylistMarketPricesauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistMarketPricespostAuth0FunctionQuerylistMarketPricespostAuth0FunctionAppSyncFunctionAD10DDE8": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistMarketPricespostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/QuerylistMarketPricespostAuth0Function/QuerylistMarketPricespostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListMarketPricesDataResolverFnQueryListMarketPricesDataResolverFnAppSyncFunctionBFB32AA6": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketPriceDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListMarketPricesDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9fcbe070ecd3023c5bf5b966fa9584757db9762eef123bad0820bd87591b2174.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cc01911d0269d4080ea57505dc445dfc315ef7ad85d3d9d4ea1357858bff451d.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketPriceDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/QueryListMarketPricesDataResolverFn/QueryListMarketPricesDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ListMarketPriceResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "FieldName": "listMarketPrices",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistMarketPricesauth0FunctionQuerylistMarketPricesauth0FunctionAppSyncFunctionC0FEA464",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistMarketPricespostAuth0FunctionQuerylistMarketPricespostAuth0FunctionAppSyncFunctionAD10DDE8",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListMarketPricesDataResolverFnQueryListMarketPricesDataResolverFnAppSyncFunctionBFB32AA6",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listMarketPrices\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketPriceTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/queryListMarketPricesResolver"
+   }
+  },
+  "MutationcreateMarketPriceinit0FunctionMutationcreateMarketPriceinit0FunctionAppSyncFunction4E521E58": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateMarketPriceinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a183ddccbd956316c38ef97177b8f088ef0826f62023323f5ae6053d348ccffc.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MutationcreateMarketPriceinit0Function/MutationcreateMarketPriceinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateMarketPriceauth0FunctionMutationcreateMarketPriceauth0FunctionAppSyncFunction15ECB8C3": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateMarketPriceauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b00b044cbf62771b1bdbd1b085098bec0b7389277c1a5093ff24000983e9f8a1.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MutationcreateMarketPriceauth0Function/MutationcreateMarketPriceauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateMarketPricepostAuth0FunctionMutationcreateMarketPricepostAuth0FunctionAppSyncFunction64C227DF": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateMarketPricepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MutationcreateMarketPricepostAuth0Function/MutationcreateMarketPricepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationCreateMarketPriceDataResolverFnMutationCreateMarketPriceDataResolverFnAppSyncFunction8EA40405": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketPriceDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationCreateMarketPriceDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d7b8f08bb22bc22494f3d19183c55f4952dbcf847406f9465581fcb2eebc511c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketPriceDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MutationCreateMarketPriceDataResolverFn/MutationCreateMarketPriceDataResolverFn.AppSyncFunction"
+   }
+  },
+  "CreateMarketPriceResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "FieldName": "createMarketPrice",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationcreateMarketPriceinit0FunctionMutationcreateMarketPriceinit0FunctionAppSyncFunction4E521E58",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateMarketPriceauth0FunctionMutationcreateMarketPriceauth0FunctionAppSyncFunction15ECB8C3",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateMarketPricepostAuth0FunctionMutationcreateMarketPricepostAuth0FunctionAppSyncFunction64C227DF",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationCreateMarketPriceDataResolverFnMutationCreateMarketPriceDataResolverFnAppSyncFunction8EA40405",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createMarketPrice\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketPriceTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/mutationCreateMarketPriceResolver"
+   }
+  },
+  "MutationupdateMarketPriceinit0FunctionMutationupdateMarketPriceinit0FunctionAppSyncFunction582DAFCE": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateMarketPriceinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/06db846fd14e6fc371f22b12b5545ba8e2dbfeda85d8c8d586c71c282166657b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MutationupdateMarketPriceinit0Function/MutationupdateMarketPriceinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateMarketPriceauth0FunctionMutationupdateMarketPriceauth0FunctionAppSyncFunction51244620": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketPriceDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateMarketPriceauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/84401e6427e27a7efc57365fa0f7dc3185a6bbd9b0519a42d334fc900a3161a1.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketPriceDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MutationupdateMarketPriceauth0Function/MutationupdateMarketPriceauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateMarketPricepostAuth0FunctionMutationupdateMarketPricepostAuth0FunctionAppSyncFunction9FD963C1": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateMarketPricepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MutationupdateMarketPricepostAuth0Function/MutationupdateMarketPricepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationUpdateMarketPriceDataResolverFnMutationUpdateMarketPriceDataResolverFnAppSyncFunction2D91901B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketPriceDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationUpdateMarketPriceDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/474bf0776ec2164a13191d1a0a9e057154931e4918fea5086f49850d02a5371b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketPriceDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MutationUpdateMarketPriceDataResolverFn/MutationUpdateMarketPriceDataResolverFn.AppSyncFunction"
+   }
+  },
+  "UpdateMarketPriceResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "FieldName": "updateMarketPrice",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationupdateMarketPriceinit0FunctionMutationupdateMarketPriceinit0FunctionAppSyncFunction582DAFCE",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateMarketPriceauth0FunctionMutationupdateMarketPriceauth0FunctionAppSyncFunction51244620",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateMarketPricepostAuth0FunctionMutationupdateMarketPricepostAuth0FunctionAppSyncFunction9FD963C1",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationUpdateMarketPriceDataResolverFnMutationUpdateMarketPriceDataResolverFnAppSyncFunction2D91901B",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updateMarketPrice\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketPriceTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/mutationUpdateMarketPriceResolver"
+   }
+  },
+  "MutationdeleteMarketPriceauth0FunctionMutationdeleteMarketPriceauth0FunctionAppSyncFunction245B5B25": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketPriceDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteMarketPriceauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/05de9eab8d843ef7ef353a7792e3969abe58aae4a1016c0995c6ebddc6f9068f.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketPriceDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MutationdeleteMarketPriceauth0Function/MutationdeleteMarketPriceauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeleteMarketPricepostAuth0FunctionMutationdeleteMarketPricepostAuth0FunctionAppSyncFunction1EC01748": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteMarketPricepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MutationdeleteMarketPricepostAuth0Function/MutationdeleteMarketPricepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationDeleteMarketPriceDataResolverFnMutationDeleteMarketPriceDataResolverFnAppSyncFunction27229909": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketPriceDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationDeleteMarketPriceDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4f7907d1209a2c9953a0c053df402c634e359546d70c7cc5c2e8e21ea734880f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketPriceDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/MutationDeleteMarketPriceDataResolverFn/MutationDeleteMarketPriceDataResolverFn.AppSyncFunction"
+   }
+  },
+  "DeleteMarketPriceResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "FieldName": "deleteMarketPrice",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteMarketPriceauth0FunctionMutationdeleteMarketPriceauth0FunctionAppSyncFunction245B5B25",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteMarketPricepostAuth0FunctionMutationdeleteMarketPricepostAuth0FunctionAppSyncFunction1EC01748",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationDeleteMarketPriceDataResolverFnMutationDeleteMarketPriceDataResolverFnAppSyncFunction27229909",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deleteMarketPrice\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketPriceTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/mutationDeleteMarketPriceResolver"
+   }
+  },
+  "SubscriptiononCreateMarketPriceauth0FunctionSubscriptiononCreateMarketPriceauth0FunctionAppSyncFunctionEB5FF18C": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateMarketPriceauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/616d9084d37a5192e6c798ff5243c52f88c11adb3c7a2424c4a4948cbfa78618.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/SubscriptiononCreateMarketPriceauth0Function/SubscriptiononCreateMarketPriceauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateMarketPricepostAuth0FunctionSubscriptiononCreateMarketPricepostAuth0FunctionAppSyncFunction99A944BA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateMarketPricepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/SubscriptiononCreateMarketPricepostAuth0Function/SubscriptiononCreateMarketPricepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnCreateMarketPriceDataResolverFnSubscriptionOnCreateMarketPriceDataResolverFnAppSyncFunctionFC9B2CF0": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnCreateMarketPriceDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/SubscriptionOnCreateMarketPriceDataResolverFn/SubscriptionOnCreateMarketPriceDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateMarketPriceResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "FieldName": "onCreateMarketPrice",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateMarketPriceauth0FunctionSubscriptiononCreateMarketPriceauth0FunctionAppSyncFunctionEB5FF18C",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateMarketPricepostAuth0FunctionSubscriptiononCreateMarketPricepostAuth0FunctionAppSyncFunction99A944BA",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnCreateMarketPriceDataResolverFnSubscriptionOnCreateMarketPriceDataResolverFnAppSyncFunctionFC9B2CF0",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreateMarketPrice\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/subscriptionOnCreateMarketPriceResolver"
+   }
+  },
+  "SubscriptiononUpdateMarketPriceauth0FunctionSubscriptiononUpdateMarketPriceauth0FunctionAppSyncFunction42B02B95": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateMarketPriceauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/616d9084d37a5192e6c798ff5243c52f88c11adb3c7a2424c4a4948cbfa78618.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/SubscriptiononUpdateMarketPriceauth0Function/SubscriptiononUpdateMarketPriceauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateMarketPricepostAuth0FunctionSubscriptiononUpdateMarketPricepostAuth0FunctionAppSyncFunctionB9206DA1": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateMarketPricepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/SubscriptiononUpdateMarketPricepostAuth0Function/SubscriptiononUpdateMarketPricepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnUpdateMarketPriceDataResolverFnSubscriptionOnUpdateMarketPriceDataResolverFnAppSyncFunctionBB0E6815": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnUpdateMarketPriceDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/SubscriptionOnUpdateMarketPriceDataResolverFn/SubscriptionOnUpdateMarketPriceDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateMarketPriceResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "FieldName": "onUpdateMarketPrice",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateMarketPriceauth0FunctionSubscriptiononUpdateMarketPriceauth0FunctionAppSyncFunction42B02B95",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateMarketPricepostAuth0FunctionSubscriptiononUpdateMarketPricepostAuth0FunctionAppSyncFunctionB9206DA1",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnUpdateMarketPriceDataResolverFnSubscriptionOnUpdateMarketPriceDataResolverFnAppSyncFunctionBB0E6815",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdateMarketPrice\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/subscriptionOnUpdateMarketPriceResolver"
+   }
+  },
+  "SubscriptiononDeleteMarketPriceauth0FunctionSubscriptiononDeleteMarketPriceauth0FunctionAppSyncFunctionA73F6D17": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteMarketPriceauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/616d9084d37a5192e6c798ff5243c52f88c11adb3c7a2424c4a4948cbfa78618.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/SubscriptiononDeleteMarketPriceauth0Function/SubscriptiononDeleteMarketPriceauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteMarketPricepostAuth0FunctionSubscriptiononDeleteMarketPricepostAuth0FunctionAppSyncFunctionB81E9BFB": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteMarketPricepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/SubscriptiononDeleteMarketPricepostAuth0Function/SubscriptiononDeleteMarketPricepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnDeleteMarketPriceDataResolverFnSubscriptionOnDeleteMarketPriceDataResolverFnAppSyncFunctionAC564EE2": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnDeleteMarketPriceDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/SubscriptionOnDeleteMarketPriceDataResolverFn/SubscriptionOnDeleteMarketPriceDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteMarketPriceResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "FieldName": "onDeleteMarketPrice",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteMarketPriceauth0FunctionSubscriptiononDeleteMarketPriceauth0FunctionAppSyncFunctionA73F6D17",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteMarketPricepostAuth0FunctionSubscriptiononDeleteMarketPricepostAuth0FunctionAppSyncFunctionB81E9BFB",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnDeleteMarketPriceDataResolverFnSubscriptionOnDeleteMarketPriceDataResolverFnAppSyncFunctionAC564EE2",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteMarketPrice\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/subscriptionOnDeleteMarketPriceResolver"
+   }
+  },
+  "QuerylistMarketPriceByTickerAndDateauth0FunctionQuerylistMarketPriceByTickerAndDateauth0FunctionAppSyncFunction8FE56D9A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistMarketPriceByTickerAndDateauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/62baca1d1fe8e93eb394d958513556ffc536c35fde7d8fba84f4af8dd76705da.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/QuerylistMarketPriceByTickerAndDateauth0Function/QuerylistMarketPriceByTickerAndDateauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistMarketPriceByTickerAndDatepostAuth0FunctionQuerylistMarketPriceByTickerAndDatepostAuth0FunctionAppSyncFunction0363CC8F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistMarketPriceByTickerAndDatepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/QuerylistMarketPriceByTickerAndDatepostAuth0Function/QuerylistMarketPriceByTickerAndDatepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListMarketPriceByTickerAndDateDataResolverFnQueryListMarketPriceByTickerAndDateDataResolverFnAppSyncFunctionE33DDC96": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketPriceDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListMarketPriceByTickerAndDateDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/818d0c65493c4dfe300c84730889ef07ecdb51f50fa15e3a1a260dde4c914dba.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/098c998f215c333f57348ca8912f66057ae6b574fe34013033dc54362ee2372c.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketPriceDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/QueryListMarketPriceByTickerAndDateDataResolverFn/QueryListMarketPriceByTickerAndDateDataResolverFn.AppSyncFunction"
+   }
+  },
+  "QuerylistMarketPriceByTickerAndDateResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+    },
+    "FieldName": "listMarketPriceByTickerAndDate",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistMarketPriceByTickerAndDateauth0FunctionQuerylistMarketPriceByTickerAndDateauth0FunctionAppSyncFunction8FE56D9A",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistMarketPriceByTickerAndDatepostAuth0FunctionQuerylistMarketPriceByTickerAndDatepostAuth0FunctionAppSyncFunction0363CC8F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListMarketPriceByTickerAndDateDataResolverFnQueryListMarketPriceByTickerAndDateDataResolverFnAppSyncFunctionE33DDC96",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listMarketPriceByTickerAndDate\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketPriceTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/queryListMarketPriceByTickerAndDateResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WO0W6DMAxFv6XvwROwfcAK2mM3wd4rkxiUEhIUO60qxL9P0KnTnq6PfGTfAoryDfID3jjTZsyc7WA5EQuZVlCPqur9F0acSChuUAVvrNjgVUMcUtSkqsQSpj/s/XPGG58Xc/c4BdPBN3aOjsikLE6wNME97OBoVTjPfPcalnrX665GwfZ58j99JK+3ElXwvR1SxL3R72d3pbgqLs/ITMLwvoXiEo5JjyRbgXVzP5PMSdS+bgUH64dV+WAILvxyLV4hzyE/XNjaLCYvdiJoHvkDg1rF6DYBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/MarketPrice/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "GetAttMarketPriceTableStreamArn": {
+   "Description": "Your DynamoDB table StreamArn.",
+   "Value": {
+    "Fn::GetAtt": [
+     "MarketPriceTable",
+     "TableStreamArn"
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "GetAtt:MarketPriceTable:StreamArn"
+      ]
+     ]
+    }
+   }
+  },
+  "GetAttMarketPriceTableName": {
+   "Description": "Your DynamoDB table name.",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "MarketPrice-",
+      {
+       "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+      },
+      "-NONE"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+       },
+       "GetAtt:MarketPriceTable:Name"
+      ]
+     ]
+    }
+   }
+  },
+  "amplifymoolahmonorepojscosandbox79a19df541dataamplifyDataMarketPriceMarketPriceTableAE36F93CTableArn": {
+   "Value": {
+    "Fn::GetAtt": [
+     "MarketPriceTable",
+     "TableArn"
+    ]
+   }
+  }
+ }
+}
