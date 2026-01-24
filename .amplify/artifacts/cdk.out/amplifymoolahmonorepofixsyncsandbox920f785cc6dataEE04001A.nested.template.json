@@ -706,6 +706,52 @@
          ]
         ]
        }
+      },
+      {
+       "Action": "ssm:GetParameters",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/moolahmonorepo/fixsync-sandbox-920f785cc6/ALPHA_VANTAGE_API_KEY"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/shared/moolah-monorepo/ALPHA_VANTAGE_API_KEY"
+          ]
+         ]
+        }
+       ]
       }
      ],
      "Version": "2012-10-17"
@@ -737,11 +783,11 @@
     },
     "Environment": {
      "Variables": {
-      "AMPLIFY_SSM_ENV_CONFIG": "{}",
+      "ALPHA_VANTAGE_API_KEY": "",
+      "AMPLIFY_SSM_ENV_CONFIG": "{\"ALPHA_VANTAGE_API_KEY\":{\"path\":\"/amplify/moolahmonorepo/fixsync-sandbox-920f785cc6/ALPHA_VANTAGE_API_KEY\",\"sharedPath\":\"/amplify/shared/moolah-monorepo/ALPHA_VANTAGE_API_KEY\"}}",
       "MARKET_QUEUE_URL": {
        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6CustomInfraStackNestedStackCustomInfraStackNestedStackResource9712C2B2Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6CustomInfraStackMarketDataQueue0544A670Ref"
       },
-      "ALPHA_VANTAGE_API_KEY": "",
       "AMPLIFY_DATA_GRAPHQL_ENDPOINT": {
        "Fn::GetAtt": [
         "amplifyDataGraphQLAPI42A6FA33",
@@ -853,7 +899,7 @@
      ]
     },
     "DefinitionS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/d235473055d5d6edbe175b6d480c8434cf0f06d7d508cf7edd4f5aa21f532598.graphql"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/777d707b455bcf14749be922b3b70f4051990af92426c0f6240398bd6d5919fb.graphql"
     }
    },
    "UpdateReplacePolicy": "Delete",
@@ -871,7 +917,7 @@
       "ApiId"
      ]
     },
-    "Expires": 1771885042
+    "Expires": 1771885717
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
@@ -1307,7 +1353,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/00cf70b130f5f48fb39c28ba3a9b0cb233b3be5a7c6b3c0fac7cf6ec6e31ef21.json"
+       "/355e9f94b6a7bc6d15a6bdf395e8a032015cf5317f83aa80c186c965ba2eef34.json"
       ]
      ]
     }
@@ -1763,7 +1809,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/448e99f4c804cf5d32ea1a03f8275afe60f12e1dea691bc5e2e4e0f9b7021554.json"
+       "/f20495fd737c7fda332c1aca9f9073c0bdcf7c3871fcc185ebc89293db2d9f67.json"
       ]
      ]
     }
@@ -4298,7 +4344,7 @@
      }
     ],
     "SourceObjectKeys": [
-     "51a5754066f861d94745a77ce92b4797154ea70326113d8c87d86775b100fe8c.zip"
+     "3e8c620323db93d939cd148701e9f7812152e269e2984fb7b3be65a5dd8215d6.zip"
     ],
     "SourceMarkers": [
      {}
@@ -4803,7 +4849,7 @@
      }
     ],
     "SourceObjectKeys": [
-     "34cf52e2738352686accc2dfb062af7eef3e078c574d9c72b52be930ec816944.zip"
+     "6e2e01cd946e514ca49c4b384932dcc00160b9a4a0ec91b75d7192ca75118bc5.zip"
     ],
     "SourceMarkers": [
      {}

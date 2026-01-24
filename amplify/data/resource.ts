@@ -51,7 +51,6 @@ const schema = a.schema({
         metadata: a.json(),
         testField: a.string(),
     }).authorization((allow) => [
-        allow.authenticated().to(['read']),
         allow.owner(),
         allow.guest().to(['read', 'create']), // Allow workers to create logs
     ]),
@@ -121,7 +120,7 @@ const schema = a.schema({
             correlationId: a.string(),
         })
         .returns(a.string())
-        .authorization((allow) => [allow.authenticated()])
+        .authorization((allow) => [allow.authenticated(), allow.publicApiKey()])
         .handler(a.handler.function(orchestrator)),
 
     /**
@@ -133,7 +132,7 @@ const schema = a.schema({
             correlationId: a.string(),
         })
         .returns(a.string())
-        .authorization((allow) => [allow.authenticated()])
+        .authorization((allow) => [allow.authenticated(), allow.publicApiKey()])
         .handler(a.handler.function(marketWorker)),
 });
 
@@ -149,6 +148,6 @@ export const data = defineData({
     },
 });
 
-// Trigger schema update v4 - FORCE REFRESH
+// Trigger schema update v8 - FORCE REFRESH
 
 

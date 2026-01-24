@@ -682,7 +682,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "MutationRequestOptimizationAuthFN",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3d72cc99f51abdee9e8ef0ac8f5f84a36b933ea339e0dabbc93ff98009dbf274.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/744679bf92807267964c2c7c1a95aeb115fd16426f65e3b93d586f16c265b890.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
@@ -704,7 +704,7 @@
     "FunctionVersion": "2018-05-29",
     "Name": "MutationRequestMarketSyncAuthFN",
     "RequestMappingTemplateS3Location": {
-     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3d72cc99f51abdee9e8ef0ac8f5f84a36b933ea339e0dabbc93ff98009dbf274.vtl"
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/744679bf92807267964c2c7c1a95aeb115fd16426f65e3b93d586f16c265b890.vtl"
     },
     "ResponseMappingTemplate": "$util.toJson({})"
    },
