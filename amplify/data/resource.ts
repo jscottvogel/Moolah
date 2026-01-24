@@ -112,10 +112,10 @@ const schema = a.schema({
     /**
      * Trigger the AI reasoning engine to suggest portfolio optimizations.
      */
-    runOptimization: a.mutation()
+    requestOptimization: a.mutation()
         .arguments({
             constraintsJson: a.json(),
-            correlationKey: a.string(),
+            correlationId: a.string(),
         })
         .returns(a.string())
         .authorization((allow) => [allow.authenticated()])
@@ -124,10 +124,10 @@ const schema = a.schema({
     /**
      * On-demand synchronization of market data for specific tickers.
      */
-    syncMarketData: a.mutation()
+    requestMarketSync: a.mutation()
         .arguments({
             tickers: a.string().array(),
-            correlationKey: a.string(),
+            correlationId: a.string(),
         })
         .returns(a.string())
         .authorization((allow) => [allow.authenticated()])

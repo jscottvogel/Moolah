@@ -827,8 +827,8 @@
       "enums": {},
       "nonModels": {},
       "mutations": {
-        "runOptimization": {
-          "name": "runOptimization",
+        "requestOptimization": {
+          "name": "requestOptimization",
           "isArray": false,
           "type": "String",
           "isRequired": false,
@@ -839,16 +839,16 @@
               "type": "AWSJSON",
               "isRequired": false
             },
-            "correlationKey": {
-              "name": "correlationKey",
+            "correlationId": {
+              "name": "correlationId",
               "isArray": false,
               "type": "String",
               "isRequired": false
             }
           }
         },
-        "syncMarketData": {
-          "name": "syncMarketData",
+        "requestMarketSync": {
+          "name": "requestMarketSync",
           "isArray": false,
           "type": "String",
           "isRequired": false,
@@ -860,8 +860,8 @@
               "isRequired": false,
               "isArrayNullable": true
             },
-            "correlationKey": {
-              "name": "correlationKey",
+            "correlationId": {
+              "name": "correlationId",
               "isArray": false,
               "type": "String",
               "isRequired": false

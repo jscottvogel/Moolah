@@ -33,7 +33,7 @@ describe('Market Worker Handler', () => {
         const event = {
             arguments: {
                 tickers: ['AAPL'],
-                correlationKey: 'test-req-123'
+                correlationId: 'test-req-123'
             }
         };
 
@@ -49,5 +49,27 @@ describe('Market Worker Handler', () => {
                 metadata: expect.stringContaining('test-req-123')
             })
         }));
+    });
+
+    it('throws error if MARKET_QUEUE_URL is missing', async () => {
+        const originalUrl = process.env.MARKET_QUEUE_URL;
+        delete process.env.MARKET_QUEUE_URL;
+
+        const event = {
+            arguments: { tickers: ['AAPL'] }
+        };
+
+        await expect(handler(event)).resolves.toEqual(expect.stringContaining('FAILED'));
+
+        process.env.MARKET_QUEUE_URL = originalUrl;
+    });
+
+    it('handles empty ticker list gracefully', async () => {
+        const event = {
+            arguments: { tickers: [] }
+        };
+
+        const result = await handler(event);
+        expect(result).toBe('ACCEPTED');
     });
 });

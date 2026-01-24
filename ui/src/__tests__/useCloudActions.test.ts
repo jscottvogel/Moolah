@@ -25,9 +25,9 @@ describe('useCloudActions Hook', () => {
         expect(result.current.isOptimizing).toBe(false);
     });
 
-    it('handles successful syncMarketData call', async () => {
+    it('handles successful link to requestMarketSync', async () => {
         const mockResponse = {
-            data: { syncMarketData: JSON.stringify({ status: 'ACCEPTED', count: 2 }) },
+            data: { requestMarketSync: JSON.stringify({ status: 'ACCEPTED', count: 2 }) },
             errors: null
         };
         mockClient.graphql.mockResolvedValue(mockResponse);
@@ -38,12 +38,12 @@ describe('useCloudActions Hook', () => {
         expect(mockClient.graphql).toHaveBeenCalledWith(expect.objectContaining({
             variables: { tickers: ['AAPL', 'MSFT'], correlationKey: undefined }
         }));
-        expect(syncResult).toBe(mockResponse.data.syncMarketData);
+        expect(syncResult).toBe(mockResponse.data.requestMarketSync);
     });
 
-    it('passes correlationKey to syncMarketData', async () => {
+    it('passes correlationId to requestMarketSync', async () => {
         const mockResponse = {
-            data: { syncMarketData: JSON.stringify({ status: 'ACCEPTED' }) },
+            data: { requestMarketSync: JSON.stringify({ status: 'ACCEPTED' }) },
             errors: null
         };
         mockClient.graphql.mockResolvedValue(mockResponse);
@@ -52,7 +52,7 @@ describe('useCloudActions Hook', () => {
         await result.current.syncMarketData(['AAPL'], 'test-id-123');
 
         expect(mockClient.graphql).toHaveBeenCalledWith(expect.objectContaining({
-            variables: { tickers: ['AAPL'], correlationKey: 'test-id-123' }
+            variables: { tickers: ['AAPL'], correlationId: 'test-id-123' }
         }));
     });
 
@@ -69,10 +69,10 @@ describe('useCloudActions Hook', () => {
             .rejects.toThrow('Access Denied');
     });
 
-    it('handles successful runOptimization call', async () => {
+    it('handles successful requestOptimization call', async () => {
         const mockResult = { status: 'SUCCESS', explanation: { summary: 'Looks good' } };
         const mockResponse = {
-            data: { runOptimization: JSON.stringify(mockResult) },
+            data: { requestOptimization: JSON.stringify(mockResult) },
             errors: null
         };
         mockClient.graphql.mockResolvedValue(mockResponse);
@@ -86,10 +86,10 @@ describe('useCloudActions Hook', () => {
         expect(optimResult).toEqual(mockResult);
     });
 
-    it('passes correlationKey to runOptimization', async () => {
+    it('passes correlationId to requestOptimization', async () => {
         const mockResult = { status: 'SUCCESS' };
         const mockResponse = {
-            data: { runOptimization: JSON.stringify(mockResult) },
+            data: { requestOptimization: JSON.stringify(mockResult) },
             errors: null
         };
         mockClient.graphql.mockResolvedValue(mockResponse);
@@ -98,14 +98,14 @@ describe('useCloudActions Hook', () => {
         await result.current.runOptimization(undefined, 'test-opt-id');
 
         expect(mockClient.graphql).toHaveBeenCalledWith(expect.objectContaining({
-            variables: { constraints: JSON.stringify({ targetYield: 0.04 }), correlationKey: 'test-opt-id' }
+            variables: { constraints: JSON.stringify({ targetYield: 0.04 }), correlationId: 'test-opt-id' }
         }));
     });
 
     it('handles failed optimization status from agent', async () => {
         const mockResult = { status: 'FAILED', error: 'Market data missing' };
         const mockResponse = {
-            data: { runOptimization: JSON.stringify(mockResult) },
+            data: { requestOptimization: JSON.stringify(mockResult) },
             errors: null
         };
         mockClient.graphql.mockResolvedValue(mockResponse);

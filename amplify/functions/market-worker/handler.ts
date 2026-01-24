@@ -87,9 +87,9 @@ export const handler = async (event: any) => {
     const queueUrl = getEnv('MARKET_QUEUE_URL');
 
     // A. Mutation Handler
-    if (event.arguments || (event.info && event.info.fieldName === 'syncMarketData')) {
+    if (event.arguments || (event.info && event.info.fieldName === 'requestMarketSync')) {
         const tickers = event.arguments?.tickers || [];
-        const correlationId = event.arguments?.correlationKey;
+        const correlationId = event.arguments?.correlationId;
         try {
             if (!queueUrl) throw new Error("MARKET_QUEUE_URL missing");
             for (const ticker of tickers) {

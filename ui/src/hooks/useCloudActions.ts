@@ -22,13 +22,13 @@ export function useCloudActions() {
             const client = getActiveClient();
             console.log("[CLOUD] Syncing tickers:", tickers);
             const syncMutation = `
-                mutation SyncMarketData($tickers: [String], $correlationKey: String) {
-                    syncMarketData(tickers: $tickers, correlationKey: $correlationKey)
+                mutation RequestMarketSync($tickers: [String], $correlationId: String) {
+                    requestMarketSync(tickers: $tickers, correlationId: $correlationId)
                 }
             `;
             const response: any = await client.graphql({
                 query: syncMutation,
-                variables: { tickers, correlationKey: correlationId }
+                variables: { tickers, correlationId }
             });
 
             if (response.errors) {
@@ -37,11 +37,11 @@ export function useCloudActions() {
                 throw new Error(detailedError || "Cloud sync mutation failed.");
             }
 
-            if (!response.data?.syncMarketData) {
+            if (!response.data?.requestMarketSync) {
                 throw new Error("Cloud did not return a valid sync status.");
             }
 
-            return response.data.syncMarketData;
+            return response.data.requestMarketSync;
         } catch (err: any) {
             console.error("[CLOUD] Sync Exception:", err);
             const msg = err.message || (typeof err === 'string' ? err : JSON.stringify(err));
@@ -57,13 +57,13 @@ export function useCloudActions() {
             const client = getActiveClient();
             console.log("[CLOUD] Running optimization with target yield:", targetYield);
             const optimMutation = `
-                mutation RunOptimization($constraints: AWSJSON, $correlationKey: String) {
-                    runOptimization(constraintsJson: $constraints, correlationKey: $correlationKey)
+                mutation RequestOptimization($constraints: AWSJSON, $correlationId: String) {
+                    requestOptimization(constraintsJson: $constraints, correlationId: $correlationId)
                 }
             `;
             const response: any = await client.graphql({
                 query: optimMutation,
-                variables: { constraints: JSON.stringify({ targetYield }), correlationKey: correlationId }
+                variables: { constraints: JSON.stringify({ targetYield }), correlationId }
             });
 
             if (response.errors) {
@@ -72,7 +72,7 @@ export function useCloudActions() {
                 throw new Error(detailedError || "AI Optimization mutation failed.");
             }
 
-            const rawResult = response.data?.runOptimization;
+            const rawResult = response.data?.requestOptimization;
             if (!rawResult) throw new Error("AI agent did not return a result.");
 
             const result = JSON.parse(rawResult || "{}");

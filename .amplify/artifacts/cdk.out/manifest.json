@@ -22,7 +22,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/59ebfb11f839b5613d9f7d7fe47e1ed756e24a9a0df30ac15fa748284c09e5de.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/5cf77852b3ed47203f8ce97cf95dec74870f2d4512e8d9598ab74a30b190e84d.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -4791,120 +4791,120 @@
             "data": "HasEnvironmentParameter"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRunOptimizationLambdaDataSource": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRequestOptimizationLambdaDataSource": [
           {
             "type": "graphqltransformer:resourceName",
-            "data": "FnRunOptimizationLambdaDataSource"
+            "data": "FnRequestOptimizationLambdaDataSource"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRunOptimizationLambdaDataSource/ServiceRole/Resource": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRequestOptimizationLambdaDataSource/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "FnRunOptimizationLambdaDataSourceServiceRoleEC1A73A2"
+            "data": "FnRequestOptimizationLambdaDataSourceServiceRole72E32240"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRunOptimizationLambdaDataSource/ServiceRole/DefaultPolicy/Resource": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRequestOptimizationLambdaDataSource/ServiceRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "FnRunOptimizationLambdaDataSourceServiceRoleDefaultPolicy587EC054"
+            "data": "FnRequestOptimizationLambdaDataSourceServiceRoleDefaultPolicy134210A3"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRunOptimizationLambdaDataSource/Resource": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRequestOptimizationLambdaDataSource/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "FnRunOptimizationLambdaDataSource"
+            "data": "FnRequestOptimizationLambdaDataSource"
           },
           {
             "type": "graphqltransformer:resourceName",
-            "data": "FnRunOptimizationLambdaDataSource"
+            "data": "FnRequestOptimizationLambdaDataSource"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/InvokeFnRunOptimizationLambdaDataSource/InvokeFnRunOptimizationLambdaDataSource.AppSyncFunction": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/InvokeFnRequestOptimizationLambdaDataSource/InvokeFnRequestOptimizationLambdaDataSource.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "InvokeFnRunOptimizationLambdaDataSourceInvokeFnRunOptimizationLambdaDataSourceAppSyncFunctionFC49C8AD"
+            "data": "InvokeFnRequestOptimizationLambdaDataSourceInvokeFnRequestOptimizationLambdaDataSourceAppSyncFunction98145016"
           },
           {
             "type": "graphqltransformer:resourceName",
-            "data": "InvokeFnRunOptimizationLambdaDataSource"
+            "data": "InvokeFnRequestOptimizationLambdaDataSource"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/mutationRunOptimizationResolver": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/mutationRequestOptimizationResolver": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "MutationrunOptimizationResolver"
+            "data": "MutationrequestOptimizationResolver"
           },
           {
             "type": "graphqltransformer:resourceName",
-            "data": "Mutation.runOptimization"
+            "data": "Mutation.requestOptimization"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnSyncMarketDataLambdaDataSource": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRequestMarketSyncLambdaDataSource": [
           {
             "type": "graphqltransformer:resourceName",
-            "data": "FnSyncMarketDataLambdaDataSource"
+            "data": "FnRequestMarketSyncLambdaDataSource"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnSyncMarketDataLambdaDataSource/ServiceRole/Resource": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRequestMarketSyncLambdaDataSource/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "FnSyncMarketDataLambdaDataSourceServiceRole0BAD7959"
+            "data": "FnRequestMarketSyncLambdaDataSourceServiceRoleCE4987D2"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnSyncMarketDataLambdaDataSource/ServiceRole/DefaultPolicy/Resource": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRequestMarketSyncLambdaDataSource/ServiceRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "FnSyncMarketDataLambdaDataSourceServiceRoleDefaultPolicy321C42B6"
+            "data": "FnRequestMarketSyncLambdaDataSourceServiceRoleDefaultPolicyB9B45B99"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnSyncMarketDataLambdaDataSource/Resource": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/FnRequestMarketSyncLambdaDataSource/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "FnSyncMarketDataLambdaDataSource"
+            "data": "FnRequestMarketSyncLambdaDataSource"
           },
           {
             "type": "graphqltransformer:resourceName",
-            "data": "FnSyncMarketDataLambdaDataSource"
+            "data": "FnRequestMarketSyncLambdaDataSource"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/InvokeFnSyncMarketDataLambdaDataSource/InvokeFnSyncMarketDataLambdaDataSource.AppSyncFunction": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/InvokeFnRequestMarketSyncLambdaDataSource/InvokeFnRequestMarketSyncLambdaDataSource.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "InvokeFnSyncMarketDataLambdaDataSourceInvokeFnSyncMarketDataLambdaDataSourceAppSyncFunction763F6D20"
+            "data": "InvokeFnRequestMarketSyncLambdaDataSourceInvokeFnRequestMarketSyncLambdaDataSourceAppSyncFunctionCBBC35D3"
           },
           {
             "type": "graphqltransformer:resourceName",
-            "data": "InvokeFnSyncMarketDataLambdaDataSource"
+            "data": "InvokeFnRequestMarketSyncLambdaDataSource"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/mutationSyncMarketDataResolver": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/mutationRequestMarketSyncResolver": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "MutationsyncMarketDataResolver"
+            "data": "MutationrequestMarketSyncResolver"
           },
           {
             "type": "graphqltransformer:resourceName",
-            "data": "Mutation.syncMarketData"
+            "data": "Mutation.requestMarketSync"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/MutationRunOptimizationAuthFN/MutationRunOptimizationAuthFN.AppSyncFunction": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/MutationRequestOptimizationAuthFN/MutationRequestOptimizationAuthFN.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "MutationRunOptimizationAuthFNMutationRunOptimizationAuthFNAppSyncFunction76BC45E3"
+            "data": "MutationRequestOptimizationAuthFNMutationRequestOptimizationAuthFNAppSyncFunction9BDAC22F"
           },
           {
             "type": "graphqltransformer:resourceName",
-            "data": "MutationRunOptimizationAuthFN"
+            "data": "MutationRequestOptimizationAuthFN"
           }
         ],
-        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/MutationSyncMarketDataAuthFN/MutationSyncMarketDataAuthFN.AppSyncFunction": [
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/MutationRequestMarketSyncAuthFN/MutationRequestMarketSyncAuthFN.AppSyncFunction": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "MutationSyncMarketDataAuthFNMutationSyncMarketDataAuthFNAppSyncFunction26B7BA9C"
+            "data": "MutationRequestMarketSyncAuthFNMutationRequestMarketSyncAuthFNAppSyncFunctionD800CC5B"
           },
           {
             "type": "graphqltransformer:resourceName",
-            "data": "MutationSyncMarketDataAuthFN"
+            "data": "MutationRequestMarketSyncAuthFN"
           }
         ],
         "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/FunctionDirectiveStack/CDKMetadata/Default": [

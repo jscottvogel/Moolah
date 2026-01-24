@@ -34,7 +34,7 @@ describe('Orchestrator Handler', () => {
         const event = {
             arguments: {
                 constraintsJson: JSON.stringify({ targetYield: 0.05 }),
-                correlationKey: 'test-opt-456'
+                correlationId: 'test-opt-456'
             }
         };
 
@@ -49,6 +49,31 @@ describe('Orchestrator Handler', () => {
         expect(mockGraphqlClient.graphql).toHaveBeenCalledWith(expect.objectContaining({
             variables: expect.objectContaining({
                 metadata: expect.stringContaining('test-opt-456')
+            })
+        }));
+    });
+
+    it('handles Bedrock failures gracefully', async () => {
+        mockBedrockClient.send.mockRejectedValueOnce(new Error('ThrottlingException'));
+
+        const event = {
+            arguments: {
+                constraintsJson: '{}',
+                correlationId: 'test-fail-999'
+            }
+        };
+
+        const result = await handler(event);
+        const parsed = JSON.parse(result);
+
+        expect(parsed.status).toBe('FAILED');
+        expect(parsed.error).toContain('ThrottlingException');
+
+        // Verify failure was logged to AuditLog
+        expect(mockGraphqlClient.graphql).toHaveBeenCalledWith(expect.objectContaining({
+            variables: expect.objectContaining({
+                action: 'AI_OPTIM_FAILED',
+                metadata: expect.stringContaining('test-fail-999')
             })
         }));
     });
