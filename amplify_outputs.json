@@ -839,8 +839,8 @@
               "type": "AWSJSON",
               "isRequired": false
             },
-            "correlationId": {
-              "name": "correlationId",
+            "correlationKey": {
+              "name": "correlationKey",
               "isArray": false,
               "type": "String",
               "isRequired": false
@@ -860,8 +860,8 @@
               "isRequired": false,
               "isArrayNullable": true
             },
-            "correlationId": {
-              "name": "correlationId",
+            "correlationKey": {
+              "name": "correlationKey",
               "isArray": false,
               "type": "String",
               "isRequired": false
