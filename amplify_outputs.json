@@ -326,6 +326,13 @@
               "isRequired": false,
               "attributes": []
             },
+            "testField": {
+              "name": "testField",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
             "createdAt": {
               "name": "createdAt",
               "isArray": false,

@@ -46,6 +46,7 @@ const schema = a.schema({
         action: a.string().required(),
         details: a.string(),
         metadata: a.json(),
+        testField: a.string(),
     }).authorization((allow) => [
         allow.authenticated().to(['read']),
         allow.owner(),
@@ -114,7 +115,7 @@ const schema = a.schema({
     runOptimization: a.mutation()
         .arguments({
             constraintsJson: a.json(),
-            correlationId: a.string(),
+            correlationKey: a.string(),
         })
         .returns(a.string())
         .authorization((allow) => [allow.authenticated()])
@@ -126,7 +127,7 @@ const schema = a.schema({
     syncMarketData: a.mutation()
         .arguments({
             tickers: a.string().array(),
-            correlationId: a.string(),
+            correlationKey: a.string(),
         })
         .returns(a.string())
         .authorization((allow) => [allow.authenticated()])

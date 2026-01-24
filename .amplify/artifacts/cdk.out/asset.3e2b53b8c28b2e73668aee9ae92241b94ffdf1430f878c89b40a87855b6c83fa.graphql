@@ -1,0 +1,830 @@
+type UserSettings @aws_iam @aws_cognito_user_pools {
+  settingsJson: AWSJSON
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type Holding @aws_iam @aws_cognito_user_pools {
+  ticker: String!
+  shares: Float!
+  costBasis: Float
+  purchaseDate: AWSDate
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type Recommendation @aws_iam @aws_cognito_user_pools {
+  status: String!
+  packetJson: AWSJSON
+  explanationJson: AWSJSON
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type AuditLog @aws_iam @aws_cognito_user_pools {
+  action: String!
+  details: String
+  metadata: AWSJSON
+  testField: String
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type MarketPrice @aws_iam @aws_cognito_user_pools {
+  ticker: String!
+  date: String!
+  close: Float
+  adjustedClose: Float
+  volume: Float
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type MarketFundamental @aws_iam @aws_cognito_user_pools {
+  ticker: String!
+  asOf: String!
+  dataJson: AWSJSON
+  dividendYield: Float
+  payoutRatio: Float
+  debtToEquity: Float
+  qualityScore: Float
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type MarketDividend @aws_iam @aws_cognito_user_pools {
+  ticker: String!
+  exDate: String!
+  amount: Float
+  paymentDate: String
+  isCut: Boolean
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type ProviderCache @aws_iam @aws_cognito_user_pools {
+  cacheKey: String!
+  responseJson: AWSJSON
+  ttl: Int
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Mutation @aws_iam {
+  createUserSettings(input: CreateUserSettingsInput!, condition: ModelUserSettingsConditionInput): UserSettings @aws_iam @aws_cognito_user_pools
+  updateUserSettings(input: UpdateUserSettingsInput!, condition: ModelUserSettingsConditionInput): UserSettings @aws_iam @aws_cognito_user_pools
+  deleteUserSettings(input: DeleteUserSettingsInput!, condition: ModelUserSettingsConditionInput): UserSettings @aws_iam @aws_cognito_user_pools
+  createHolding(input: CreateHoldingInput!, condition: ModelHoldingConditionInput): Holding @aws_iam @aws_cognito_user_pools
+  updateHolding(input: UpdateHoldingInput!, condition: ModelHoldingConditionInput): Holding @aws_iam @aws_cognito_user_pools
+  deleteHolding(input: DeleteHoldingInput!, condition: ModelHoldingConditionInput): Holding @aws_iam @aws_cognito_user_pools
+  createRecommendation(input: CreateRecommendationInput!, condition: ModelRecommendationConditionInput): Recommendation @aws_iam @aws_cognito_user_pools
+  updateRecommendation(input: UpdateRecommendationInput!, condition: ModelRecommendationConditionInput): Recommendation @aws_iam @aws_cognito_user_pools
+  deleteRecommendation(input: DeleteRecommendationInput!, condition: ModelRecommendationConditionInput): Recommendation @aws_iam @aws_cognito_user_pools
+  createAuditLog(input: CreateAuditLogInput!, condition: ModelAuditLogConditionInput): AuditLog @aws_iam @aws_cognito_user_pools
+  updateAuditLog(input: UpdateAuditLogInput!, condition: ModelAuditLogConditionInput): AuditLog @aws_iam @aws_cognito_user_pools
+  deleteAuditLog(input: DeleteAuditLogInput!, condition: ModelAuditLogConditionInput): AuditLog @aws_iam @aws_cognito_user_pools
+  createMarketPrice(input: CreateMarketPriceInput!, condition: ModelMarketPriceConditionInput): MarketPrice @aws_iam
+  updateMarketPrice(input: UpdateMarketPriceInput!, condition: ModelMarketPriceConditionInput): MarketPrice @aws_iam
+  deleteMarketPrice(input: DeleteMarketPriceInput!, condition: ModelMarketPriceConditionInput): MarketPrice @aws_iam @aws_cognito_user_pools
+  createMarketFundamental(input: CreateMarketFundamentalInput!, condition: ModelMarketFundamentalConditionInput): MarketFundamental @aws_iam
+  updateMarketFundamental(input: UpdateMarketFundamentalInput!, condition: ModelMarketFundamentalConditionInput): MarketFundamental @aws_iam
+  deleteMarketFundamental(input: DeleteMarketFundamentalInput!, condition: ModelMarketFundamentalConditionInput): MarketFundamental @aws_iam @aws_cognito_user_pools
+  createMarketDividend(input: CreateMarketDividendInput!, condition: ModelMarketDividendConditionInput): MarketDividend @aws_iam
+  updateMarketDividend(input: UpdateMarketDividendInput!, condition: ModelMarketDividendConditionInput): MarketDividend @aws_iam
+  deleteMarketDividend(input: DeleteMarketDividendInput!, condition: ModelMarketDividendConditionInput): MarketDividend @aws_iam @aws_cognito_user_pools
+  createProviderCache(input: CreateProviderCacheInput!, condition: ModelProviderCacheConditionInput): ProviderCache @aws_iam
+  updateProviderCache(input: UpdateProviderCacheInput!, condition: ModelProviderCacheConditionInput): ProviderCache @aws_iam
+  deleteProviderCache(input: DeleteProviderCacheInput!, condition: ModelProviderCacheConditionInput): ProviderCache @aws_iam @aws_cognito_user_pools
+  runOptimization(constraintsJson: AWSJSON, correlationKey: String): String @aws_iam @aws_cognito_user_pools
+  syncMarketData(tickers: [String], correlationKey: String): String @aws_iam @aws_cognito_user_pools
+}
+
+input AmplifyAIConversationTurnErrorInput {
+  errorType: String!
+  message: String!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelUserSettingsConnection @aws_iam @aws_cognito_user_pools {
+  items: [UserSettings]!
+  nextToken: String
+}
+
+input ModelUserSettingsFilterInput {
+  settingsJson: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelUserSettingsFilterInput]
+  or: [ModelUserSettingsFilterInput]
+  not: ModelUserSettingsFilterInput
+  owner: ModelStringInput
+}
+
+type Query {
+  getUserSettings(id: ID!): UserSettings @aws_iam @aws_cognito_user_pools
+  listUserSettings(filter: ModelUserSettingsFilterInput, limit: Int, nextToken: String): ModelUserSettingsConnection @aws_iam @aws_cognito_user_pools
+  getHolding(id: ID!): Holding @aws_iam @aws_cognito_user_pools
+  listHoldings(filter: ModelHoldingFilterInput, limit: Int, nextToken: String): ModelHoldingConnection @aws_iam @aws_cognito_user_pools
+  getRecommendation(id: ID!): Recommendation @aws_iam @aws_cognito_user_pools
+  listRecommendations(filter: ModelRecommendationFilterInput, limit: Int, nextToken: String): ModelRecommendationConnection @aws_iam @aws_cognito_user_pools
+  getAuditLog(id: ID!): AuditLog @aws_iam @aws_cognito_user_pools
+  listAuditLogs(filter: ModelAuditLogFilterInput, limit: Int, nextToken: String): ModelAuditLogConnection @aws_iam @aws_cognito_user_pools
+  getMarketPrice(id: ID!): MarketPrice @aws_iam @aws_cognito_user_pools
+  listMarketPrices(filter: ModelMarketPriceFilterInput, limit: Int, nextToken: String): ModelMarketPriceConnection @aws_iam @aws_cognito_user_pools
+  listMarketPriceByTickerAndDate(ticker: String!, date: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelMarketPriceFilterInput, limit: Int, nextToken: String): ModelMarketPriceConnection @aws_iam @aws_cognito_user_pools
+  getMarketFundamental(id: ID!): MarketFundamental @aws_iam @aws_cognito_user_pools
+  listMarketFundamentals(filter: ModelMarketFundamentalFilterInput, limit: Int, nextToken: String): ModelMarketFundamentalConnection @aws_iam @aws_cognito_user_pools
+  listMarketFundamentalByTickerAndAsOf(ticker: String!, asOf: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelMarketFundamentalFilterInput, limit: Int, nextToken: String): ModelMarketFundamentalConnection @aws_iam @aws_cognito_user_pools
+  getMarketDividend(id: ID!): MarketDividend @aws_iam @aws_cognito_user_pools
+  listMarketDividends(filter: ModelMarketDividendFilterInput, limit: Int, nextToken: String): ModelMarketDividendConnection @aws_iam @aws_cognito_user_pools
+  listMarketDividendByTickerAndExDate(ticker: String!, exDate: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelMarketDividendFilterInput, limit: Int, nextToken: String): ModelMarketDividendConnection @aws_iam @aws_cognito_user_pools
+  getProviderCache(cacheKey: String!): ProviderCache @aws_iam @aws_cognito_user_pools
+  listProviderCaches(cacheKey: String, filter: ModelProviderCacheFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelProviderCacheConnection @aws_iam @aws_cognito_user_pools
+}
+
+input ModelUserSettingsConditionInput {
+  settingsJson: ModelStringInput
+  and: [ModelUserSettingsConditionInput]
+  or: [ModelUserSettingsConditionInput]
+  not: ModelUserSettingsConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  owner: ModelStringInput
+}
+
+input CreateUserSettingsInput {
+  settingsJson: AWSJSON
+  id: ID
+}
+
+input UpdateUserSettingsInput {
+  settingsJson: AWSJSON
+  id: ID!
+}
+
+input DeleteUserSettingsInput {
+  id: ID!
+}
+
+input ModelSubscriptionUserSettingsFilterInput {
+  settingsJson: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionUserSettingsFilterInput]
+  or: [ModelSubscriptionUserSettingsFilterInput]
+  owner: ModelStringInput
+}
+
+type Subscription {
+  onCreateUserSettings(filter: ModelSubscriptionUserSettingsFilterInput, owner: String): UserSettings @aws_subscribe(mutations: ["createUserSettings"]) @aws_iam @aws_cognito_user_pools
+  onUpdateUserSettings(filter: ModelSubscriptionUserSettingsFilterInput, owner: String): UserSettings @aws_subscribe(mutations: ["updateUserSettings"]) @aws_iam @aws_cognito_user_pools
+  onDeleteUserSettings(filter: ModelSubscriptionUserSettingsFilterInput, owner: String): UserSettings @aws_subscribe(mutations: ["deleteUserSettings"]) @aws_iam @aws_cognito_user_pools
+  onCreateHolding(filter: ModelSubscriptionHoldingFilterInput, owner: String): Holding @aws_subscribe(mutations: ["createHolding"]) @aws_iam @aws_cognito_user_pools
+  onUpdateHolding(filter: ModelSubscriptionHoldingFilterInput, owner: String): Holding @aws_subscribe(mutations: ["updateHolding"]) @aws_iam @aws_cognito_user_pools
+  onDeleteHolding(filter: ModelSubscriptionHoldingFilterInput, owner: String): Holding @aws_subscribe(mutations: ["deleteHolding"]) @aws_iam @aws_cognito_user_pools
+  onCreateRecommendation(filter: ModelSubscriptionRecommendationFilterInput, owner: String): Recommendation @aws_subscribe(mutations: ["createRecommendation"]) @aws_iam @aws_cognito_user_pools
+  onUpdateRecommendation(filter: ModelSubscriptionRecommendationFilterInput, owner: String): Recommendation @aws_subscribe(mutations: ["updateRecommendation"]) @aws_iam @aws_cognito_user_pools
+  onDeleteRecommendation(filter: ModelSubscriptionRecommendationFilterInput, owner: String): Recommendation @aws_subscribe(mutations: ["deleteRecommendation"]) @aws_iam @aws_cognito_user_pools
+  onCreateAuditLog(filter: ModelSubscriptionAuditLogFilterInput, owner: String): AuditLog @aws_subscribe(mutations: ["createAuditLog"]) @aws_iam @aws_cognito_user_pools
+  onUpdateAuditLog(filter: ModelSubscriptionAuditLogFilterInput, owner: String): AuditLog @aws_subscribe(mutations: ["updateAuditLog"]) @aws_iam @aws_cognito_user_pools
+  onDeleteAuditLog(filter: ModelSubscriptionAuditLogFilterInput, owner: String): AuditLog @aws_subscribe(mutations: ["deleteAuditLog"]) @aws_iam @aws_cognito_user_pools
+  onCreateMarketPrice(filter: ModelSubscriptionMarketPriceFilterInput): MarketPrice @aws_subscribe(mutations: ["createMarketPrice"]) @aws_iam @aws_cognito_user_pools
+  onUpdateMarketPrice(filter: ModelSubscriptionMarketPriceFilterInput): MarketPrice @aws_subscribe(mutations: ["updateMarketPrice"]) @aws_iam @aws_cognito_user_pools
+  onDeleteMarketPrice(filter: ModelSubscriptionMarketPriceFilterInput): MarketPrice @aws_subscribe(mutations: ["deleteMarketPrice"]) @aws_iam @aws_cognito_user_pools
+  onCreateMarketFundamental(filter: ModelSubscriptionMarketFundamentalFilterInput): MarketFundamental @aws_subscribe(mutations: ["createMarketFundamental"]) @aws_iam @aws_cognito_user_pools
+  onUpdateMarketFundamental(filter: ModelSubscriptionMarketFundamentalFilterInput): MarketFundamental @aws_subscribe(mutations: ["updateMarketFundamental"]) @aws_iam @aws_cognito_user_pools
+  onDeleteMarketFundamental(filter: ModelSubscriptionMarketFundamentalFilterInput): MarketFundamental @aws_subscribe(mutations: ["deleteMarketFundamental"]) @aws_iam @aws_cognito_user_pools
+  onCreateMarketDividend(filter: ModelSubscriptionMarketDividendFilterInput): MarketDividend @aws_subscribe(mutations: ["createMarketDividend"]) @aws_iam @aws_cognito_user_pools
+  onUpdateMarketDividend(filter: ModelSubscriptionMarketDividendFilterInput): MarketDividend @aws_subscribe(mutations: ["updateMarketDividend"]) @aws_iam @aws_cognito_user_pools
+  onDeleteMarketDividend(filter: ModelSubscriptionMarketDividendFilterInput): MarketDividend @aws_subscribe(mutations: ["deleteMarketDividend"]) @aws_iam @aws_cognito_user_pools
+  onCreateProviderCache(filter: ModelSubscriptionProviderCacheFilterInput): ProviderCache @aws_subscribe(mutations: ["createProviderCache"]) @aws_iam @aws_cognito_user_pools
+  onUpdateProviderCache(filter: ModelSubscriptionProviderCacheFilterInput): ProviderCache @aws_subscribe(mutations: ["updateProviderCache"]) @aws_iam @aws_cognito_user_pools
+  onDeleteProviderCache(filter: ModelSubscriptionProviderCacheFilterInput): ProviderCache @aws_subscribe(mutations: ["deleteProviderCache"]) @aws_iam @aws_cognito_user_pools
+}
+
+type ModelHoldingConnection @aws_iam @aws_cognito_user_pools {
+  items: [Holding]!
+  nextToken: String
+}
+
+input ModelHoldingFilterInput {
+  ticker: ModelStringInput
+  shares: ModelFloatInput
+  costBasis: ModelFloatInput
+  purchaseDate: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelHoldingFilterInput]
+  or: [ModelHoldingFilterInput]
+  not: ModelHoldingFilterInput
+  owner: ModelStringInput
+}
+
+input ModelHoldingConditionInput {
+  ticker: ModelStringInput
+  shares: ModelFloatInput
+  costBasis: ModelFloatInput
+  purchaseDate: ModelStringInput
+  and: [ModelHoldingConditionInput]
+  or: [ModelHoldingConditionInput]
+  not: ModelHoldingConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  owner: ModelStringInput
+}
+
+input CreateHoldingInput {
+  ticker: String!
+  shares: Float!
+  costBasis: Float
+  purchaseDate: AWSDate
+  id: ID
+}
+
+input UpdateHoldingInput {
+  ticker: String
+  shares: Float
+  costBasis: Float
+  purchaseDate: AWSDate
+  id: ID!
+}
+
+input DeleteHoldingInput {
+  id: ID!
+}
+
+input ModelSubscriptionHoldingFilterInput {
+  ticker: ModelSubscriptionStringInput
+  shares: ModelSubscriptionFloatInput
+  costBasis: ModelSubscriptionFloatInput
+  purchaseDate: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionHoldingFilterInput]
+  or: [ModelSubscriptionHoldingFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelRecommendationConnection @aws_iam @aws_cognito_user_pools {
+  items: [Recommendation]!
+  nextToken: String
+}
+
+input ModelRecommendationFilterInput {
+  status: ModelStringInput
+  packetJson: ModelStringInput
+  explanationJson: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelRecommendationFilterInput]
+  or: [ModelRecommendationFilterInput]
+  not: ModelRecommendationFilterInput
+  owner: ModelStringInput
+}
+
+input ModelRecommendationConditionInput {
+  status: ModelStringInput
+  packetJson: ModelStringInput
+  explanationJson: ModelStringInput
+  and: [ModelRecommendationConditionInput]
+  or: [ModelRecommendationConditionInput]
+  not: ModelRecommendationConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  owner: ModelStringInput
+}
+
+input CreateRecommendationInput {
+  status: String!
+  packetJson: AWSJSON
+  explanationJson: AWSJSON
+  id: ID
+}
+
+input UpdateRecommendationInput {
+  status: String
+  packetJson: AWSJSON
+  explanationJson: AWSJSON
+  id: ID!
+}
+
+input DeleteRecommendationInput {
+  id: ID!
+}
+
+input ModelSubscriptionRecommendationFilterInput {
+  status: ModelSubscriptionStringInput
+  packetJson: ModelSubscriptionStringInput
+  explanationJson: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionRecommendationFilterInput]
+  or: [ModelSubscriptionRecommendationFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelAuditLogConnection @aws_iam @aws_cognito_user_pools {
+  items: [AuditLog]!
+  nextToken: String
+}
+
+input ModelAuditLogFilterInput {
+  action: ModelStringInput
+  details: ModelStringInput
+  metadata: ModelStringInput
+  testField: ModelStringInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelAuditLogFilterInput]
+  or: [ModelAuditLogFilterInput]
+  not: ModelAuditLogFilterInput
+  owner: ModelStringInput
+}
+
+input ModelAuditLogConditionInput {
+  action: ModelStringInput
+  details: ModelStringInput
+  metadata: ModelStringInput
+  testField: ModelStringInput
+  and: [ModelAuditLogConditionInput]
+  or: [ModelAuditLogConditionInput]
+  not: ModelAuditLogConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  owner: ModelStringInput
+}
+
+input CreateAuditLogInput {
+  action: String!
+  details: String
+  metadata: AWSJSON
+  testField: String
+  id: ID
+}
+
+input UpdateAuditLogInput {
+  action: String
+  details: String
+  metadata: AWSJSON
+  testField: String
+  id: ID!
+}
+
+input DeleteAuditLogInput {
+  id: ID!
+}
+
+input ModelSubscriptionAuditLogFilterInput {
+  action: ModelSubscriptionStringInput
+  details: ModelSubscriptionStringInput
+  metadata: ModelSubscriptionStringInput
+  testField: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionAuditLogFilterInput]
+  or: [ModelSubscriptionAuditLogFilterInput]
+  owner: ModelStringInput
+}
+
+type ModelMarketPriceConnection @aws_iam @aws_cognito_user_pools {
+  items: [MarketPrice]!
+  nextToken: String
+}
+
+input ModelMarketPriceFilterInput {
+  ticker: ModelStringInput
+  date: ModelStringInput
+  close: ModelFloatInput
+  adjustedClose: ModelFloatInput
+  volume: ModelFloatInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelMarketPriceFilterInput]
+  or: [ModelMarketPriceFilterInput]
+  not: ModelMarketPriceFilterInput
+}
+
+input ModelMarketPriceConditionInput {
+  ticker: ModelStringInput
+  date: ModelStringInput
+  close: ModelFloatInput
+  adjustedClose: ModelFloatInput
+  volume: ModelFloatInput
+  and: [ModelMarketPriceConditionInput]
+  or: [ModelMarketPriceConditionInput]
+  not: ModelMarketPriceConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateMarketPriceInput {
+  ticker: String!
+  date: String!
+  close: Float
+  adjustedClose: Float
+  volume: Float
+  id: ID
+}
+
+input UpdateMarketPriceInput {
+  ticker: String
+  date: String
+  close: Float
+  adjustedClose: Float
+  volume: Float
+  id: ID!
+}
+
+input DeleteMarketPriceInput {
+  id: ID!
+}
+
+input ModelSubscriptionMarketPriceFilterInput {
+  ticker: ModelSubscriptionStringInput
+  date: ModelSubscriptionStringInput
+  close: ModelSubscriptionFloatInput
+  adjustedClose: ModelSubscriptionFloatInput
+  volume: ModelSubscriptionFloatInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionMarketPriceFilterInput]
+  or: [ModelSubscriptionMarketPriceFilterInput]
+}
+
+type ModelMarketFundamentalConnection @aws_iam @aws_cognito_user_pools {
+  items: [MarketFundamental]!
+  nextToken: String
+}
+
+input ModelMarketFundamentalFilterInput {
+  ticker: ModelStringInput
+  asOf: ModelStringInput
+  dataJson: ModelStringInput
+  dividendYield: ModelFloatInput
+  payoutRatio: ModelFloatInput
+  debtToEquity: ModelFloatInput
+  qualityScore: ModelFloatInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelMarketFundamentalFilterInput]
+  or: [ModelMarketFundamentalFilterInput]
+  not: ModelMarketFundamentalFilterInput
+}
+
+input ModelMarketFundamentalConditionInput {
+  ticker: ModelStringInput
+  asOf: ModelStringInput
+  dataJson: ModelStringInput
+  dividendYield: ModelFloatInput
+  payoutRatio: ModelFloatInput
+  debtToEquity: ModelFloatInput
+  qualityScore: ModelFloatInput
+  and: [ModelMarketFundamentalConditionInput]
+  or: [ModelMarketFundamentalConditionInput]
+  not: ModelMarketFundamentalConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateMarketFundamentalInput {
+  ticker: String!
+  asOf: String!
+  dataJson: AWSJSON
+  dividendYield: Float
+  payoutRatio: Float
+  debtToEquity: Float
+  qualityScore: Float
+  id: ID
+}
+
+input UpdateMarketFundamentalInput {
+  ticker: String
+  asOf: String
+  dataJson: AWSJSON
+  dividendYield: Float
+  payoutRatio: Float
+  debtToEquity: Float
+  qualityScore: Float
+  id: ID!
+}
+
+input DeleteMarketFundamentalInput {
+  id: ID!
+}
+
+input ModelSubscriptionMarketFundamentalFilterInput {
+  ticker: ModelSubscriptionStringInput
+  asOf: ModelSubscriptionStringInput
+  dataJson: ModelSubscriptionStringInput
+  dividendYield: ModelSubscriptionFloatInput
+  payoutRatio: ModelSubscriptionFloatInput
+  debtToEquity: ModelSubscriptionFloatInput
+  qualityScore: ModelSubscriptionFloatInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionMarketFundamentalFilterInput]
+  or: [ModelSubscriptionMarketFundamentalFilterInput]
+}
+
+type ModelMarketDividendConnection @aws_iam @aws_cognito_user_pools {
+  items: [MarketDividend]!
+  nextToken: String
+}
+
+input ModelMarketDividendFilterInput {
+  ticker: ModelStringInput
+  exDate: ModelStringInput
+  amount: ModelFloatInput
+  paymentDate: ModelStringInput
+  isCut: ModelBooleanInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelMarketDividendFilterInput]
+  or: [ModelMarketDividendFilterInput]
+  not: ModelMarketDividendFilterInput
+}
+
+input ModelMarketDividendConditionInput {
+  ticker: ModelStringInput
+  exDate: ModelStringInput
+  amount: ModelFloatInput
+  paymentDate: ModelStringInput
+  isCut: ModelBooleanInput
+  and: [ModelMarketDividendConditionInput]
+  or: [ModelMarketDividendConditionInput]
+  not: ModelMarketDividendConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateMarketDividendInput {
+  ticker: String!
+  exDate: String!
+  amount: Float
+  paymentDate: String
+  isCut: Boolean
+  id: ID
+}
+
+input UpdateMarketDividendInput {
+  ticker: String
+  exDate: String
+  amount: Float
+  paymentDate: String
+  isCut: Boolean
+  id: ID!
+}
+
+input DeleteMarketDividendInput {
+  id: ID!
+}
+
+input ModelSubscriptionMarketDividendFilterInput {
+  ticker: ModelSubscriptionStringInput
+  exDate: ModelSubscriptionStringInput
+  amount: ModelSubscriptionFloatInput
+  paymentDate: ModelSubscriptionStringInput
+  isCut: ModelSubscriptionBooleanInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionMarketDividendFilterInput]
+  or: [ModelSubscriptionMarketDividendFilterInput]
+}
+
+type ModelProviderCacheConnection @aws_iam @aws_cognito_user_pools {
+  items: [ProviderCache]!
+  nextToken: String
+}
+
+input ModelProviderCacheFilterInput {
+  cacheKey: ModelStringInput
+  responseJson: ModelStringInput
+  ttl: ModelIntInput
+  id: ModelIDInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelProviderCacheFilterInput]
+  or: [ModelProviderCacheFilterInput]
+  not: ModelProviderCacheFilterInput
+}
+
+input ModelProviderCacheConditionInput {
+  responseJson: ModelStringInput
+  ttl: ModelIntInput
+  and: [ModelProviderCacheConditionInput]
+  or: [ModelProviderCacheConditionInput]
+  not: ModelProviderCacheConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateProviderCacheInput {
+  cacheKey: String!
+  responseJson: AWSJSON
+  ttl: Int
+}
+
+input UpdateProviderCacheInput {
+  cacheKey: String!
+  responseJson: AWSJSON
+  ttl: Int
+}
+
+input DeleteProviderCacheInput {
+  cacheKey: String!
+}
+
+input ModelSubscriptionProviderCacheFilterInput {
+  cacheKey: ModelSubscriptionStringInput
+  responseJson: ModelSubscriptionStringInput
+  ttl: ModelSubscriptionIntInput
+  id: ModelSubscriptionIDInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionProviderCacheFilterInput]
+  or: [ModelSubscriptionProviderCacheFilterInput]
+}
+
+input ModelStringKeyConditionInput {
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  between: [String]
+  beginsWith: String
+}
