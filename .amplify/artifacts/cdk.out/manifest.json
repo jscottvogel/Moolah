@@ -22,7 +22,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f96d8ab3d12d8c8efa4838e4ac795b8303136fc286dda26f83c31978f8585eb3.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/82b9f0ce47c0b48ec4c61d6aaf6031165c08a646704d3ba72923ff48bb8b2f66.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -421,6 +421,520 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "amplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource86290833"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/ProbeModelTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ProbeModel"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/ProbeModelTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProbeModelTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ProbeModel"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/CustomTableProbeModelTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ProbeModel"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/GetAttProbeModelTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttProbeModelTableStreamArn"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/GetAttProbeModelTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttProbeModelTableName"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/ProbeModelIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ProbeModelIAMRole"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/ProbeModelIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProbeModelIAMRole68CDABA5"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ProbeModelIAMRole"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/ProbeModelDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ProbeModelTable"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/ProbeModelDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProbeModelDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "ProbeModelTable"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/QuerygetProbeModelauth0Function/QuerygetProbeModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetProbeModelauth0FunctionQuerygetProbeModelauth0FunctionAppSyncFunction8119F767"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetProbeModelauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/QuerygetProbeModelpostAuth0Function/QuerygetProbeModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetProbeModelpostAuth0FunctionQuerygetProbeModelpostAuth0FunctionAppSyncFunction8FABC9C9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetProbeModelpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/QueryGetProbeModelDataResolverFn/QueryGetProbeModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetProbeModelDataResolverFnQueryGetProbeModelDataResolverFnAppSyncFunctionE38D153F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetProbeModelDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/queryGetProbeModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetProbeModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getProbeModel"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/QuerylistProbeModelsauth0Function/QuerylistProbeModelsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistProbeModelsauth0FunctionQuerylistProbeModelsauth0FunctionAppSyncFunction3042A639"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistProbeModelsauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/QuerylistProbeModelspostAuth0Function/QuerylistProbeModelspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistProbeModelspostAuth0FunctionQuerylistProbeModelspostAuth0FunctionAppSyncFunction8890A8D0"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistProbeModelspostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/QueryListProbeModelsDataResolverFn/QueryListProbeModelsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListProbeModelsDataResolverFnQueryListProbeModelsDataResolverFnAppSyncFunctionD0C535DB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListProbeModelsDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/queryListProbeModelsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListProbeModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listProbeModels"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/MutationcreateProbeModelinit0Function/MutationcreateProbeModelinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateProbeModelinit0FunctionMutationcreateProbeModelinit0FunctionAppSyncFunction37553DFE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateProbeModelinit0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/MutationcreateProbeModelauth0Function/MutationcreateProbeModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateProbeModelauth0FunctionMutationcreateProbeModelauth0FunctionAppSyncFunctionE328FED5"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateProbeModelauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/MutationcreateProbeModelpostAuth0Function/MutationcreateProbeModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateProbeModelpostAuth0FunctionMutationcreateProbeModelpostAuth0FunctionAppSyncFunction224B3F5C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateProbeModelpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/MutationCreateProbeModelDataResolverFn/MutationCreateProbeModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateProbeModelDataResolverFnMutationCreateProbeModelDataResolverFnAppSyncFunctionE1C4DF5C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateProbeModelDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/mutationCreateProbeModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateProbeModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createProbeModel"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/MutationupdateProbeModelinit0Function/MutationupdateProbeModelinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateProbeModelinit0FunctionMutationupdateProbeModelinit0FunctionAppSyncFunction6661C12E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateProbeModelinit0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/MutationupdateProbeModelauth0Function/MutationupdateProbeModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateProbeModelauth0FunctionMutationupdateProbeModelauth0FunctionAppSyncFunctionE3A2E18F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateProbeModelauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/MutationupdateProbeModelpostAuth0Function/MutationupdateProbeModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateProbeModelpostAuth0FunctionMutationupdateProbeModelpostAuth0FunctionAppSyncFunctionF64DCA1F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateProbeModelpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/MutationUpdateProbeModelDataResolverFn/MutationUpdateProbeModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateProbeModelDataResolverFnMutationUpdateProbeModelDataResolverFnAppSyncFunction010E9DCF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateProbeModelDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/mutationUpdateProbeModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateProbeModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateProbeModel"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/MutationdeleteProbeModelauth0Function/MutationdeleteProbeModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteProbeModelauth0FunctionMutationdeleteProbeModelauth0FunctionAppSyncFunctionCD881768"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteProbeModelauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/MutationdeleteProbeModelpostAuth0Function/MutationdeleteProbeModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteProbeModelpostAuth0FunctionMutationdeleteProbeModelpostAuth0FunctionAppSyncFunctionA18E448D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteProbeModelpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/MutationDeleteProbeModelDataResolverFn/MutationDeleteProbeModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteProbeModelDataResolverFnMutationDeleteProbeModelDataResolverFnAppSyncFunctionB9A6B9B9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteProbeModelDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/mutationDeleteProbeModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteProbeModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteProbeModel"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/SubscriptiononCreateProbeModelauth0Function/SubscriptiononCreateProbeModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateProbeModelauth0FunctionSubscriptiononCreateProbeModelauth0FunctionAppSyncFunctionDA5C0BC7"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateProbeModelauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/SubscriptiononCreateProbeModelpostAuth0Function/SubscriptiononCreateProbeModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateProbeModelpostAuth0FunctionSubscriptiononCreateProbeModelpostAuth0FunctionAppSyncFunction7744EDCE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateProbeModelpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/SubscriptionOnCreateProbeModelDataResolverFn/SubscriptionOnCreateProbeModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateProbeModelDataResolverFnSubscriptionOnCreateProbeModelDataResolverFnAppSyncFunctionD29F3586"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateProbeModelDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/subscriptionOnCreateProbeModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateProbeModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateProbeModel"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/SubscriptiononUpdateProbeModelauth0Function/SubscriptiononUpdateProbeModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateProbeModelauth0FunctionSubscriptiononUpdateProbeModelauth0FunctionAppSyncFunctionBB523C4A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateProbeModelauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/SubscriptiononUpdateProbeModelpostAuth0Function/SubscriptiononUpdateProbeModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateProbeModelpostAuth0FunctionSubscriptiononUpdateProbeModelpostAuth0FunctionAppSyncFunction4B97AB78"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateProbeModelpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/SubscriptionOnUpdateProbeModelDataResolverFn/SubscriptionOnUpdateProbeModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateProbeModelDataResolverFnSubscriptionOnUpdateProbeModelDataResolverFnAppSyncFunction11240D0A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateProbeModelDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/subscriptionOnUpdateProbeModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateProbeModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateProbeModel"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/SubscriptiononDeleteProbeModelauth0Function/SubscriptiononDeleteProbeModelauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteProbeModelauth0FunctionSubscriptiononDeleteProbeModelauth0FunctionAppSyncFunction8D10FF34"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteProbeModelauth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/SubscriptiononDeleteProbeModelpostAuth0Function/SubscriptiononDeleteProbeModelpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteProbeModelpostAuth0FunctionSubscriptiononDeleteProbeModelpostAuth0FunctionAppSyncFunction3B362261"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteProbeModelpostAuth0Function"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/SubscriptionOnDeleteProbeModelDataResolverFn/SubscriptionOnDeleteProbeModelDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteProbeModelDataResolverFnSubscriptionOnDeleteProbeModelDataResolverFnAppSyncFunctionADFE985B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteProbeModelDataResolverFn"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/subscriptionOnDeleteProbeModelResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteProbeModelResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteProbeModel"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/amplifymoolahmonorepojscosandbox79a19df541dataamplifyDataProbeModelProbeModelTableC6D90E7ETableArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifymoolahmonorepojscosandbox79a19df541dataamplifyDataProbeModelProbeModelTableC6D90E7ETableArn"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/reference-to-amplifymoolahmonorepojscosandbox79a19df541dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource28AFAD45Outputs.amplifymoolahmonorepojscosandbox79a19df541dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventA367AF40Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource28AFAD45Outputsamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataAmplifyTableManagerTableManagerC6F389092"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/reference-to-amplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPIF7EAC395ApiId"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/reference-to-amplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepojscosandbox79a19df541dataamplifyDataGraphQLAPINONEDSB02409ECName"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/reference-to-amplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputs.amplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthauthenticatedUserRole5A9C342ARef"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/reference-to-amplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputs.amplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthunauthenticatedUserRoleC14D2DDDRef"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel/reference-to-amplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputs.amplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifymoolahmonorepojscosandbox79a19df541authNestedStackauthNestedStackResourceF59DED2FOutputsamplifymoolahmonorepojscosandbox79a19df541authamplifyAuthIdentityPoolDC2B4453Ref"
+          }
+        ],
+        "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/ProbeModel.NestedStack/ProbeModel.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataProbeModelNestedStackProbeModelNestedStackResource0E7B239D"
           }
         ],
         "/amplify-moolahmonorepo-jsco-sandbox-79a19df541/data/amplifyData/UserSettings/DynamoDBModelTableReadIOPS": [

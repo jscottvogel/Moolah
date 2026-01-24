@@ -13,7 +13,12 @@ import { marketWorker } from '../functions/market-worker/resource';
  * - Owners can full-access their own data.
  * - Authenticated users can read shared market data.
  */
+// PROBE MODEL - FORCE REFRESH v5
 const schema = a.schema({
+    ProbeModel: a.model({
+        content: a.string(),
+    }).authorization(allow => [allow.publicApiKey()]),
+
     // --- USER DOMAIN ---
 
     UserSettings: a.model({
