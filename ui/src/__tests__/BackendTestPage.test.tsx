@@ -40,13 +40,13 @@ vi.mock('../hooks/useCloudActions', () => ({
 }));
 
 describe('BackendTestPage', () => {
-    it('renders without crashing (smoke test)', () => {
+    it('renders without crashing (smoke test)', async () => {
         render(
             <BrowserRouter>
                 <BackendTestPage />
             </BrowserRouter>
         );
-        expect(screen.getByText(/System Diagnostics/i)).toBeDefined();
+        await screen.findByText(/System Diagnostics/i);
     });
 
     it('displays the console header', () => {

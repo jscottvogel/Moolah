@@ -102,22 +102,7 @@ const BackendTestPage = () => {
         }
     };
 
-    useEffect(() => {
-        if (!client) return;
-        fetchHoldings();
 
-        // Listen for background work logs (AuditLog)
-        // Defensively check if AuditLog exists in the schema to prevent crash
-        if (!client.models || !client.models.AuditLog) {
-            const currentModels = client.models ? Object.keys(client.models) : [];
-            const availableModels = currentModels.join(', ');
-            console.warn(`[DIAG] AuditLog model not found. Available models: ${availableModels}`);
-            addLog('error', `Diagnostics: AuditLog model missing. Available: ${availableModels}`);
-            return;
-        }
-
-        return () => sub.unsubscribe();
-    }, [client]);
 
     const refreshLogs = async () => {
         if (!client || !client.models?.AuditLog) return;
@@ -173,6 +158,25 @@ const BackendTestPage = () => {
             });
         }
     };
+
+    // Subscription Effect
+    useEffect(() => {
+        if (!client) return;
+        fetchHoldings();
+
+        if (!client.models || !client.models.AuditLog) {
+            const currentModels = client.models ? Object.keys(client.models) : [];
+            const availableModels = currentModels.join(', ');
+            console.warn(`[DIAG] AuditLog model not found. Available models: ${availableModels}`);
+            addLog('error', `Diagnostics: AuditLog model missing. Available: ${availableModels}`);
+            return;
+        }
+
+        const sub = client.models.AuditLog.observeQuery().subscribe({
+            next: ({ items }: any) => processLogs(items)
+        });
+        return () => sub.unsubscribe();
+    }, [client]);
 
     // Polling Effect
     useEffect(() => {
