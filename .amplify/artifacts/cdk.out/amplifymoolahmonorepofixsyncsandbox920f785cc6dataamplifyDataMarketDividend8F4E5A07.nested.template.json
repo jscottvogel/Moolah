@@ -1,0 +1,2310 @@
+{
+ "Parameters": {
+  "DynamoDBModelTableReadIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of read IOPS the table should support."
+  },
+  "DynamoDBModelTableWriteIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of write IOPS the table should support."
+  },
+  "DynamoDBBillingMode": {
+   "Type": "String",
+   "Default": "PAY_PER_REQUEST",
+   "AllowedValues": [
+    "PAY_PER_REQUEST",
+    "PROVISIONED"
+   ],
+   "Description": "Configure @model types to create DynamoDB tables with PAY_PER_REQUEST or PROVISIONED billing modes."
+  },
+  "DynamoDBEnablePointInTimeRecovery": {
+   "Type": "String",
+   "Default": "false",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Whether to enable Point in Time Recovery on the table."
+  },
+  "DynamoDBEnableServerSideEncryption": {
+   "Type": "String",
+   "Default": "true",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Enable server side encryption powered by KMS."
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource5A853621Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataAmplifyTableManagerTableMa6534BBDA": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref": {
+   "Type": "String"
+  }
+ },
+ "Conditions": {
+  "HasEnvironmentParameter": {
+   "Fn::Not": [
+    {
+     "Fn::Equals": [
+      "NONE",
+      "NONE"
+     ]
+    }
+   ]
+  },
+  "ShouldUsePayPerRequestBilling": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBBillingMode"
+    },
+    "PAY_PER_REQUEST"
+   ]
+  },
+  "ShouldUsePointInTimeRecovery": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBEnablePointInTimeRecovery"
+    },
+    "true"
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "MarketDividendTable": {
+   "Type": "Custom::AmplifyDynamoDBTable",
+   "Properties": {
+    "ServiceToken": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource5A853621Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataAmplifyTableManagerTableMa6534BBDA"
+    },
+    "tableName": {
+     "Fn::Join": [
+      "",
+      [
+       "MarketDividend-",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "attributeDefinitions": [
+     {
+      "attributeName": "id",
+      "attributeType": "S"
+     },
+     {
+      "attributeName": "ticker",
+      "attributeType": "S"
+     },
+     {
+      "attributeName": "exDate",
+      "attributeType": "S"
+     }
+    ],
+    "keySchema": [
+     {
+      "attributeName": "id",
+      "keyType": "HASH"
+     }
+    ],
+    "globalSecondaryIndexes": [
+     {
+      "indexName": "marketDividendsByTickerAndExDate",
+      "keySchema": [
+       {
+        "attributeName": "ticker",
+        "keyType": "HASH"
+       },
+       {
+        "attributeName": "exDate",
+        "keyType": "RANGE"
+       }
+      ],
+      "projection": {
+       "projectionType": "ALL"
+      },
+      "provisionedThroughput": {
+       "Fn::If": [
+        "ShouldUsePayPerRequestBilling",
+        {
+         "Ref": "AWS::NoValue"
+        },
+        {
+         "ReadCapacityUnits": {
+          "Ref": "DynamoDBModelTableReadIOPS"
+         },
+         "WriteCapacityUnits": {
+          "Ref": "DynamoDBModelTableWriteIOPS"
+         }
+        }
+       ]
+      }
+     }
+    ],
+    "provisionedThroughput": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      {
+       "Ref": "AWS::NoValue"
+      },
+      {
+       "ReadCapacityUnits": {
+        "Ref": "DynamoDBModelTableReadIOPS"
+       },
+       "WriteCapacityUnits": {
+        "Ref": "DynamoDBModelTableWriteIOPS"
+       }
+      }
+     ]
+    },
+    "sseSpecification": {
+     "sseEnabled": false
+    },
+    "streamSpecification": {
+     "streamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "deletionProtectionEnabled": false,
+    "allowDestructiveGraphqlSchemaUpdates": true,
+    "replaceTableUponGsiUpdate": true,
+    "pointInTimeRecoverySpecification": {
+     "Fn::If": [
+      "ShouldUsePointInTimeRecovery",
+      {
+       "PointInTimeRecoveryEnabled": true
+      },
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    },
+    "billingMode": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      "PAY_PER_REQUEST",
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MarketDividendTable/Default/Default"
+   }
+  },
+  "MarketDividendIAMRoleF6A1E09A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:GetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:UpdateItem",
+          "dynamodb:ConditionCheckItem",
+          "dynamodb:DescribeTable",
+          "dynamodb:GetRecords",
+          "dynamodb:GetShardIterator"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "MarketDividend-",
+                {
+                 "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          },
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "MarketDividend-",
+                {
+                 "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "DynamoDBAccess"
+     }
+    ],
+    "RoleName": {
+     "Fn::Join": [
+      "",
+      [
+       "MarketDividendIAMRol7ded9b-",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MarketDividendIAMRole/Resource"
+   }
+  },
+  "MarketDividendDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DynamoDBConfig": {
+     "AwsRegion": {
+      "Ref": "AWS::Region"
+     },
+     "TableName": {
+      "Fn::Select": [
+       1,
+       {
+        "Fn::Split": [
+         "/",
+         {
+          "Fn::Select": [
+           5,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "MarketDividendTable",
+               "TableArn"
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "Name": "MarketDividendTable",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "MarketDividendIAMRoleF6A1E09A",
+      "Arn"
+     ]
+    },
+    "Type": "AMAZON_DYNAMODB"
+   },
+   "DependsOn": [
+    "MarketDividendIAMRoleF6A1E09A"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MarketDividendDataSource/Resource"
+   }
+  },
+  "QuerygetMarketDividendauth0FunctionQuerygetMarketDividendauth0FunctionAppSyncFunction4C41159E": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetMarketDividendauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/62baca1d1fe8e93eb394d958513556ffc536c35fde7d8fba84f4af8dd76705da.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/QuerygetMarketDividendauth0Function/QuerygetMarketDividendauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetMarketDividendpostAuth0FunctionQuerygetMarketDividendpostAuth0FunctionAppSyncFunctionA3D3562B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetMarketDividendpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/QuerygetMarketDividendpostAuth0Function/QuerygetMarketDividendpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryGetMarketDividendDataResolverFnQueryGetMarketDividendDataResolverFnAppSyncFunction9FABA73B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketDividendDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryGetMarketDividendDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/08f4d557693d96c1a4efba0f9dc91330e4b19772fd5477c156468843e3d9cb5e.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4c6a2d29f01c6091bd1d9afe16e5849d456c96f17c3b215938c8067399532719.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketDividendDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/QueryGetMarketDividendDataResolverFn/QueryGetMarketDividendDataResolverFn.AppSyncFunction"
+   }
+  },
+  "GetMarketDividendResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "FieldName": "getMarketDividend",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerygetMarketDividendauth0FunctionQuerygetMarketDividendauth0FunctionAppSyncFunction4C41159E",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetMarketDividendpostAuth0FunctionQuerygetMarketDividendpostAuth0FunctionAppSyncFunctionA3D3562B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryGetMarketDividendDataResolverFnQueryGetMarketDividendDataResolverFnAppSyncFunction9FABA73B",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getMarketDividend\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketDividendTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/queryGetMarketDividendResolver"
+   }
+  },
+  "QuerylistMarketDividendsauth0FunctionQuerylistMarketDividendsauth0FunctionAppSyncFunctionBF5D3457": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistMarketDividendsauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/62baca1d1fe8e93eb394d958513556ffc536c35fde7d8fba84f4af8dd76705da.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/QuerylistMarketDividendsauth0Function/QuerylistMarketDividendsauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistMarketDividendspostAuth0FunctionQuerylistMarketDividendspostAuth0FunctionAppSyncFunction1EE3C787": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistMarketDividendspostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/QuerylistMarketDividendspostAuth0Function/QuerylistMarketDividendspostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListMarketDividendsDataResolverFnQueryListMarketDividendsDataResolverFnAppSyncFunction8864E91D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketDividendDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListMarketDividendsDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9fcbe070ecd3023c5bf5b966fa9584757db9762eef123bad0820bd87591b2174.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cc01911d0269d4080ea57505dc445dfc315ef7ad85d3d9d4ea1357858bff451d.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketDividendDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/QueryListMarketDividendsDataResolverFn/QueryListMarketDividendsDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ListMarketDividendResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "FieldName": "listMarketDividends",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistMarketDividendsauth0FunctionQuerylistMarketDividendsauth0FunctionAppSyncFunctionBF5D3457",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistMarketDividendspostAuth0FunctionQuerylistMarketDividendspostAuth0FunctionAppSyncFunction1EE3C787",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListMarketDividendsDataResolverFnQueryListMarketDividendsDataResolverFnAppSyncFunction8864E91D",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listMarketDividends\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketDividendTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/queryListMarketDividendsResolver"
+   }
+  },
+  "MutationcreateMarketDividendinit0FunctionMutationcreateMarketDividendinit0FunctionAppSyncFunction045B2E3F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateMarketDividendinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a183ddccbd956316c38ef97177b8f088ef0826f62023323f5ae6053d348ccffc.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MutationcreateMarketDividendinit0Function/MutationcreateMarketDividendinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateMarketDividendauth0FunctionMutationcreateMarketDividendauth0FunctionAppSyncFunction3437698C": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateMarketDividendauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b00b044cbf62771b1bdbd1b085098bec0b7389277c1a5093ff24000983e9f8a1.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MutationcreateMarketDividendauth0Function/MutationcreateMarketDividendauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateMarketDividendpostAuth0FunctionMutationcreateMarketDividendpostAuth0FunctionAppSyncFunction4973AA22": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateMarketDividendpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MutationcreateMarketDividendpostAuth0Function/MutationcreateMarketDividendpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationCreateMarketDividendDataResolverFnMutationCreateMarketDividendDataResolverFnAppSyncFunctionCDEADD85": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketDividendDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationCreateMarketDividendDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/aa17cce7e77ccf426c9e0a20471ff17b0e3a941453d50707fe5876a59e068e31.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketDividendDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MutationCreateMarketDividendDataResolverFn/MutationCreateMarketDividendDataResolverFn.AppSyncFunction"
+   }
+  },
+  "CreateMarketDividendResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "FieldName": "createMarketDividend",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationcreateMarketDividendinit0FunctionMutationcreateMarketDividendinit0FunctionAppSyncFunction045B2E3F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateMarketDividendauth0FunctionMutationcreateMarketDividendauth0FunctionAppSyncFunction3437698C",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateMarketDividendpostAuth0FunctionMutationcreateMarketDividendpostAuth0FunctionAppSyncFunction4973AA22",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationCreateMarketDividendDataResolverFnMutationCreateMarketDividendDataResolverFnAppSyncFunctionCDEADD85",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createMarketDividend\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketDividendTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/mutationCreateMarketDividendResolver"
+   }
+  },
+  "MutationupdateMarketDividendinit0FunctionMutationupdateMarketDividendinit0FunctionAppSyncFunctionA0E9CA4F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateMarketDividendinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/06db846fd14e6fc371f22b12b5545ba8e2dbfeda85d8c8d586c71c282166657b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MutationupdateMarketDividendinit0Function/MutationupdateMarketDividendinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateMarketDividendauth0FunctionMutationupdateMarketDividendauth0FunctionAppSyncFunction094EC2B8": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketDividendDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateMarketDividendauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b78eb1e14e67fb98110b98d8dacf69835e493c73744f8d49f50af785279a8541.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketDividendDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MutationupdateMarketDividendauth0Function/MutationupdateMarketDividendauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateMarketDividendpostAuth0FunctionMutationupdateMarketDividendpostAuth0FunctionAppSyncFunction0105F369": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateMarketDividendpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MutationupdateMarketDividendpostAuth0Function/MutationupdateMarketDividendpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationUpdateMarketDividendDataResolverFnMutationUpdateMarketDividendDataResolverFnAppSyncFunction09F888C5": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketDividendDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationUpdateMarketDividendDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/474bf0776ec2164a13191d1a0a9e057154931e4918fea5086f49850d02a5371b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketDividendDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MutationUpdateMarketDividendDataResolverFn/MutationUpdateMarketDividendDataResolverFn.AppSyncFunction"
+   }
+  },
+  "UpdateMarketDividendResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "FieldName": "updateMarketDividend",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationupdateMarketDividendinit0FunctionMutationupdateMarketDividendinit0FunctionAppSyncFunctionA0E9CA4F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateMarketDividendauth0FunctionMutationupdateMarketDividendauth0FunctionAppSyncFunction094EC2B8",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateMarketDividendpostAuth0FunctionMutationupdateMarketDividendpostAuth0FunctionAppSyncFunction0105F369",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationUpdateMarketDividendDataResolverFnMutationUpdateMarketDividendDataResolverFnAppSyncFunction09F888C5",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updateMarketDividend\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketDividendTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/mutationUpdateMarketDividendResolver"
+   }
+  },
+  "MutationdeleteMarketDividendauth0FunctionMutationdeleteMarketDividendauth0FunctionAppSyncFunction55AFA0A5": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketDividendDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteMarketDividendauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/05de9eab8d843ef7ef353a7792e3969abe58aae4a1016c0995c6ebddc6f9068f.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketDividendDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MutationdeleteMarketDividendauth0Function/MutationdeleteMarketDividendauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeleteMarketDividendpostAuth0FunctionMutationdeleteMarketDividendpostAuth0FunctionAppSyncFunctionE4CC1E37": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteMarketDividendpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MutationdeleteMarketDividendpostAuth0Function/MutationdeleteMarketDividendpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationDeleteMarketDividendDataResolverFnMutationDeleteMarketDividendDataResolverFnAppSyncFunction7E029FCE": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketDividendDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationDeleteMarketDividendDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4f7907d1209a2c9953a0c053df402c634e359546d70c7cc5c2e8e21ea734880f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketDividendDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/MutationDeleteMarketDividendDataResolverFn/MutationDeleteMarketDividendDataResolverFn.AppSyncFunction"
+   }
+  },
+  "DeleteMarketDividendResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "FieldName": "deleteMarketDividend",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteMarketDividendauth0FunctionMutationdeleteMarketDividendauth0FunctionAppSyncFunction55AFA0A5",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteMarketDividendpostAuth0FunctionMutationdeleteMarketDividendpostAuth0FunctionAppSyncFunctionE4CC1E37",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationDeleteMarketDividendDataResolverFnMutationDeleteMarketDividendDataResolverFnAppSyncFunction7E029FCE",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deleteMarketDividend\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketDividendTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/mutationDeleteMarketDividendResolver"
+   }
+  },
+  "SubscriptiononCreateMarketDividendauth0FunctionSubscriptiononCreateMarketDividendauth0FunctionAppSyncFunction9F3A3799": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateMarketDividendauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/616d9084d37a5192e6c798ff5243c52f88c11adb3c7a2424c4a4948cbfa78618.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/SubscriptiononCreateMarketDividendauth0Function/SubscriptiononCreateMarketDividendauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateMarketDividendpostAuth0FunctionSubscriptiononCreateMarketDividendpostAuth0FunctionAppSyncFunction97009A2D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateMarketDividendpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/SubscriptiononCreateMarketDividendpostAuth0Function/SubscriptiononCreateMarketDividendpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnCreateMarketDividendDataResolverFnSubscriptionOnCreateMarketDividendDataResolverFnAppSyncFunction1D5C9356": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnCreateMarketDividendDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/SubscriptionOnCreateMarketDividendDataResolverFn/SubscriptionOnCreateMarketDividendDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateMarketDividendResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "FieldName": "onCreateMarketDividend",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateMarketDividendauth0FunctionSubscriptiononCreateMarketDividendauth0FunctionAppSyncFunction9F3A3799",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateMarketDividendpostAuth0FunctionSubscriptiononCreateMarketDividendpostAuth0FunctionAppSyncFunction97009A2D",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnCreateMarketDividendDataResolverFnSubscriptionOnCreateMarketDividendDataResolverFnAppSyncFunction1D5C9356",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreateMarketDividend\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/subscriptionOnCreateMarketDividendResolver"
+   }
+  },
+  "SubscriptiononUpdateMarketDividendauth0FunctionSubscriptiononUpdateMarketDividendauth0FunctionAppSyncFunctionFDB1675D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateMarketDividendauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/616d9084d37a5192e6c798ff5243c52f88c11adb3c7a2424c4a4948cbfa78618.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/SubscriptiononUpdateMarketDividendauth0Function/SubscriptiononUpdateMarketDividendauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateMarketDividendpostAuth0FunctionSubscriptiononUpdateMarketDividendpostAuth0FunctionAppSyncFunction2D6CDBFA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateMarketDividendpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/SubscriptiononUpdateMarketDividendpostAuth0Function/SubscriptiononUpdateMarketDividendpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnUpdateMarketDividendDataResolverFnSubscriptionOnUpdateMarketDividendDataResolverFnAppSyncFunctionD37616DC": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnUpdateMarketDividendDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/SubscriptionOnUpdateMarketDividendDataResolverFn/SubscriptionOnUpdateMarketDividendDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateMarketDividendResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "FieldName": "onUpdateMarketDividend",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateMarketDividendauth0FunctionSubscriptiononUpdateMarketDividendauth0FunctionAppSyncFunctionFDB1675D",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateMarketDividendpostAuth0FunctionSubscriptiononUpdateMarketDividendpostAuth0FunctionAppSyncFunction2D6CDBFA",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnUpdateMarketDividendDataResolverFnSubscriptionOnUpdateMarketDividendDataResolverFnAppSyncFunctionD37616DC",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdateMarketDividend\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/subscriptionOnUpdateMarketDividendResolver"
+   }
+  },
+  "SubscriptiononDeleteMarketDividendauth0FunctionSubscriptiononDeleteMarketDividendauth0FunctionAppSyncFunctionA4EA2B87": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteMarketDividendauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/616d9084d37a5192e6c798ff5243c52f88c11adb3c7a2424c4a4948cbfa78618.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/SubscriptiononDeleteMarketDividendauth0Function/SubscriptiononDeleteMarketDividendauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteMarketDividendpostAuth0FunctionSubscriptiononDeleteMarketDividendpostAuth0FunctionAppSyncFunction75E5AC46": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteMarketDividendpostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/SubscriptiononDeleteMarketDividendpostAuth0Function/SubscriptiononDeleteMarketDividendpostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnDeleteMarketDividendDataResolverFnSubscriptionOnDeleteMarketDividendDataResolverFnAppSyncFunction29377E5A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnDeleteMarketDividendDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/SubscriptionOnDeleteMarketDividendDataResolverFn/SubscriptionOnDeleteMarketDividendDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteMarketDividendResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "FieldName": "onDeleteMarketDividend",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteMarketDividendauth0FunctionSubscriptiononDeleteMarketDividendauth0FunctionAppSyncFunctionA4EA2B87",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteMarketDividendpostAuth0FunctionSubscriptiononDeleteMarketDividendpostAuth0FunctionAppSyncFunction75E5AC46",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnDeleteMarketDividendDataResolverFnSubscriptionOnDeleteMarketDividendDataResolverFnAppSyncFunction29377E5A",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteMarketDividend\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/subscriptionOnDeleteMarketDividendResolver"
+   }
+  },
+  "QuerylistMarketDividendByTickerAndExDateauth0FunctionQuerylistMarketDividendByTickerAndExDateauth0FunctionAppSyncFunction5EFFFFDA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistMarketDividendByTickerAndExDateauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/62baca1d1fe8e93eb394d958513556ffc536c35fde7d8fba84f4af8dd76705da.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/QuerylistMarketDividendByTickerAndExDateauth0Function/QuerylistMarketDividendByTickerAndExDateauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistMarketDividendByTickerAndExDatepostAuth0FunctionQuerylistMarketDividendByTickerAndExDatepostAuth0FunctionAppSyncFunctionCC9AFA38": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistMarketDividendByTickerAndExDatepostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/QuerylistMarketDividendByTickerAndExDatepostAuth0Function/QuerylistMarketDividendByTickerAndExDatepostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListMarketDividendByTickerAndExDateDataResolverFnQueryListMarketDividendByTickerAndExDateDataResolverFnAppSyncFunction888CA165": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "MarketDividendDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListMarketDividendByTickerAndExDateDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/81da388465fda428165b7f07c13dc876925eaa1fd1f193fc09e76912844e3e7f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/098c998f215c333f57348ca8912f66057ae6b574fe34013033dc54362ee2372c.vtl"
+    }
+   },
+   "DependsOn": [
+    "MarketDividendDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/QueryListMarketDividendByTickerAndExDateDataResolverFn/QueryListMarketDividendByTickerAndExDateDataResolverFn.AppSyncFunction"
+   }
+  },
+  "QuerylistMarketDividendByTickerAndExDateResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "FieldName": "listMarketDividendByTickerAndExDate",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistMarketDividendByTickerAndExDateauth0FunctionQuerylistMarketDividendByTickerAndExDateauth0FunctionAppSyncFunction5EFFFFDA",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistMarketDividendByTickerAndExDatepostAuth0FunctionQuerylistMarketDividendByTickerAndExDatepostAuth0FunctionAppSyncFunctionCC9AFA38",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListMarketDividendByTickerAndExDateDataResolverFnQueryListMarketDividendByTickerAndExDateDataResolverFnAppSyncFunction888CA165",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listMarketDividendByTickerAndExDate\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "MarketDividendTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/queryListMarketDividendByTickerAndExDateResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WO0W6DMAxFv6XvwROwfcAK2mM3wd4rkxiUEhIUO60qxL9P0KnTnq6PfGTfAoryDfID3jjTZsyc7WA5EQuZVlCPqur9F0acSChuUAVvrNjgVUMcUtSkqsQSpj/s/XPGG58Xc/c4BdPBN3aOjsikLE6wNME97OBoVTjPfPcalnrX665GwfZ58j99JK+3ElXwvR1SxL3R72d3pbgqLs/ITMLwvoXiEo5JjyRbgXVzP5PMSdS+bgUH64dV+WAILvxyLV4hzyE/XNjaLCYvdiJoHvkDg1rF6DYBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/MarketDividend/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "GetAttMarketDividendTableStreamArn": {
+   "Description": "Your DynamoDB table StreamArn.",
+   "Value": {
+    "Fn::GetAtt": [
+     "MarketDividendTable",
+     "TableStreamArn"
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "GetAtt:MarketDividendTable:StreamArn"
+      ]
+     ]
+    }
+   }
+  },
+  "GetAttMarketDividendTableName": {
+   "Description": "Your DynamoDB table name.",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "MarketDividend-",
+      {
+       "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+      },
+      "-NONE"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+       },
+       "GetAtt:MarketDividendTable:Name"
+      ]
+     ]
+    }
+   }
+  },
+  "amplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataMarketDividendMarketDividendTableFD3EB45BTableArn": {
+   "Value": {
+    "Fn::GetAtt": [
+     "MarketDividendTable",
+     "TableArn"
+    ]
+   }
+  }
+ }
+}

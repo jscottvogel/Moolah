@@ -16,11 +16,32 @@ async function checkBackend() {
                 requestMarketSync(tickers: $tickers, correlationId: $correlationId)
             }
         `;
+        const query = `
+            query CheckProbe {
+                listProbeModels {
+                    items { id }
+                }
+            }
+        `;
 
-        console.log("Attempting to invoke requestMarketSync...");
+        console.log("1. Checking for ProbeModel (Deployment Liveness)...");
+        try {
+            await client.graphql({
+                query,
+                variables: {},
+                authMode: 'apiKey'
+            });
+            console.log("✅ ProbeModel found! Deployment is active.");
+        } catch (e: any) {
+            console.log("❌ ProbeModel NOT found. Deployment is likely stuck on old version.");
+            console.log("Error details:", e.errors?.[0]?.message || e.message);
+        }
+
+        console.log("2. Attempting to invoke requestMarketSync...");
         const response: any = await client.graphql({
             query: mutation,
-            variables: { tickers: ["TEST"], correlationId: "probe-123" }
+            variables: { tickers: ["TEST"], correlationId: "probe-123" },
+            authMode: 'apiKey'
         });
 
         if (response.errors) {
@@ -30,8 +51,9 @@ async function checkBackend() {
             console.log("✅ Success! requestMarketSync exists and is callable.");
             console.log("Response:", response.data);
         }
-    } catch (err) {
-        console.error("❌ Exception:", err);
+    } catch (err: any) {
+        console.error("❌ Exception:", err.message || err);
+        if (err.errors) console.error("GraphQLErrors:", JSON.stringify(err.errors, null, 2));
     }
 }
 

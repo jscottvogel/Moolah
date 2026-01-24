@@ -1,0 +1,751 @@
+{
+ "Description": "An auto-generated nested stack for the @function directive.",
+ "AWSTemplateFormatVersion": "2010-09-09",
+ "Conditions": {
+  "HasEnvironmentParameter": {
+   "Fn::Not": [
+    {
+     "Fn::Equals": [
+      "NONE",
+      "NONE"
+     ]
+    }
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "FnRequestOptimizationLambdaDataSourceServiceRole72E32240": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/FnRequestOptimizationLambdaDataSource/ServiceRole/Resource"
+   }
+  },
+  "FnRequestOptimizationLambdaDataSourceServiceRoleDefaultPolicy134210A3": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataorchestratorlambdaCC07AEA4Arn"
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataorchestratorlambdaCC07AEA4Arn"
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "FnRequestOptimizationLambdaDataSourceServiceRoleDefaultPolicy134210A3",
+    "Roles": [
+     {
+      "Ref": "FnRequestOptimizationLambdaDataSourceServiceRole72E32240"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/FnRequestOptimizationLambdaDataSource/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "FnRequestOptimizationLambdaDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "LambdaConfig": {
+     "LambdaFunctionArn": {
+      "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataorchestratorlambdaCC07AEA4Arn"
+     }
+    },
+    "Name": "FnRequestOptimizationLambdaDataSource",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "FnRequestOptimizationLambdaDataSourceServiceRole72E32240",
+      "Arn"
+     ]
+    },
+    "Type": "AWS_LAMBDA"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/FnRequestOptimizationLambdaDataSource/Resource"
+   }
+  },
+  "InvokeFnRequestOptimizationLambdaDataSourceInvokeFnRequestOptimizationLambdaDataSourceAppSyncFunction98145016": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "FnRequestOptimizationLambdaDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "InvokeFnRequestOptimizationLambdaDataSource",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/128d0e9467d235990d896fa0a31c0ddd3d2c121d370f4006c0583150924698d9.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a20e304512b1fde77dc16ed9d5e0ed03817afcab629ce87ef11c99877b7b1e30.vtl"
+    }
+   },
+   "DependsOn": [
+    "FnRequestOptimizationLambdaDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/InvokeFnRequestOptimizationLambdaDataSource/InvokeFnRequestOptimizationLambdaDataSource.AppSyncFunction"
+   }
+  },
+  "MutationrequestOptimizationResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "FieldName": "requestOptimization",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationRequestOptimizationAuthFNMutationRequestOptimizationAuthFNAppSyncFunction9BDAC22F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "InvokeFnRequestOptimizationLambdaDataSourceInvokeFnRequestOptimizationLambdaDataSourceAppSyncFunction98145016",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "## [Start] Stash resolver specific context.. **\n$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"requestOptimization\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n{}\n## [End] Stash resolver specific context.. **"
+      ]
+     ]
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/387d5992f5fc03d05de27289457dcc374a84c42a889acb504aff1031047dde00.vtl"
+    },
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/mutationRequestOptimizationResolver"
+   }
+  },
+  "FnRequestMarketSyncLambdaDataSourceServiceRoleCE4987D2": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/FnRequestMarketSyncLambdaDataSource/ServiceRole/Resource"
+   }
+  },
+  "FnRequestMarketSyncLambdaDataSourceServiceRoleDefaultPolicyB9B45B99": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6datamarketworkerlambdaB0736304Arn"
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6datamarketworkerlambdaB0736304Arn"
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "FnRequestMarketSyncLambdaDataSourceServiceRoleDefaultPolicyB9B45B99",
+    "Roles": [
+     {
+      "Ref": "FnRequestMarketSyncLambdaDataSourceServiceRoleCE4987D2"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/FnRequestMarketSyncLambdaDataSource/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "FnRequestMarketSyncLambdaDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "LambdaConfig": {
+     "LambdaFunctionArn": {
+      "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6datamarketworkerlambdaB0736304Arn"
+     }
+    },
+    "Name": "FnRequestMarketSyncLambdaDataSource",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "FnRequestMarketSyncLambdaDataSourceServiceRoleCE4987D2",
+      "Arn"
+     ]
+    },
+    "Type": "AWS_LAMBDA"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/FnRequestMarketSyncLambdaDataSource/Resource"
+   }
+  },
+  "InvokeFnRequestMarketSyncLambdaDataSourceInvokeFnRequestMarketSyncLambdaDataSourceAppSyncFunctionCBBC35D3": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "FnRequestMarketSyncLambdaDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "InvokeFnRequestMarketSyncLambdaDataSource",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cb6782f3aa7aabc12f03feb250d7d18f7f09cc28927d3903aae78f4d89ff67c6.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a20e304512b1fde77dc16ed9d5e0ed03817afcab629ce87ef11c99877b7b1e30.vtl"
+    }
+   },
+   "DependsOn": [
+    "FnRequestMarketSyncLambdaDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/InvokeFnRequestMarketSyncLambdaDataSource/InvokeFnRequestMarketSyncLambdaDataSource.AppSyncFunction"
+   }
+  },
+  "MutationrequestMarketSyncResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "FieldName": "requestMarketSync",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationRequestMarketSyncAuthFNMutationRequestMarketSyncAuthFNAppSyncFunctionD800CC5B",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "InvokeFnRequestMarketSyncLambdaDataSourceInvokeFnRequestMarketSyncLambdaDataSourceAppSyncFunctionCBBC35D3",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "## [Start] Stash resolver specific context.. **\n$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"requestMarketSync\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n{}\n## [End] Stash resolver specific context.. **"
+      ]
+     ]
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/387d5992f5fc03d05de27289457dcc374a84c42a889acb504aff1031047dde00.vtl"
+    },
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/mutationRequestMarketSyncResolver"
+   }
+  },
+  "MutationRequestOptimizationAuthFNMutationRequestOptimizationAuthFNAppSyncFunction9BDAC22F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationRequestOptimizationAuthFN",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3d72cc99f51abdee9e8ef0ac8f5f84a36b933ea339e0dabbc93ff98009dbf274.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/MutationRequestOptimizationAuthFN/MutationRequestOptimizationAuthFN.AppSyncFunction"
+   }
+  },
+  "MutationRequestMarketSyncAuthFNMutationRequestMarketSyncAuthFNAppSyncFunctionD800CC5B": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationRequestMarketSyncAuthFN",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3d72cc99f51abdee9e8ef0ac8f5f84a36b933ea339e0dabbc93ff98009dbf274.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/MutationRequestMarketSyncAuthFN/MutationRequestMarketSyncAuthFN.AppSyncFunction"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WNTY7CMAyFz8I+NWo7c4Cho1khhNoDIJO4lWnroDoBoap3HyWsWH1+8vupoKq/odzhUwvrxmLiK6wn0kCuC2hH0/TSeHEc2IvBp15WvN/1JRbWI85Xh78YsPNxsZS8n+ovik3BxkvPQ1wwtzS9tKR+etCyGcYZ1tZP2Z959hPbV5LvazNaX1CVgsJPgtEaDtGOFA6otJlUlhfztws4sAybEe8Ibrp/VF9QllDubspcLFECzwTtm/+lTBl/AAEAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-moolahmonorepo-fixsync-sandbox-920f785cc6/data/amplifyData/FunctionDirectiveStack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Parameters": {
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataorchestratorlambdaCC07AEA4Arn": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPIF2DA7522ApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthauthenticatedUserRole4BFCB21CRef": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthunauthenticatedUserRole0EAB698CRef": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6authNestedStackauthNestedStackResourceC9E30F63Outputsamplifymoolahmonorepofixsyncsandbox920f785cc6authamplifyAuthIdentityPool6FA1E498Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6datamarketworkerlambdaB0736304Arn": {
+   "Type": "String"
+  },
+  "referencetoamplifymoolahmonorepofixsyncsandbox920f785cc6dataamplifyDataGraphQLAPINONEDS7DB82E14Name": {
+   "Type": "String"
+  }
+ }
+}
