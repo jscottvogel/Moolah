@@ -73,10 +73,10 @@ async function signedRequest(query: string, variables: any = {}) {
     return result.data;
 }
 
-async function logToAudit(action: string, details: string) {
+async function logToAudit(action: string, details: string, metadata: any = {}) {
     try {
         const mutation = `mutation Log($input: CreateAuditLogInput!) { createAuditLog(input: $input) { id } }`;
-        await signedRequest(mutation, { input: { action, details } });
+        await signedRequest(mutation, { input: { action, details, metadata: JSON.stringify(metadata) } });
     } catch (e) {
         console.error('[WORKER] Audit Fail:', e);
     }
@@ -89,6 +89,7 @@ export const handler = async (event: any) => {
     // A. Mutation Handler
     if (event.arguments || (event.info && event.info.fieldName === 'syncMarketData')) {
         const tickers = event.arguments?.tickers || [];
+        const correlationId = event.arguments?.correlationId;
         try {
             if (!queueUrl) throw new Error("MARKET_QUEUE_URL missing");
             for (const ticker of tickers) {
@@ -101,7 +102,7 @@ export const handler = async (event: any) => {
                     MessageBody: JSON.stringify({ ticker, type: 'FUNDAMENTAL' })
                 }));
             }
-            await logToAudit('SYNC_ACCEPTED', `Accepted ${tickers.length} tickers.`);
+            await logToAudit('SYNC_ACCEPTED', `Accepted ${tickers.length} tickers.`, { correlationId });
             return JSON.stringify({ status: 'ACCEPTED', count: tickers.length });
         } catch (err: any) {
             console.error('[WORKER] Mutation Error:', err);

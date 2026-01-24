@@ -8,6 +8,8 @@ const mockClient = {
     models: {
         Holding: {
             list: vi.fn().mockResolvedValue({ data: [] }),
+            create: vi.fn().mockResolvedValue({ data: { id: 'test-id' } }),
+            delete: vi.fn().mockResolvedValue({ data: { id: 'test-id' } }),
             observeQuery: vi.fn().mockReturnValue({
                 subscribe: vi.fn().mockReturnValue({ unsubscribe: vi.fn() })
             })
@@ -16,6 +18,7 @@ const mockClient = {
             list: vi.fn().mockResolvedValue({ data: [] })
         },
         AuditLog: {
+            list: vi.fn().mockResolvedValue({ data: [] }),
             observeQuery: vi.fn().mockReturnValue({
                 subscribe: vi.fn().mockReturnValue({ unsubscribe: vi.fn() })
             })
@@ -29,7 +32,7 @@ vi.mock('../client', () => ({
 
 vi.mock('../hooks/useCloudActions', () => ({
     useCloudActions: () => ({
-        syncMarketData: vi.fn(),
+        syncMarketData: vi.fn().mockResolvedValue({ status: 'ACCEPTED' }),
         runOptimization: vi.fn(),
         isSyncing: false,
         isOptimizing: false

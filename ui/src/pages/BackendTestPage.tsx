@@ -10,8 +10,15 @@ import { Activity, Database, RefreshCw, Sparkles, Plus, Trash2, ChevronRight, Te
 const BackendTestPage = () => {
     const [logs, setLogs] = useState<{ type: 'info' | 'error' | 'success' | 'debug', message: string, timestamp: string }[]>([]);
     const [holdings, setHoldings] = useState<any[]>([]);
+    const [correlationId, setCorrelationId] = useState<string>('');
+    const [isPolling, setIsPolling] = useState(false);
     const { syncMarketData, runOptimization, isSyncing, isOptimizing } = useCloudActions();
     const client = getClient();
+
+    // Auto-scroll ref
+    const scrollRef = React.useRef<HTMLDivElement>(null);
+
+    const generateCorrelationId = () => `req-${Math.random().toString(36).substring(2, 6)}`;
 
     const addLog = (type: 'info' | 'error' | 'success' | 'debug', message: string) => {
         setLogs(prev => [{ type, message, timestamp: new Date().toLocaleTimeString() }, ...prev]);
@@ -68,10 +75,12 @@ const BackendTestPage = () => {
     };
 
     const handleSync = async () => {
-        addLog('info', 'Invoking Mutation: syncMarketData(["MSFT", "AAPL"])');
+        const id = generateCorrelationId();
+        setCorrelationId(id);
+        addLog('info', `[${id}] Invoking Mutation: syncMarketData(["MSFT", "AAPL"])`);
         try {
-            const result = await syncMarketData(['MSFT', 'AAPL']);
-            addLog('success', `Result Raw: ${JSON.stringify(result)}`);
+            const result = await syncMarketData(['MSFT', 'AAPL'], id);
+            addLog('success', `[${id}] Result Raw: ${JSON.stringify(result)}`);
             addLog('info', 'Note: Data is processed asynchronously via SQS. Check back in 30-60 seconds.');
         } catch (err: any) {
             addLog('error', `Failed: ${err.message}`);
@@ -79,10 +88,12 @@ const BackendTestPage = () => {
     };
 
     const handleOptimize = async () => {
-        addLog('info', 'Invoking Mutation: runOptimization(targetYield: 0.05)');
+        const id = generateCorrelationId();
+        setCorrelationId(id);
+        addLog('info', `[${id}] Invoking Mutation: runOptimization(targetYield: 0.05)`);
         try {
-            const result = await runOptimization(0.05);
-            addLog('success', `Result Status: ${result.status || 'OK'}`);
+            const result = await runOptimization(0.05, id);
+            addLog('success', `[${id}] Result Status: ${result.status || 'OK'}`);
             if (result.explanation) {
                 addLog('info', `AI Explanation: ${result.explanation.summary?.substring(0, 100)}...`);
             }
@@ -105,31 +116,72 @@ const BackendTestPage = () => {
             return;
         }
 
-        const sub = client.models.AuditLog.observeQuery().subscribe({
-            next: ({ items }: any) => {
-                const now = Date.now();
-                const recentLogs = items
-                    .filter((i: any) => (now - new Date(i.createdAt).getTime()) < 60000) // Last 60 seconds only
-                    .sort((a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-
-                if (recentLogs.length > 0) {
-                    setLogs(prev => {
-                        // Prevent duplicates by checking existing messages
-                        const existingMessages = new Set(prev.map(l => l.message));
-                        const newEntries = recentLogs
-                            .filter((log: any) => !existingMessages.has(`[SERVICE] ${log.action}: ${log.details}`))
-                            .map((log: any) => ({
-                                type: 'debug' as const,
-                                message: `[SERVICE] ${log.action}: ${log.details}`,
-                                timestamp: new Date(log.createdAt).toLocaleTimeString()
-                            }));
-                        return [...newEntries.reverse(), ...prev];
-                    });
-                }
-            }
-        });
         return () => sub.unsubscribe();
     }, [client]);
+
+    const refreshLogs = async () => {
+        if (!client || !client.models?.AuditLog) return;
+
+        try {
+            // Manual fetch to bypass subscription lag
+            const { data: items } = await client.models.AuditLog.list({
+                limit: 20
+            });
+            processLogs(items);
+        } catch (e: any) {
+            console.error("Log refresh failed", e);
+        }
+    };
+
+    const processLogs = (items: any[]) => {
+        const now = Date.now();
+        const recentLogs = items
+            .filter((i: any) => (now - new Date(i.createdAt).getTime()) < 3600000) // Expanded to 1 hour
+            .sort((a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+
+        if (recentLogs.length > 0) {
+            setLogs(prev => {
+                const existingMessages = new Set(prev.map(l => l.message));
+                const newEntries = recentLogs
+                    .filter((log: any) => {
+                        // Extract correlation ID if present
+                        let prefix = '';
+                        try {
+                            const meta = log.metadata ? JSON.parse(log.metadata) : {};
+                            if (meta.correlationId) prefix = `[${meta.correlationId}] `;
+                        } catch { }
+
+                        const msg = `${prefix}[SERVICE] ${log.action}: ${log.details}`;
+                        return !existingMessages.has(msg);
+                    })
+                    .map((log: any) => {
+                        let prefix = '';
+                        try {
+                            const meta = log.metadata ? JSON.parse(log.metadata) : {};
+                            if (meta.correlationId) prefix = `[${meta.correlationId}] `;
+                        } catch { }
+
+                        return {
+                            type: 'debug' as const,
+                            message: `${prefix}[SERVICE] ${log.action}: ${log.details}`,
+                            timestamp: new Date(log.createdAt).toLocaleTimeString()
+                        };
+                    });
+
+                if (newEntries.length === 0) return prev;
+                return [...newEntries.reverse(), ...prev]; // Newest on top
+            });
+        }
+    };
+
+    // Polling Effect
+    useEffect(() => {
+        if (!isPolling) return;
+        const timer = setInterval(() => {
+            refreshLogs();
+        }, 10000);
+        return () => clearInterval(timer);
+    }, [isPolling, client]);
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-12">
@@ -201,12 +253,26 @@ const BackendTestPage = () => {
                             <Terminal className="w-4 h-4" />
                             <span className="text-[10px] font-bold tracking-[0.2em] uppercase">Amplify Diagnostic Stream</span>
                         </div>
-                        <button
-                            onClick={() => setLogs([])}
-                            className="text-[10px] font-bold text-slate-500 hover:text-white transition-colors uppercase"
-                        >
-                            [ Clear ]
-                        </button>
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={() => setIsPolling(!isPolling)}
+                                className={`text-[10px] font-bold px-2 py-1 rounded transition-colors uppercase border ${isPolling ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-transparent border-transparent text-slate-500 hover:text-white'}`}
+                            >
+                                {isPolling ? '● Auto-Polling (10s)' : '○ Polling Off'}
+                            </button>
+                            <button
+                                onClick={refreshLogs}
+                                className="text-[10px] font-bold text-indigo-400 hover:text-white transition-colors uppercase"
+                            >
+                                [ Refresh Log ]
+                            </button>
+                            <button
+                                onClick={() => setLogs([])}
+                                className="text-[10px] font-bold text-slate-500 hover:text-white transition-colors uppercase"
+                            >
+                                [ Clear ]
+                            </button>
+                        </div>
                     </div>
                     <div className="flex-1 overflow-y-auto p-6 space-y-3 font-mono text-[11px] leading-relaxed">
                         {logs.length === 0 && (

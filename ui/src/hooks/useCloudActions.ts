@@ -15,20 +15,20 @@ export function useCloudActions() {
         return client;
     };
 
-    const syncMarketData = async (tickers: string[]) => {
+    const syncMarketData = async (tickers: string[], correlationId?: string) => {
         if (!tickers.length) return;
         setIsSyncing(true);
         try {
             const client = getActiveClient();
             console.log("[CLOUD] Syncing tickers:", tickers);
             const syncMutation = `
-                mutation SyncMarketData($tickers: [String]) {
-                    syncMarketData(tickers: $tickers)
+                mutation SyncMarketData($tickers: [String], $correlationId: String) {
+                    syncMarketData(tickers: $tickers, correlationId: $correlationId)
                 }
             `;
             const response: any = await client.graphql({
                 query: syncMutation,
-                variables: { tickers }
+                variables: { tickers, correlationId }
             });
 
             if (response.errors) {
@@ -51,19 +51,19 @@ export function useCloudActions() {
         }
     };
 
-    const runOptimization = async (targetYield: number = 0.04) => {
+    const runOptimization = async (targetYield: number = 0.04, correlationId?: string) => {
         setIsOptimizing(true);
         try {
             const client = getActiveClient();
             console.log("[CLOUD] Running optimization with target yield:", targetYield);
             const optimMutation = `
-                mutation RunOptimization($constraints: AWSJSON) {
-                    runOptimization(constraintsJson: $constraints)
+                mutation RunOptimization($constraints: AWSJSON, $correlationId: String) {
+                    runOptimization(constraintsJson: $constraints, correlationId: $correlationId)
                 }
             `;
             const response: any = await client.graphql({
                 query: optimMutation,
-                variables: { constraints: JSON.stringify({ targetYield }) }
+                variables: { constraints: JSON.stringify({ targetYield }), correlationId }
             });
 
             if (response.errors) {

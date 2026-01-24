@@ -60,15 +60,16 @@ async function signedRequest(query: string, variables: any = {}) {
     return result.data;
 }
 
-async function logToAudit(action: string, details: string) {
+async function logToAudit(action: string, details: string, metadata: any = {}) {
     try {
         const mutation = `mutation L($i: CreateAuditLogInput!) { createAuditLog(input: $i) { id } }`;
-        await signedRequest(mutation, { i: { action, details } });
+        await signedRequest(mutation, { i: { action, details, metadata: JSON.stringify(metadata) } });
     } catch (e) { console.error('[ORC] Audit Fail:', e); }
 }
 
 export const handler = async (event: any) => {
     console.log('[ORC] Pulse');
+    const correlationId = event.arguments?.correlationId;
     const bedrock = new BedrockRuntimeClient({ region: getEnv('AWS_REGION') || 'us-east-1' });
 
     try {
@@ -135,7 +136,7 @@ Return ONLY raw JSON. No conversational text or markdown blocks.`;
             }
         });
 
-        await logToAudit('AI_OPTIM_SUCCESS', `Ready: ${val.targetPortfolio.length} tickers.`);
+        await logToAudit('AI_OPTIM_SUCCESS', `Ready: ${val.targetPortfolio.length} tickers.`, { correlationId });
 
         return JSON.stringify({
             status: 'SUCCESS',
@@ -145,7 +146,8 @@ Return ONLY raw JSON. No conversational text or markdown blocks.`;
 
     } catch (err: any) {
         console.error("[ORC] Fatal:", err);
-        await logToAudit('AI_OPTIM_FAILED', err.message);
+        const correlationId = event?.arguments?.correlationId; // Re-fetch in catch block to be safe
+        await logToAudit('AI_OPTIM_FAILED', err.message, { correlationId });
         return JSON.stringify({ status: 'FAILED', error: err.message });
     }
 };

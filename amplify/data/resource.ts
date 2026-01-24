@@ -114,6 +114,7 @@ const schema = a.schema({
     runOptimization: a.mutation()
         .arguments({
             constraintsJson: a.json(),
+            correlationId: a.string(),
         })
         .returns(a.string())
         .authorization((allow) => [allow.authenticated()])
@@ -125,6 +126,7 @@ const schema = a.schema({
     syncMarketData: a.mutation()
         .arguments({
             tickers: a.string().array(),
+            correlationId: a.string(),
         })
         .returns(a.string())
         .authorization((allow) => [allow.authenticated()])
