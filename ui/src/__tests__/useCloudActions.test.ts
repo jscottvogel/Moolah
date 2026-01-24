@@ -36,9 +36,24 @@ describe('useCloudActions Hook', () => {
         const syncResult = await result.current.syncMarketData(['AAPL', 'MSFT']);
 
         expect(mockClient.graphql).toHaveBeenCalledWith(expect.objectContaining({
-            variables: { tickers: ['AAPL', 'MSFT'] }
+            variables: { tickers: ['AAPL', 'MSFT'], correlationKey: undefined }
         }));
         expect(syncResult).toBe(mockResponse.data.syncMarketData);
+    });
+
+    it('passes correlationKey to syncMarketData', async () => {
+        const mockResponse = {
+            data: { syncMarketData: JSON.stringify({ status: 'ACCEPTED' }) },
+            errors: null
+        };
+        mockClient.graphql.mockResolvedValue(mockResponse);
+
+        const { result } = renderHook(() => useCloudActions());
+        await result.current.syncMarketData(['AAPL'], 'test-id-123');
+
+        expect(mockClient.graphql).toHaveBeenCalledWith(expect.objectContaining({
+            variables: { tickers: ['AAPL'], correlationKey: 'test-id-123' }
+        }));
     });
 
     it('handles GraphQL errors in syncMarketData', async () => {
@@ -66,9 +81,25 @@ describe('useCloudActions Hook', () => {
         const optimResult = await result.current.runOptimization(0.05);
 
         expect(mockClient.graphql).toHaveBeenCalledWith(expect.objectContaining({
-            variables: { constraints: JSON.stringify({ targetYield: 0.05 }) }
+            variables: { constraints: JSON.stringify({ targetYield: 0.05 }), correlationKey: undefined }
         }));
         expect(optimResult).toEqual(mockResult);
+    });
+
+    it('passes correlationKey to runOptimization', async () => {
+        const mockResult = { status: 'SUCCESS' };
+        const mockResponse = {
+            data: { runOptimization: JSON.stringify(mockResult) },
+            errors: null
+        };
+        mockClient.graphql.mockResolvedValue(mockResponse);
+
+        const { result } = renderHook(() => useCloudActions());
+        await result.current.runOptimization(undefined, 'test-opt-id');
+
+        expect(mockClient.graphql).toHaveBeenCalledWith(expect.objectContaining({
+            variables: { constraints: JSON.stringify({ targetYield: 0.04 }), correlationKey: 'test-opt-id' }
+        }));
     });
 
     it('handles failed optimization status from agent', async () => {

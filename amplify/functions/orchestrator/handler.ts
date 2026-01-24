@@ -69,7 +69,7 @@ async function logToAudit(action: string, details: string, metadata: any = {}) {
 
 export const handler = async (event: any) => {
     console.log('[ORC] Pulse');
-    const correlationId = event.arguments?.correlationId;
+    const correlationId = event.arguments?.correlationKey;
     const bedrock = new BedrockRuntimeClient({ region: getEnv('AWS_REGION') || 'us-east-1' });
 
     try {
@@ -146,7 +146,7 @@ Return ONLY raw JSON. No conversational text or markdown blocks.`;
 
     } catch (err: any) {
         console.error("[ORC] Fatal:", err);
-        const correlationId = event?.arguments?.correlationId; // Re-fetch in catch block to be safe
+        const correlationId = event?.arguments?.correlationKey; // Re-fetch in catch block to be safe
         await logToAudit('AI_OPTIM_FAILED', err.message, { correlationId });
         return JSON.stringify({ status: 'FAILED', error: err.message });
     }

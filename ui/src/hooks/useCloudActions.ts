@@ -22,13 +22,13 @@ export function useCloudActions() {
             const client = getActiveClient();
             console.log("[CLOUD] Syncing tickers:", tickers);
             const syncMutation = `
-                mutation SyncMarketData($tickers: [String], $correlationId: String) {
-                    syncMarketData(tickers: $tickers, correlationId: $correlationId)
+                mutation SyncMarketData($tickers: [String], $correlationKey: String) {
+                    syncMarketData(tickers: $tickers, correlationKey: $correlationKey)
                 }
             `;
             const response: any = await client.graphql({
                 query: syncMutation,
-                variables: { tickers, correlationId }
+                variables: { tickers, correlationKey: correlationId }
             });
 
             if (response.errors) {
@@ -57,13 +57,13 @@ export function useCloudActions() {
             const client = getActiveClient();
             console.log("[CLOUD] Running optimization with target yield:", targetYield);
             const optimMutation = `
-                mutation RunOptimization($constraints: AWSJSON, $correlationId: String) {
-                    runOptimization(constraintsJson: $constraints, correlationId: $correlationId)
+                mutation RunOptimization($constraints: AWSJSON, $correlationKey: String) {
+                    runOptimization(constraintsJson: $constraints, correlationKey: $correlationKey)
                 }
             `;
             const response: any = await client.graphql({
                 query: optimMutation,
-                variables: { constraints: JSON.stringify({ targetYield }), correlationId }
+                variables: { constraints: JSON.stringify({ targetYield }), correlationKey: correlationId }
             });
 
             if (response.errors) {

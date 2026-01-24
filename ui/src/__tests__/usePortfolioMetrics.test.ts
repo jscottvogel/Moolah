@@ -1,17 +1,41 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { usePortfolioMetrics } from '../hooks/usePortfolioMetrics';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
-import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '../../../amplify/data/resource';
+import { getClient } from '../client';
 
-const client = generateClient<Schema>();
+// Mock the client singleton
+vi.mock('../client', () => ({
+    getClient: vi.fn()
+}));
 
 describe('usePortfolioMetrics Hook', () => {
+    let mockClient: any;
+
     beforeEach(() => {
         vi.clearAllMocks();
+
+        mockClient = {
+            models: {
+                Holding: {
+                    observeQuery: vi.fn()
+                },
+                MarketPrice: {
+                    listMarketPriceByTickerAndDate: vi.fn()
+                },
+                MarketFundamental: {
+                    listMarketFundamentalByTickerAndAsOf: vi.fn()
+                }
+            }
+        };
+        (getClient as any).mockReturnValue(mockClient);
     });
 
     it('initializes with default values', () => {
+        // Setup initial subscription mock to do nothing
+        mockClient.models.Holding.observeQuery.mockReturnValue({
+            subscribe: () => ({ unsubscribe: vi.fn() })
+        });
+
         const { result } = renderHook(() => usePortfolioMetrics());
 
         expect(result.current.isLoading).toBe(true);
@@ -27,7 +51,7 @@ describe('usePortfolioMetrics Hook', () => {
         ];
 
         // Mock the observeQuery to return our holding
-        (client.models.Holding.observeQuery as any).mockReturnValue({
+        mockClient.models.Holding.observeQuery.mockReturnValue({
             subscribe: (callbacks: any) => {
                 callbacks.next({ items: mockHoldings });
                 return { unsubscribe: vi.fn() };
@@ -35,12 +59,12 @@ describe('usePortfolioMetrics Hook', () => {
         });
 
         // Mock Price: $350
-        (client.models.MarketPrice.listMarketPriceByTickerAndDate as any).mockResolvedValue({
+        mockClient.models.MarketPrice.listMarketPriceByTickerAndDate.mockResolvedValue({
             data: [{ close: 350 }]
         });
 
         // Mock Yield: 2% (0.02)
-        (client.models.MarketFundamental.listMarketFundamentalByTickerAndAsOf as any).mockResolvedValue({
+        mockClient.models.MarketFundamental.listMarketFundamentalByTickerAndAsOf.mockResolvedValue({
             data: [{ dividendYield: 0.02 }]
         });
 
