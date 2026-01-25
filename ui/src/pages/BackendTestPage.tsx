@@ -102,7 +102,25 @@ const BackendTestPage = () => {
         }
     };
 
+    const handleCheckAlphaVantage = async () => {
+        addLog('info', 'Invoking Query: checkAlphaVantageHealth');
+        try {
+            // @ts-ignore - Schema updated
+            const { data, errors } = await client.queries.checkAlphaVantageHealth();
+            if (errors) throw new Error(errors[0].message);
 
+            if (data) {
+                const result = JSON.parse(data);
+                if (result.status === 'SUCCESS') {
+                    addLog('success', `[AV] Success (${result.latency}ms): ${result.data.ticker} $${result.data.price}`);
+                } else {
+                    addLog('error', `[AV] ${result.status}: ${result.message}`);
+                }
+            }
+        } catch (err: any) {
+            addLog('error', `Failed: ${err.message}`);
+        }
+    };
 
     const refreshLogs = async () => {
         if (!client || !client.models?.AuditLog) return;
@@ -245,6 +263,13 @@ const BackendTestPage = () => {
                             >
                                 <Sparkles className={`w-4 h-4 text-purple-400 ${isOptimizing ? 'animate-pulse' : ''}`} />
                                 <span className="text-sm font-medium">{isOptimizing ? 'Optimizing...' : 'Test AI Optimizer'}</span>
+                            </button>
+                            <button
+                                onClick={handleCheckAlphaVantage}
+                                className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl transition-all"
+                            >
+                                <Activity className="w-4 h-4 text-orange-400" />
+                                <span className="text-sm font-medium">Test Alpha Vantage API</span>
                             </button>
                         </div>
                     </section>

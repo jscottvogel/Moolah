@@ -5,6 +5,7 @@ import { data } from './data/resource.ts';
 import { orchestrator } from './functions/orchestrator/resource.ts';
 import { marketWorker } from './functions/market-worker/resource.ts';
 import { marketScheduler } from './functions/market-scheduler/resource.ts';
+import { alphaVantageHealth } from './functions/alpha-vantage-health/resource.ts';
 import * as sqs from 'aws-cdk-lib/aws-sqs';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as targets from 'aws-cdk-lib/aws-events-targets';
@@ -20,6 +21,7 @@ const backend = defineBackend({
     orchestrator,
     marketWorker,
     marketScheduler,
+    alphaVantageHealth,
 });
 
 // --- Custom Infrastructure (CDK) ---
@@ -51,6 +53,7 @@ marketQueue.grantSendMessages(backend.marketScheduler.resources.lambda);
 
 // 2.5 Pass API Keys
 (backend.marketWorker.resources.lambda as any).addEnvironment('ALPHA_VANTAGE_API_KEY', process.env.ALPHA_VANTAGE_API_KEY || '');
+(backend.alphaVantageHealth.resources.lambda as any).addEnvironment('ALPHA_VANTAGE_API_KEY', process.env.ALPHA_VANTAGE_API_KEY || '');
 
 // 3. EventBridge Schedule (Daily)
 const marketSchedulerStack = Stack.of(backend.marketScheduler.resources.lambda);

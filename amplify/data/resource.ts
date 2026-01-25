@@ -1,6 +1,7 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 import { orchestrator } from '../functions/orchestrator/resource';
 import { marketWorker } from '../functions/market-worker/resource';
+import { alphaVantageHealth } from '../functions/alpha-vantage-health/resource';
 
 /**
  * Moolah Data Schema - Domain-Driven Design
@@ -134,6 +135,11 @@ const schema = a.schema({
         .returns(a.string())
         .authorization((allow) => [allow.authenticated(), allow.publicApiKey()])
         .handler(a.handler.function(marketWorker)),
+
+    checkAlphaVantageHealth: a.query()
+        .returns(a.string())
+        .authorization((allow) => [allow.authenticated(), allow.publicApiKey()])
+        .handler(a.handler.function(alphaVantageHealth)),
 });
 
 export type Schema = ClientSchema<typeof schema>;
