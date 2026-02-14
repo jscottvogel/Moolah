@@ -12,7 +12,7 @@ const BackendTestPage = () => {
     const [holdings, setHoldings] = useState<any[]>([]);
     const [correlationId, setCorrelationId] = useState<string>('');
     const [isPolling, setIsPolling] = useState(false);
-    const { syncMarketData, runOptimization, isSyncing, isOptimizing } = useCloudActions();
+    const { syncMarketData, runOptimization, checkHealth, isSyncing, isOptimizing, isCheckingHealth } = useCloudActions();
     const client = getClient();
 
     // Auto-scroll ref
@@ -105,17 +105,11 @@ const BackendTestPage = () => {
     const handleCheckAlphaVantage = async () => {
         addLog('info', 'Invoking Query: checkAlphaVantageHealth');
         try {
-            // @ts-ignore - Schema updated
-            const { data, errors } = await client.queries.checkAlphaVantageHealth();
-            if (errors) throw new Error(errors[0].message);
-
-            if (data) {
-                const result = JSON.parse(data);
-                if (result.status === 'SUCCESS') {
-                    addLog('success', `[AV] Success (${result.latency}ms): ${result.data.ticker} $${result.data.price}`);
-                } else {
-                    addLog('error', `[AV] ${result.status}: ${result.message}`);
-                }
+            const result = await checkHealth();
+            if (result.status === 'SUCCESS') {
+                addLog('success', `[AV] Success (${result.latency}ms): ${result.data.ticker} $${result.data.price}`);
+            } else {
+                addLog('error', `[AV] ${result.status}: ${result.message}`);
             }
         } catch (err: any) {
             addLog('error', `Failed: ${err.message}`);
@@ -266,10 +260,11 @@ const BackendTestPage = () => {
                             </button>
                             <button
                                 onClick={handleCheckAlphaVantage}
-                                className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl transition-all"
+                                disabled={isCheckingHealth}
+                                className="flex items-center gap-3 px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl transition-all disabled:opacity-50"
                             >
-                                <Activity className="w-4 h-4 text-orange-400" />
-                                <span className="text-sm font-medium">Test Alpha Vantage API</span>
+                                <Activity className={`w-4 h-4 text-orange-400 ${isCheckingHealth ? 'animate-pulse' : ''}`} />
+                                <span className="text-sm font-medium">{isCheckingHealth ? 'Checking...' : 'Test Alpha Vantage API'}</span>
                             </button>
                         </div>
                     </section>

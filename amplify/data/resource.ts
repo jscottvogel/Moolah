@@ -54,6 +54,7 @@ const schema = a.schema({
     }).authorization((allow) => [
         allow.owner(),
         allow.guest().to(['read', 'create']), // Allow workers to create logs
+        allow.publicApiKey().to(['read']),
     ]),
 
     // --- MARKET DOMAIN ---
@@ -69,6 +70,7 @@ const schema = a.schema({
         .authorization((allow) => [
             allow.authenticated().to(['read']),
             allow.guest().to(['read', 'create', 'update']),
+            allow.publicApiKey().to(['read']),
         ]),
 
     MarketFundamental: a.model({
@@ -84,6 +86,7 @@ const schema = a.schema({
         .authorization((allow) => [
             allow.authenticated().to(['read']),
             allow.guest().to(['read', 'create', 'update']),
+            allow.publicApiKey().to(['read']),
         ]),
 
     MarketDividend: a.model({
@@ -97,6 +100,7 @@ const schema = a.schema({
         .authorization((allow) => [
             allow.authenticated().to(['read']),
             allow.guest().to(['read', 'create', 'update']),
+            allow.publicApiKey().to(['read']),
         ]),
 
     ProviderCache: a.model({
@@ -108,6 +112,7 @@ const schema = a.schema({
         .authorization((allow) => [
             allow.authenticated().to(['read']),
             allow.guest().to(['read', 'create', 'update']),
+            allow.publicApiKey().to(['read']),
         ]),
 
     // --- ORCHESTRATION MUTATIONS ---

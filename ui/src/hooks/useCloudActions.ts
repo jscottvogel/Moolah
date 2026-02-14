@@ -8,6 +8,7 @@ import { getClient } from '../client';
 export function useCloudActions() {
     const [isSyncing, setIsSyncing] = useState(false);
     const [isOptimizing, setIsOptimizing] = useState(false);
+    const [isCheckingHealth, setIsCheckingHealth] = useState(false);
 
     const getActiveClient = () => {
         const client = getClient();
@@ -87,10 +88,44 @@ export function useCloudActions() {
         }
     };
 
+    const checkHealth = async () => {
+        setIsCheckingHealth(true);
+        try {
+            const client = getActiveClient();
+            const healthQuery = `
+                query CheckAlphaVantageHealth {
+                    checkAlphaVantageHealth
+                }
+            `;
+            const response: any = await client.graphql({
+                query: healthQuery
+            });
+
+            if (response.errors) {
+                console.error("[CLOUD] Health Check Errors:", response.errors);
+                const detailedError = response.errors.map((e: any) => e.message).join(", ");
+                throw new Error(detailedError || "Health check query failed.");
+            }
+
+            const rawResult = response.data?.checkAlphaVantageHealth;
+            if (!rawResult) throw new Error("Health check did not return a result.");
+
+            return JSON.parse(rawResult);
+        } catch (err: any) {
+            console.error("[CLOUD] Health Check Exception:", err);
+            const msg = err.message || (typeof err === 'string' ? err : JSON.stringify(err));
+            throw new Error(msg);
+        } finally {
+            setIsCheckingHealth(false);
+        }
+    };
+
     return {
         isSyncing,
         isOptimizing,
+        isCheckingHealth,
         syncMarketData,
-        runOptimization
+        runOptimization,
+        checkHealth
     };
 }
